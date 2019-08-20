@@ -2,14 +2,49 @@ import Foundation
 import SwiftDate
 
 
+func quantized(_ periods: [TimePeriod], unit: DateComponents) -> [TimePeriod] {
+    let res = periods
+        // Maps the time periods into smaller, unit-sized chunks, if possible
+        .compactMap { period -> [TimePeriod] in
+            var res = [TimePeriod]()
+
+            // if the unit is larger than the period, then drop.
+            guard period.duration >= unit.timeInterval else {
+                return res
+            }
+
+            var i: TimeInterval = 0
+            let n: TimeInterval = (period.duration / unit.timeInterval)
+            var increment = period.start!
+
+            while i < n {
+                let chunk = TimePeriod(start: increment, duration: unit)
+
+                res.append(chunk)
+
+                increment = increment.addingTimeInterval(unit.timeInterval)
+                i += 1
+            }
+
+            return res
+        }
+        // Flattens the results
+        .reduce([], +)
+
+    return res
+}
+
 public final class Filters {
     
     typealias Filter = (tag: String, contents: [TimePeriod])
     
+    /// Tracks the operations applied
     private var stack = [Filter]()
-    fileprivate let base: [TimePeriod]
     
-    // MARK: - Initializers
+    /// Represents the absolute lower and upper bounds of time periods
+    private let window: [TimePeriod]
+    
+    /// MARK: - Initializers
     
     public convenience init(start: DateInRegion, duration: DateComponents) {
         self.init(start: start, end: start + duration)
@@ -20,39 +55,39 @@ public final class Filters {
     }
     
     public init(start: DateInRegion, end: DateInRegion) {
-        self.base = [TimePeriod(start: start, end: end)]
+        self.window = [TimePeriod(start: start, end: end)]
         let copy  = [TimePeriod(start: start, end: end)]
 
         stack.append((tag: "base", contents: copy))
     }
     
-    // MARK: - Reduce
+    /// MARK: - Reduce
     
     public func apply(region: Region) -> [TimePeriod] {
         return stack.map { $0.contents }
-                    .reduce(base) { res, next  in res.only(periods: next) }
+                    .reduce(window) { res, next  in res.only(periods: next) }
                     .map { TimePeriod(start: $0.start?.convertTo(region: region), end: $0.end?.convertTo(region: region)) }
     }
     
-    // MARK: - Filter
+    /// MARK: - Filter
     
     @discardableResult
     public func min(only hours: (start: Int, end: Int)..., tag: String) -> Filters {
-        let filtered = base.only(fromHours: hours)
+        let filtered = window.only(fromHours: hours)
         stack.append( (tag: tag, contents: filtered) )
         return self
     }
     
     @discardableResult
     public func min(only weekdays: WeekDay..., tag: String) -> Filters {
-        let filtered = base.only(weekdays: weekdays)
+        let filtered = window.only(weekdays: weekdays)
         stack.append( (tag: tag, contents: filtered) )
         return self
     }
     
     @discardableResult
     public func min(only periods: TimePeriod..., tag: String) -> Filters {
-        let filtered = base.only(periods: periods)
+        let filtered = window.only(periods: periods)
         stack.append( (tag: tag, contents: filtered) )
         return self
     }
@@ -60,7 +95,7 @@ public final class Filters {
     @discardableResult
     public func subtract(with periods: [TimePeriod], tag: String) -> Filters {
         let input = inversed(periods)
-        let filtered = base.only(periods: input)
+        let filtered = window.only(periods: input)
 
         stack.append( (tag: tag, contents: filtered) )
         
@@ -78,8 +113,8 @@ public final class Filters {
                          tag: String,
                          onSuccess: (() -> Void)?,
                          onFailure: ((Error) -> Void)?) {
-        let start = base.first!.start!
-        let end = base.first!.end!
+        let start = window.first!.start!
+        let end = window.first!.end!
         
         source.timePeriods(from: start, until: end,
                            onSuccess: { results in
@@ -91,11 +126,11 @@ public final class Filters {
                            })
     }
     
-    // MARK: - Transform
+    /// MARK: - Transform
     
     func inversed(_ periods: [TimePeriod]) -> [TimePeriod] {
-        var curr = base.first!.start!
-        let end = base.first!.end!
+        var curr = window.first!.start!
+        let end = window.first!.end!
         var iter = periods.makeIterator()
         var res = [TimePeriod]()
 
@@ -112,7 +147,7 @@ public final class Filters {
         return res
     }
     
-    // MARK: - Delete
+    /// MARK: - Delete
 
     public func remove(withTag target: String) {
         stack.removeAll { filter -> Bool in filter.tag == target }
