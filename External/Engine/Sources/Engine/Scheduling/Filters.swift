@@ -1,7 +1,6 @@
 import Foundation
 import SwiftDate
 
-
 func quantized(_ periods: [TimePeriod], unit: DateComponents) -> [TimePeriod] {
     let res = periods
         // Maps the time periods into smaller, unit-sized chunks, if possible
@@ -14,7 +13,7 @@ func quantized(_ periods: [TimePeriod], unit: DateComponents) -> [TimePeriod] {
             }
 
             var i: TimeInterval = 0
-            let n: TimeInterval = (period.duration / unit.timeInterval)
+            let n: TimeInterval = floor(period.duration / unit.timeInterval)
             var increment = period.start!
 
             while i < n {

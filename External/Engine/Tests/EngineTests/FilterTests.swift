@@ -150,7 +150,16 @@ final class FiltersTests: QuickSpec {
                 expect(res).to(beEmpty())
             }
 
-            it("decomposes the time period, and disposes the rest") {}
+            it("decomposes the time period, and disposes the rest") {
+                let unit = 1.hours
+                let extra = [
+                    TimePeriod(end: DateInRegion(), duration: 3.hours + 45.minutes)
+                ]
+                
+                let res = quantized(extra, unit: unit)
+                
+                expect(res.count) == 3
+            }
         }
         
     }
