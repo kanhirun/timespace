@@ -127,6 +127,22 @@ public final class Filters {
     
     /// MARK: - Transform
     
+    public func quantize(unit: DateComponents, tag: String) -> Filters? {
+        let last = stack.last!.contents
+        let results = quantized(last, unit: unit)
+
+        stack.append( (tag: tag, contents: results) )
+        
+        return self
+    }
+    
+    /// MARK: - Delete
+    
+    public func remove(withTag target: String) {
+        stack.removeAll { filter -> Bool in filter.tag == target }
+    }
+    
+    /// MARK: - Helpers
     func inversed(_ periods: [TimePeriod]) -> [TimePeriod] {
         var curr = window.first!.start!
         let end = window.first!.end!
@@ -144,11 +160,5 @@ public final class Filters {
         }
         
         return res
-    }
-    
-    /// MARK: - Delete
-
-    public func remove(withTag target: String) {
-        stack.removeAll { filter -> Bool in filter.tag == target }
     }
 }
