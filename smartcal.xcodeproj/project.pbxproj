@@ -133,12 +133,9 @@
 
 /* Begin PBXFileReference section */
 		E0408F4E230E0BD700FE40B1 /* ServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCell.swift; sourceTree = "<group>"; };
-		E06A5E9F230641A80059524E /* smartcal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = smartcal.entitlements; sourceTree = "<group>"; };
-		E06A5EA0230641B00059524E /* imessage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = imessage.entitlements; sourceTree = "<group>"; };
 		E06A5EA3230642BD0059524E /* ServicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		E06A5EA7230647960059524E /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		E06A5EA92306481E0059524E /* AvailabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityViewController.swift; sourceTree = "<group>"; };
-		E06A5EAB230649020059524E /* imessage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = imessage.entitlements; sourceTree = "<group>"; };
 		E06A5EB92306F0C30059524E /* AvailabilityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityCell.swift; sourceTree = "<group>"; };
 		E06B5A4E230B8F4F00DF0CA5 /* ConnectAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectAlertViewController.swift; sourceTree = "<group>"; };
 		E06B5A75230CA7C600DF0CA5 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
@@ -179,16 +176,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E06A5EA22306429C0059524E /* Support */ = {
-			isa = PBXGroup;
-			children = (
-				E06B5A4E230B8F4F00DF0CA5 /* ConnectAlertViewController.swift */,
-				E0F5B9232306399D0043605C /* Assets.xcassets */,
-				E06A5EA0230641B00059524E /* imessage.entitlements */,
-			);
-			path = Support;
-			sourceTree = "<group>";
-		};
 		E06B5A65230CA7B900DF0CA5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,7 +207,6 @@
 		E0F5B902230639840043605C /* smartcal */ = {
 			isa = PBXGroup;
 			children = (
-				E06A5E9F230641A80059524E /* smartcal.entitlements */,
 				E0F5B903230639840043605C /* AppDelegate.swift */,
 				E0F5B905230639840043605C /* ViewController.swift */,
 				E0F5B907230639840043605C /* Main.storyboard */,
@@ -244,8 +230,6 @@
 		E0F5B91D2306399C0043605C /* imessage */ = {
 			isa = PBXGroup;
 			children = (
-				E06A5EAB230649020059524E /* imessage.entitlements */,
-				E0F5B9202306399C0043605C /* MainInterface.storyboard */,
 				E0F5B91E2306399C0043605C /* MessagesViewController.swift */,
 				E06A5EA3230642BD0059524E /* ServicesViewController.swift */,
 				E0408F4E230E0BD700FE40B1 /* ServiceCell.swift */,
@@ -255,9 +239,11 @@
 				E06A5EA7230647960059524E /* ScheduleViewController.swift */,
 				E06A5EA92306481E0059524E /* AvailabilityViewController.swift */,
 				E06A5EB92306F0C30059524E /* AvailabilityCell.swift */,
-				E0F5B9252306399D0043605C /* Info.plist */,
+				E06B5A4E230B8F4F00DF0CA5 /* ConnectAlertViewController.swift */,
 				E06B5A65230CA7B900DF0CA5 /* Models */,
-				E06A5EA22306429C0059524E /* Support */,
+				E0F5B9252306399D0043605C /* Info.plist */,
+				E0F5B9232306399D0043605C /* Assets.xcassets */,
+				E0F5B9202306399C0043605C /* MainInterface.storyboard */,
 			);
 			path = imessage;
 			sourceTree = "<group>";
@@ -340,7 +326,7 @@
 						CreatedOnToolsVersion = 10.2.1;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -348,7 +334,7 @@
 						CreatedOnToolsVersion = 10.2.1;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -690,7 +676,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = smartcal/smartcal.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BV5EESPT9S;
 				ENABLE_BITCODE = NO;
@@ -715,7 +700,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = smartcal/smartcal.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BV5EESPT9S;
 				ENABLE_BITCODE = NO;
@@ -739,7 +723,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
-				CODE_SIGN_ENTITLEMENTS = imessage/imessage.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BV5EESPT9S;
 				ENABLE_BITCODE = NO;
@@ -765,7 +748,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
-				CODE_SIGN_ENTITLEMENTS = imessage/imessage.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BV5EESPT9S;
 				ENABLE_BITCODE = NO;
