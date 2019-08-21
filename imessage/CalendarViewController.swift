@@ -6,6 +6,9 @@ class CalendarViewController: UIViewController {
 
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     
+    /// The dates picked by the user
+    var selectedPeriods = [TimePeriod]()
+    
     // The next button on the nav bar
     private var nextButton: UIBarButtonItem!
 
@@ -61,10 +64,21 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         configureCell(view: cell, cellState: cellState)
+        
+        let aDateInRegion = date.convertTo(region: Region.local).dateAtStartOf(.day)
+        let aPeriod = TimePeriod(startDate: aDateInRegion.date,
+                                 endDate: aDateInRegion.dateByAdding(1, .day).date)
+
+        selectedPeriods.append(aPeriod)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+
         configureCell(view: cell, cellState: cellState)
+
+        selectedPeriods.removeAll { period -> Bool in
+            period.start?.day == date.day
+        }
     }
     
     /// MARK: - Header
