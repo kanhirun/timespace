@@ -25,7 +25,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X47-rx-isc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="49" y="-110"/>
+            <point key="canvasLocation" x="-506" y="-163"/>
         </scene>
         <!--Services View Controller-->
         <scene sceneID="HOV-bf-V1V">
@@ -73,7 +73,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tJb-eE-b2Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="770" y="-25"/>
+            <point key="canvasLocation" x="1729" y="-25"/>
         </scene>
         <!--Schedule View Controller-->
         <scene sceneID="DAh-kg-tqp">
@@ -162,7 +162,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BhX-Ej-BK5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1572" y="-25"/>
+            <point key="canvasLocation" x="2484" y="-25"/>
         </scene>
         <!--Availability View Controller-->
         <scene sceneID="CKb-JO-9cY">
@@ -232,7 +232,112 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nc1-I4-Dy7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2368" y="-25"/>
+            <point key="canvasLocation" x="3239" y="-25"/>
+        </scene>
+        <!--Ib Calendar Data Source-->
+        <scene sceneID="IHc-Pc-yyp">
+            <objects>
+                <viewController restorationIdentifier="CalendarViewController" storyboardIdentifier="CalendarViewController" id="ufp-pu-r0g" customClass="CalendarViewController" customModule="imessage" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oTS-o1-Hk3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6eD-9T-Y01" customClass="JTAppleCalendarView" customModule="JTAppleCalendar">
+                                <rect key="frame" x="0.0" y="44" width="414" height="233"/>
+                                <color key="backgroundColor" red="0.91280764250000002" green="0.91280764250000002" blue="0.91280764250000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="233" id="0Im-Di-jtM"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ayb-vD-P9O">
+                                    <size key="itemSize" width="0.0" height="50"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="dateCell" id="sG2-p3-dGb" customClass="DateCell" customModule="imessage" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="0.0" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FJr-R9-ksH" userLabel="Selected View">
+                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="50"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="aDate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3S-R0-sc2" userLabel="dateLabel">
+                                                    <rect key="frame" x="-22.5" y="14.5" width="45" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="e3S-R0-sc2" firstAttribute="centerY" secondItem="sG2-p3-dGb" secondAttribute="centerY" id="1cE-Cr-cpk"/>
+                                            <constraint firstAttribute="bottom" secondItem="FJr-R9-ksH" secondAttribute="bottom" id="BNN-0h-t53"/>
+                                            <constraint firstItem="FJr-R9-ksH" firstAttribute="leading" secondItem="sG2-p3-dGb" secondAttribute="leading" id="DGA-et-7uk"/>
+                                            <constraint firstItem="FJr-R9-ksH" firstAttribute="top" secondItem="sG2-p3-dGb" secondAttribute="top" id="FYG-Lu-Aas"/>
+                                            <constraint firstAttribute="trailing" secondItem="FJr-R9-ksH" secondAttribute="trailing" id="dym-Vy-trB"/>
+                                            <constraint firstItem="e3S-R0-sc2" firstAttribute="centerX" secondItem="sG2-p3-dGb" secondAttribute="centerX" id="e4N-Vg-oo0"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="dateLabel" destination="e3S-R0-sc2" id="ohw-lc-eBX"/>
+                                            <outlet property="selectedView" destination="FJr-R9-ksH" id="hba-4c-hDX"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="DateHeader" id="5rn-B8-od7" customClass="DateHeader" customModule="imessage" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="u6I-NC-hj3">
+                                            <rect key="frame" x="8" y="8" width="398" height="34"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="January 2019" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9cj-w3-xUR" userLabel="Month Label">
+                                                    <rect key="frame" x="0.0" y="0.0" width="295.5" height="34"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Od1-sc-axE">
+                                                    <rect key="frame" x="295.5" y="0.0" width="102.5" height="34"/>
+                                                    <state key="normal" title="Send"/>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="u6I-NC-hj3" secondAttribute="bottom" id="2Fv-AV-3SQ"/>
+                                        <constraint firstItem="u6I-NC-hj3" firstAttribute="leading" secondItem="5rn-B8-od7" secondAttribute="leadingMargin" id="GRS-W8-ZVi"/>
+                                        <constraint firstItem="u6I-NC-hj3" firstAttribute="top" secondItem="5rn-B8-od7" secondAttribute="topMargin" id="RQN-Xe-Suh"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="u6I-NC-hj3" secondAttribute="trailing" id="kub-MR-I9I"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="monthLabel" destination="9cj-w3-xUR" id="owA-c6-b9M"/>
+                                    </connections>
+                                </collectionReusableView>
+                                <connections>
+                                    <outlet property="ibCalendarDataSource" destination="ufp-pu-r0g" id="f2G-gG-xjl"/>
+                                    <outlet property="ibCalendarDelegate" destination="ufp-pu-r0g" id="m36-bd-PvI"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="6eD-9T-Y01" firstAttribute="leading" secondItem="EIN-Eo-3pU" secondAttribute="leading" id="aod-4J-m6c"/>
+                            <constraint firstItem="6eD-9T-Y01" firstAttribute="centerX" secondItem="EIN-Eo-3pU" secondAttribute="centerX" id="pZ5-6j-zhp"/>
+                            <constraint firstItem="6eD-9T-Y01" firstAttribute="top" secondItem="EIN-Eo-3pU" secondAttribute="top" id="r9C-Qw-uF0"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EIN-Eo-3pU"/>
+                    </view>
+                    <connections>
+                        <outlet property="calendarView" destination="6eD-9T-Y01" id="srL-Rl-G93"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qp8-9B-oF7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
 </document>

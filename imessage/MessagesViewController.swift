@@ -15,7 +15,7 @@ class MessagesViewController: MSMessagesAppViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        let rootVC = storyboard!.instantiateViewController(withIdentifier: "ServicesViewController") as! ServicesViewController
+        let rootVC = storyboard!.instantiateViewController(withIdentifier: "CalendarViewController") as! CalendarViewController
         let nav = UINavigationController(rootViewController: rootVC)
         present(nav, animated: false, completion: nil)
     }

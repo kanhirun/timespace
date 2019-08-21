@@ -20,6 +20,9 @@
 		E06B5A4C230B43C300DF0CA5 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0F5B945230639E70043605C /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E06B5A4F230B8F4F00DF0CA5 /* ConnectAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A4E230B8F4F00DF0CA5 /* ConnectAlertViewController.swift */; };
 		E06B5A76230CA7C600DF0CA5 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A75230CA7C600DF0CA5 /* Service.swift */; };
+		E06B5A8C230D8D7A00DF0CA5 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A8B230D8D7A00DF0CA5 /* CalendarViewController.swift */; };
+		E06B5A91230D90BF00DF0CA5 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A90230D90BF00DF0CA5 /* DateCell.swift */; };
+		E06B5A93230DA06600DF0CA5 /* DateHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A92230DA06600DF0CA5 /* DateHeader.swift */; };
 		E0F5B904230639840043605C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F5B903230639840043605C /* AppDelegate.swift */; };
 		E0F5B906230639840043605C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F5B905230639840043605C /* ViewController.swift */; };
 		E0F5B909230639840043605C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0F5B907230639840043605C /* Main.storyboard */; };
@@ -137,6 +140,10 @@
 		E06A5EB92306F0C30059524E /* AvailabilityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityCell.swift; sourceTree = "<group>"; };
 		E06B5A4E230B8F4F00DF0CA5 /* ConnectAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectAlertViewController.swift; sourceTree = "<group>"; };
 		E06B5A75230CA7C600DF0CA5 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		E06B5A89230D8BEA00DF0CA5 /* JTAppleCalendar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JTAppleCalendar.framework; path = Carthage/Build/iOS/JTAppleCalendar.framework; sourceTree = "<group>"; };
+		E06B5A8B230D8D7A00DF0CA5 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		E06B5A90230D90BF00DF0CA5 /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
+		E06B5A92230DA06600DF0CA5 /* DateHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHeader.swift; sourceTree = "<group>"; };
 		E0F5B900230639840043605C /* smartcal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smartcal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F5B903230639840043605C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0F5B905230639840043605C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -225,6 +232,7 @@
 		E0F5B91A2306399C0043605C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E06B5A89230D8BEA00DF0CA5 /* JTAppleCalendar.framework */,
 				E0F5B95123063DDC0043605C /* OAuthSwift.framework */,
 				E0F5B91B2306399C0043605C /* Messages.framework */,
 			);
@@ -238,6 +246,9 @@
 				E0F5B9202306399C0043605C /* MainInterface.storyboard */,
 				E0F5B91E2306399C0043605C /* MessagesViewController.swift */,
 				E06A5EA3230642BD0059524E /* ServicesViewController.swift */,
+				E06B5A8B230D8D7A00DF0CA5 /* CalendarViewController.swift */,
+				E06B5A92230DA06600DF0CA5 /* DateHeader.swift */,
+				E06B5A90230D90BF00DF0CA5 /* DateCell.swift */,
 				E06A5EA7230647960059524E /* ScheduleViewController.swift */,
 				E06A5EA92306481E0059524E /* AvailabilityViewController.swift */,
 				E06A5EB92306F0C30059524E /* AvailabilityCell.swift */,
@@ -300,6 +311,7 @@
 			buildPhases = (
 				E0F5B9152306399C0043605C /* Sources */,
 				E0F5B9162306399C0043605C /* Frameworks */,
+				E06B5A8E230D8E5E00DF0CA5 /* Copy Frameworks (Carthage) */,
 				E0F5B9172306399C0043605C /* Resources */,
 			);
 			buildRules = (
@@ -466,6 +478,26 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
+		E06B5A8E230D8E5E00DF0CA5 /* Copy Frameworks (Carthage) */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/JTAppleCalendar.framework",
+			);
+			name = "Copy Frameworks (Carthage)";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/JTAppleCalendar.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -482,9 +514,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E06B5A93230DA06600DF0CA5 /* DateHeader.swift in Sources */,
+				E06B5A8C230D8D7A00DF0CA5 /* CalendarViewController.swift in Sources */,
 				E06A5EBA2306F0C30059524E /* AvailabilityCell.swift in Sources */,
 				E06B5A76230CA7C600DF0CA5 /* Service.swift in Sources */,
 				E06A5EA4230642BD0059524E /* ServicesViewController.swift in Sources */,
+				E06B5A91230D90BF00DF0CA5 /* DateCell.swift in Sources */,
 				E0F5B91F2306399C0043605C /* MessagesViewController.swift in Sources */,
 				E06A5EA8230647960059524E /* ScheduleViewController.swift in Sources */,
 				E06B5A4F230B8F4F00DF0CA5 /* ConnectAlertViewController.swift in Sources */,
