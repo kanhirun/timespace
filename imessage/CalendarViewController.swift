@@ -46,7 +46,7 @@ extension CalendarViewController: JTAppleCalendarViewDataSource {
         return ConfigurationParameters(
             startDate: startDate,
             endDate: endDate,
-            numberOfRows: 4,
+            numberOfRows: 2,
             generateOutDates: .tillEndOfRow,
             firstDayOfWeek: .monday,
             hasStrictBoundaries: false
@@ -69,7 +69,10 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
     
     /// MARK: - Header
     
-    func calendar(_ calendar: JTAppleCalendarView, headerViewForDateRange range: (start: Date, end: Date), at indexPath: IndexPath) -> JTAppleCollectionReusableView {
+    func calendar(_ calendar: JTAppleCalendarView,
+                  headerViewForDateRange range: (start: Date, end: Date),
+                  at indexPath: IndexPath) -> JTAppleCollectionReusableView {
+
         let header = calendar.dequeueReusableJTAppleSupplementaryView(withReuseIdentifier: "DateHeader", for: indexPath) as! DateHeader
         let refDate = range.start
 
@@ -77,42 +80,56 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
 
         return header
     }
-    
+
+    // Adjusts header height
     func calendarSizeForMonths(_ calendar: JTAppleCalendarView?) -> MonthSize? {
-        return MonthSize(defaultSize: 50)
+        return MonthSize(defaultSize: 100)
     }
     
     /// MARK: - Cell
 
-    func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
+    func calendar(_ calendar: JTAppleCalendarView,
+                  cellForItemAt date: Date,
+                  cellState: CellState,
+                  indexPath: IndexPath) -> JTAppleCell {
+
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "dateCell",for: indexPath) as! DateCell
         self.calendar(calendar, willDisplay: cell, forItemAt: date, cellState: cellState, indexPath: indexPath)
         return cell
     }
 
-    func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
+    func calendar(_ calendar: JTAppleCalendarView,
+                  willDisplay cell: JTAppleCell,
+                  forItemAt date: Date,
+                  cellState: CellState,
+                  indexPath: IndexPath) {
+
         configureCell(view: cell, cellState: cellState)
     }
-    
+
+    // Display
     private func configureCell(view: JTAppleCell?, cellState: CellState) {
         guard let cell = view as? DateCell else {
             return
         }
 
         cell.dateLabel.text = cellState.text
-
-        switch cellState.dateBelongsTo {
-        case .thisMonth:
-            cell.dateLabel.textColor = UIColor.black
-        default:
-            cell.dateLabel.textColor = UIColor.lightGray
+        cell.layer.cornerRadius =  13
+        
+        // Today
+        if cellState.date.isToday {
+            cell.backgroundColor = .lightGray
+        } else {
+            cell.backgroundColor = .white
         }
 
+        // Selected
         if cellState.isSelected {
-            cell.selectedView.layer.cornerRadius =  13
             cell.selectedView.isHidden = false
+            cell.dateLabel.textColor = .white
         } else {
             cell.selectedView.isHidden = true
+            cell.dateLabel.textColor = .black
         }
     }
     
