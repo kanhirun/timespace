@@ -16,6 +16,7 @@ class MessagesViewController: MSMessagesAppViewController {
         super.viewWillAppear(animated)
 
         let rootVC = storyboard!.instantiateViewController(withIdentifier: "CalendarViewController") as! CalendarViewController
+        rootVC.activeConversation = activeConversation
         let nav = UINavigationController(rootViewController: rootVC)
         present(nav, animated: false, completion: nil)
     }
@@ -25,7 +26,6 @@ class MessagesViewController: MSMessagesAppViewController {
     override func willBecomeActive(with conversation: MSConversation) {
         // Called when the extension is about to move from the inactive to active state.
         // This will happen when the extension is about to present UI.
-        
         // Use this method to configure the extension and restore previously stored state.
     }
     

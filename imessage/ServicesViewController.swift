@@ -12,7 +12,7 @@ final class ServicesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Services"
+        title = "\(ServicesViewController.self)"
         tableView.dataSource = self
         tableView.sizeToFit()
     }
@@ -23,7 +23,7 @@ final class ServicesViewController: UITableViewController {
         // Set up for 2 weeks
         model = Filters(start: DateInRegion(Date(), region: Region.local), duration: 2.weeks)
             .min(only: .wednesday, .thursday, .friday, .saturday, .sunday, tag: title!)
-            .min(only: (start: 9, end: 17), tag: title!)
+            .min(only: (start: 9, end: 12 + 8), tag: title!)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -48,15 +48,8 @@ final class ServicesViewController: UITableViewController {
     // MARK: UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ServiceCell")!
-        let service = services[indexPath.row]
-        let durationText = service.duration.timeInterval.toString {
-            $0.unitsStyle = .abbreviated
-        }
-        
-        cell.textLabel?.text = service.name
-        cell.detailTextLabel?.text = durationText
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ServiceCell")! as! ServiceCell
+        cell.update(services[indexPath.row])
         return cell
     }
     

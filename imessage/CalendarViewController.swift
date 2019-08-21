@@ -1,16 +1,16 @@
 import JTAppleCalendar
 import UIKit
 import SwiftDate
+import Messages
 
 class CalendarViewController: UIViewController {
 
     @IBOutlet weak var calendarView: JTAppleCalendarView!
+
+    var activeConversation: MSConversation!
     
     /// The dates picked by the user
     var selectedPeriods = [TimePeriod]()
-    
-    // The next button on the nav bar
-    private var nextButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,8 +34,28 @@ class CalendarViewController: UIViewController {
     
     /// MARK: - Button Actionss
     
-    @objc func didTapTextButton() {
-        print("Compose message!")
+    @objc func send() {
+        let layout = MSMessageTemplateLayout()
+        layout.image = getSnapshotImage()
+        let session = MSSession()
+        let msg = MSMessage(session: session)
+        msg.layout = layout
+
+        activeConversation.insert(msg) { err in
+            debugPrint(err as Any)
+        }
+    }
+    
+    private func getSnapshotImage() -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(calendarView.bounds.size, calendarView.isOpaque, 0.0)
+
+        calendarView.drawHierarchy(in: calendarView.bounds, afterScreenUpdates: false)
+
+        let snapshotImage = UIGraphicsGetImageFromCurrentImageContext()!
+        
+        UIGraphicsEndImageContext()
+
+        return snapshotImage
     }
 }
 
@@ -87,9 +107,11 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
                   headerViewForDateRange range: (start: Date, end: Date),
                   at indexPath: IndexPath) -> JTAppleCollectionReusableView {
 
-        let header = calendar.dequeueReusableJTAppleSupplementaryView(withReuseIdentifier: "DateHeader", for: indexPath) as! DateHeader
+        let header = calendar.dequeueReusableJTAppleSupplementaryView(
+            withReuseIdentifier: "DateHeader", for: indexPath) as! CalendarDateHeader
         let refDate = range.start
 
+        header.sendButton.addTarget(self, action: #selector(send), for: .primaryActionTriggered)
         header.monthLabel.text = "\(refDate.monthName(.default)) \(refDate.toFormat("YYYY"))"
 
         return header
@@ -107,7 +129,7 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
                   cellState: CellState,
                   indexPath: IndexPath) -> JTAppleCell {
 
-        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "dateCell",for: indexPath) as! DateCell
+        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "dateCell",for: indexPath) as! CalendarDateCell
         self.calendar(calendar, willDisplay: cell, forItemAt: date, cellState: cellState, indexPath: indexPath)
         return cell
     }
@@ -123,7 +145,7 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
 
     // Display
     private func configureCell(view: JTAppleCell?, cellState: CellState) {
-        guard let cell = view as? DateCell else {
+        guard let cell = view as? CalendarDateCell else {
             return
         }
 
