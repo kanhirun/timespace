@@ -11,6 +11,8 @@ final class ScheduleViewController: UITableViewController {
     // The total count of rows tapped; for tracking next button state
     private var _taps: UInt8 = 0
     
+    var selectedService: Service? = nil
+    
     var model: Filters!
     
     override func viewDidLoad() {
@@ -41,6 +43,7 @@ final class ScheduleViewController: UITableViewController {
         let destination = storyboard!.instantiateViewController(withIdentifier: "AvailabilityVC") as! AvailabilityViewController
         
         destination.model = model
+        destination.selectedService = selectedService
 
         navigationController?.pushViewController(destination, animated: true)
     }

@@ -5,22 +5,9 @@ import Engine
 
 final class ServicesViewController: UITableViewController {
 
-    struct Service {
-        let name: String
-        let duration: DateComponents
-    }
-    
-    struct JeanServices {
-        static let models: [Service] = [
-            Service(name: "Men's Haircut", duration: 45.minutes),
-            Service(name: "Chemical: Color", duration: 2.hours),
-            Service(name: "Blowdry", duration: 1.hours + 30.minutes),
-            Service(name: "Updo", duration: 1.hours),
-        ]
-    }
-
     private let services = JeanServices.models
     private var model: Filters!
+    private var selectedService: Service? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +40,7 @@ final class ServicesViewController: UITableViewController {
         let controller = storyboard!.instantiateViewController(withIdentifier: "ScheduleVC") as! ScheduleViewController
         
         controller.model = model
+        controller.selectedService = services[indexPath.row]
         
         navigationController?.pushViewController(controller, animated: true)
     }
@@ -78,14 +66,6 @@ final class ServicesViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
-    }
-    
-    // MARK: Extras
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        
     }
     
 }

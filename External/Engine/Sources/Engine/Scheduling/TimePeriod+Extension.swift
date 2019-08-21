@@ -3,6 +3,12 @@ import SwiftDate
 
 // TODO: TimeIntervals should be designed as half-open intervals
 
+extension TimePeriod: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return "TimePeriod<[\(start?.toISO() ?? "∞") - \(end?.toISO() ?? "∞"))>"
+    }
+}
+
 extension TimePeriod {
     /// Returns a new period representing the overlap between the two
     /// TODO: Handle non-finite cases

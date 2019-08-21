@@ -19,6 +19,7 @@
 		E06B5A4B230B43C000DF0CA5 /* Engine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0F5B941230639E70043605C /* Engine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E06B5A4C230B43C300DF0CA5 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0F5B945230639E70043605C /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E06B5A4F230B8F4F00DF0CA5 /* ConnectAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A4E230B8F4F00DF0CA5 /* ConnectAlertViewController.swift */; };
+		E06B5A76230CA7C600DF0CA5 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A75230CA7C600DF0CA5 /* Service.swift */; };
 		E0F5B904230639840043605C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F5B903230639840043605C /* AppDelegate.swift */; };
 		E0F5B906230639840043605C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F5B905230639840043605C /* ViewController.swift */; };
 		E0F5B909230639840043605C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0F5B907230639840043605C /* Main.storyboard */; };
@@ -135,6 +136,7 @@
 		E06A5EAB230649020059524E /* imessage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = imessage.entitlements; sourceTree = "<group>"; };
 		E06A5EB92306F0C30059524E /* AvailabilityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityCell.swift; sourceTree = "<group>"; };
 		E06B5A4E230B8F4F00DF0CA5 /* ConnectAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectAlertViewController.swift; sourceTree = "<group>"; };
+		E06B5A75230CA7C600DF0CA5 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		E0F5B900230639840043605C /* smartcal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smartcal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F5B903230639840043605C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0F5B905230639840043605C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +178,14 @@
 				E06A5EA0230641B00059524E /* imessage.entitlements */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		E06B5A65230CA7B900DF0CA5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E06B5A75230CA7C600DF0CA5 /* Service.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		E0F5B8F7230639840043605C = {
@@ -232,6 +242,7 @@
 				E06A5EA92306481E0059524E /* AvailabilityViewController.swift */,
 				E06A5EB92306F0C30059524E /* AvailabilityCell.swift */,
 				E0F5B9252306399D0043605C /* Info.plist */,
+				E06B5A65230CA7B900DF0CA5 /* Models */,
 				E06A5EA22306429C0059524E /* Support */,
 			);
 			path = imessage;
@@ -472,6 +483,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E06A5EBA2306F0C30059524E /* AvailabilityCell.swift in Sources */,
+				E06B5A76230CA7C600DF0CA5 /* Service.swift in Sources */,
 				E06A5EA4230642BD0059524E /* ServicesViewController.swift in Sources */,
 				E0F5B91F2306399C0043605C /* MessagesViewController.swift in Sources */,
 				E06A5EA8230647960059524E /* ScheduleViewController.swift in Sources */,

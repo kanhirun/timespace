@@ -8,6 +8,7 @@ class AvailabilityViewController: UICollectionViewController {
     
     @IBOutlet weak var availabilityView: UICollectionView!
 
+    var selectedService: Service!
     var model: Filters!
     var results: [TimePeriod]?
 
@@ -27,7 +28,9 @@ class AvailabilityViewController: UICollectionViewController {
             fromSource: appleCalendar,
             tag: title!,
             onSuccess: {
-                self.results = self.model.apply(region: Region.local)
+                self.results = self.model
+                    .quantize(unit: self.selectedService!.duration, tag: self.title!)?
+                    .apply(region: Region.local)
                 self.availabilityView.reloadData()
             },
             onFailure: { err in
@@ -61,7 +64,7 @@ class AvailabilityViewController: UICollectionViewController {
         let end = results[indexPath.row].end
         
         cell.monthLabel.text = "\(start!.monthName(.short)) \(start!.day)"
-        cell.timePeriodLabel.text = "\(start!.toFormat("ha")) - \(end!.toFormat("ha")) \(start!.toFormat("z"))"
+        cell.timePeriodLabel.text = "\(start!.toFormat("h:mma")) - \(end!.toFormat("h:mma"))"
         cell.weekdayLabel.text = start?.weekdayName(.default)
         
         return cell

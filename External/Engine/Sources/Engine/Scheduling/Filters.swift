@@ -128,8 +128,7 @@ public final class Filters {
     /// MARK: - Transform
     
     public func quantize(unit: DateComponents, tag: String) -> Filters? {
-        let last = stack.last!.contents
-        let results = quantized(last, unit: unit)
+        let results = quantized(apply(region: .UTC), unit: unit)
 
         stack.append( (tag: tag, contents: results) )
         
