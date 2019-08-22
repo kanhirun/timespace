@@ -34,21 +34,9 @@
                     <view key="view" contentMode="scaleToFill" id="HzD-ir-Vcb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" ambiguous="YES" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="FId-CQ-udt" userLabel="Content View">
-                                <rect key="frame" x="186" y="44" width="42" height="20.5"/>
-                            </stackView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="FId-CQ-udt" firstAttribute="centerX" secondItem="JUn-Yx-mBT" secondAttribute="centerX" id="QwX-Jj-tXe"/>
-                            <constraint firstItem="FId-CQ-udt" firstAttribute="top" secondItem="JUn-Yx-mBT" secondAttribute="top" id="tzy-t1-wpN"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="JUn-Yx-mBT"/>
                     </view>
-                    <connections>
-                        <outlet property="contentView" destination="FId-CQ-udt" id="CNn-EB-qpu"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qcK-WX-bW2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
