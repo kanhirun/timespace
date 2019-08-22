@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E0408F4F230E0BD700FE40B1 /* ServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F4E230E0BD700FE40B1 /* ServiceCell.swift */; };
+		E0408F60230E15DB00FE40B1 /* ViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F5F230E15DB00FE40B1 /* ViewModels.swift */; };
 		E06A5EA4230642BD0059524E /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06A5EA3230642BD0059524E /* ServicesViewController.swift */; };
 		E06A5EA8230647960059524E /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06A5EA7230647960059524E /* ScheduleViewController.swift */; };
 		E06A5EAA2306481E0059524E /* AvailabilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06A5EA92306481E0059524E /* AvailabilityViewController.swift */; };
@@ -133,6 +134,7 @@
 
 /* Begin PBXFileReference section */
 		E0408F4E230E0BD700FE40B1 /* ServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCell.swift; sourceTree = "<group>"; };
+		E0408F5F230E15DB00FE40B1 /* ViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModels.swift; sourceTree = "<group>"; };
 		E06A5EA3230642BD0059524E /* ServicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		E06A5EA7230647960059524E /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		E06A5EA92306481E0059524E /* AvailabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityViewController.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 		E06B5A65230CA7B900DF0CA5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E0408F5F230E15DB00FE40B1 /* ViewModels.swift */,
 				E06B5A75230CA7C600DF0CA5 /* Service.swift */,
 			);
 			path = Models;
@@ -513,6 +516,7 @@
 				E0F5B91F2306399C0043605C /* MessagesViewController.swift in Sources */,
 				E06A5EA8230647960059524E /* ScheduleViewController.swift in Sources */,
 				E06B5A4F230B8F4F00DF0CA5 /* ConnectAlertViewController.swift in Sources */,
+				E0408F60230E15DB00FE40B1 /* ViewModels.swift in Sources */,
 				E06A5EAA2306481E0059524E /* AvailabilityViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

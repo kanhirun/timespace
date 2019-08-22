@@ -3,20 +3,21 @@ import UIKit
 import SwiftDate
 import Messages
 
-class CalendarViewController: UIViewController {
+class CalendarViewController: UIViewController,
+                              JTAppleCalendarViewDelegate,
+                              JTAppleCalendarViewDataSource {
 
     @IBOutlet weak var calendarView: JTAppleCalendarView!
 
-    var activeConversation: MSConversation!
+    var model: CalendarViewModel!
+    var activeConversation: MSConversation? = nil
     
-    /// The dates picked by the user
-    var selectedPeriods = [TimePeriod]()
+    // MARK: - Controller
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         calendarView.allowsMultipleSelection = true
-
         calendarView.scrollDirection = .horizontal
         calendarView.scrollingMode   = .stopAtEachCalendarFrame
         calendarView.showsHorizontalScrollIndicator = false
@@ -32,7 +33,7 @@ class CalendarViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
-    /// MARK: - Button Actionss
+    // MARK: - Actions
     
     @objc func send() {
         let layout = MSMessageTemplateLayout()
@@ -41,132 +42,87 @@ class CalendarViewController: UIViewController {
         let msg = MSMessage(session: session)
         msg.layout = layout
 
-        activeConversation.insert(msg) { err in
+        activeConversation?.insert(msg) { err in
             debugPrint(err as Any)
         }
     }
     
-    private func getSnapshotImage() -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(calendarView.bounds.size, calendarView.isOpaque, 0.0)
-
-        calendarView.drawHierarchy(in: calendarView.bounds, afterScreenUpdates: false)
-
-        let snapshotImage = UIGraphicsGetImageFromCurrentImageContext()!
-        
-        UIGraphicsEndImageContext()
-
-        return snapshotImage
+    func calendar(_ calendar: JTAppleCalendarView,
+                  didSelectDate date: Date,
+                  cell: JTAppleCell?,
+                  cellState: CellState) {
+        updateUI(cell, with: cellState)
+        model.select(date)
     }
-}
-
-
-extension CalendarViewController: JTAppleCalendarViewDataSource {
-
+    
+    func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        updateUI(cell, with: cellState)
+        model.unselect(date)
+    }
+    
+    // MARK: - Calendar Appearance
+    
+    // Adjusts calendar view
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
-        let startDate = Date("2019-08-19T00:00:00Z")!
-        let endDate = Date("2019-08-25T00:00:00Z")!
-        
         return ConfigurationParameters(
-            startDate: startDate,
-            endDate: endDate,
+            startDate: model.startDate,
+            endDate:  model.endDate,
             numberOfRows: 2,
             generateOutDates: .tillEndOfRow,
             firstDayOfWeek: .monday,
             hasStrictBoundaries: false
         )
     }
-
-}
-
-extension CalendarViewController: JTAppleCalendarViewDelegate {
     
-    /// MARK: - Selection
-    
-    func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        configureCell(view: cell, cellState: cellState)
-        
-        let aDateInRegion = date.convertTo(region: Region.local).dateAtStartOf(.day)
-        let aPeriod = TimePeriod(startDate: aDateInRegion.date,
-                                 endDate: aDateInRegion.dateByAdding(1, .day).date)
-
-        selectedPeriods.append(aPeriod)
-    }
-    
-    func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-
-        configureCell(view: cell, cellState: cellState)
-
-        selectedPeriods.removeAll { period -> Bool in
-            period.start?.day == date.day
-        }
-    }
-    
-    /// MARK: - Header
-    
+    // Adjusts header cell
     func calendar(_ calendar: JTAppleCalendarView,
                   headerViewForDateRange range: (start: Date, end: Date),
                   at indexPath: IndexPath) -> JTAppleCollectionReusableView {
-
+        
         let header = calendar.dequeueReusableJTAppleSupplementaryView(
             withReuseIdentifier: "DateHeader", for: indexPath) as! CalendarDateHeader
         let refDate = range.start
-
+        
         header.sendButton.addTarget(self, action: #selector(send), for: .primaryActionTriggered)
         header.monthLabel.text = "\(refDate.monthName(.default)) \(refDate.toFormat("YYYY"))"
-
+        
         return header
     }
-
+    
     // Adjusts header height
     func calendarSizeForMonths(_ calendar: JTAppleCalendarView?) -> MonthSize? {
         return MonthSize(defaultSize: 100)
     }
     
-    /// MARK: - Cell
-
+    // Adjusts calendar date cell
     func calendar(_ calendar: JTAppleCalendarView,
                   cellForItemAt date: Date,
                   cellState: CellState,
                   indexPath: IndexPath) -> JTAppleCell {
-
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "dateCell",for: indexPath) as! CalendarDateCell
         self.calendar(calendar, willDisplay: cell, forItemAt: date, cellState: cellState, indexPath: indexPath)
         return cell
     }
-
-    func calendar(_ calendar: JTAppleCalendarView,
-                  willDisplay cell: JTAppleCell,
-                  forItemAt date: Date,
-                  cellState: CellState,
-                  indexPath: IndexPath) {
-
-        configureCell(view: cell, cellState: cellState)
+    
+    func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
+        updateUI(cell, with: cellState)
     }
+    
+    // MARK: - Private
 
-    // Display
-    private func configureCell(view: JTAppleCell?, cellState: CellState) {
-        guard let cell = view as? CalendarDateCell else {
-            return
-        }
-
-        cell.dateLabel.text = cellState.text
-        cell.layer.cornerRadius =  13
-        
-        // Today
-        if cellState.date.isToday {
-            cell.backgroundColor = .lightGray
-        } else {
-            cell.backgroundColor = .white
-        }
-
-        // Selected
-        if cellState.isSelected {
-            cell.selectedView.isHidden = false
-            cell.dateLabel.textColor = .white
-        } else {
-            cell.selectedView.isHidden = true
-            cell.dateLabel.textColor = .black
+    private func updateUI(_ view: JTAppleCell?, with cellState: CellState) {
+        if let cell = view as? CalendarDateCell {
+            cell.updateUI(cellState)
         }
     }
     
+    // TODO: Should be an attribute of the next controller
+    private func getSnapshotImage() -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(calendarView.bounds.size, calendarView.isOpaque, 0.0)
+        calendarView.drawHierarchy(in: calendarView.bounds, afterScreenUpdates: false)
+        let snapshotImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+
+        return snapshotImage
+    }
 }

@@ -2,59 +2,56 @@ import Foundation
 import UIKit
 import SwiftDate
 import Engine
+import Messages
 
 final class ServicesViewController: UITableViewController {
 
-    private let services = JeanServices.models
-    private var model: Filters!
-    private var selectedService: Service? = nil
+    let model = ServiceViewModel()
+    var activeConversation: MSConversation? = nil
+    
+    // MARK: - Controller
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "\(ServicesViewController.self)"
+        title = "Services"
         tableView.dataSource = self
         tableView.sizeToFit()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // Set up for 2 weeks
-        model = Filters(start: DateInRegion(Date(), region: Region.local), duration: 2.weeks)
-            .min(only: .wednesday, .thursday, .friday, .saturday, .sunday, tag: title!)
-            .min(only: (start: 9, end: 12 + 8), tag: title!)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        // User hits "Back" button
         if self.isMovingFromParent {
-            model.remove(withTag: title!)
+            model.unselect()
         }
     }
 
-    // MARK: UITableViewDelegate
+    // MARK: - Actions
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let controller = storyboard!.instantiateViewController(withIdentifier: "ScheduleVC") as! ScheduleViewController
-        
-        controller.model = model
-        controller.selectedService = services[indexPath.row]
-        
-        navigationController?.pushViewController(controller, animated: true)
+        let dest = storyboard!.instantiateViewController(withIdentifier: "CalendarViewController")
+            as! CalendarViewController
+
+        model.select(indexPath.row)
+
+        dest.activeConversation = activeConversation
+        dest.model = CalendarViewModel(from: model)
+
+        navigationController?.pushViewController(dest, animated: true)
     }
     
-    // MARK: UITableViewDataSource
+    // MARK: - Service Cell Appearance
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ServiceCell")! as! ServiceCell
-        cell.update(services[indexPath.row])
+        cell.updateUI(model.services[indexPath.row])
         return cell
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return services.count
+        return model.services.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
