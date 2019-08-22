@@ -3,6 +3,8 @@ import SwiftDate
 
 class DateTimeViewController: UIViewController {
     
+    @IBOutlet weak var contentView: UIStackView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,42 +26,36 @@ class DateTimeViewController: UIViewController {
     
     // FYI: we assume data is sorted
     private func createViews(_ data: [TimePeriod]) {
-        guard data.count > 0 else {
-            return
-        }
-
-        // Defines the root stackview
-        let root = UIStackView(frame: CGRect.zero)
-        root.axis = .horizontal
-        root.alignment = .top
-        root.distribution = .fill
+//        guard data.count > 0 else {
+//            return
+//        }
+        
+        let view = Bundle.main.loadNibNamed("DateCell", owner: nil, options: nil)!.first! as! UIView
 
         // Inserts it
-        view.addSubview(root)
-
-        // Lays out the view
-        let safeArea = view.safeAreaLayoutGuide
-        root.translatesAutoresizingMaskIntoConstraints = false
-        root.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 0).isActive = true
-        root.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor, constant: 0).isActive = true
-
-        // Adds column
-        let columnView = UIStackView(frame: CGRect.zero)
-        columnView.axis = .vertical
-        columnView.alignment = .fill
-        columnView.distribution = .fill
-        // Day header
-        let dayHeader = UINib(nibName: "DateCell", bundle: Bundle.main)
-            .instantiate(withOwner: self, options: nil)
-            .first! as! UIView
-        columnView.addArrangedSubview(dayHeader)
-
-        // Lay it out
-        columnView.translatesAutoresizingMaskIntoConstraints = false
-        columnView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.33).isActive = true
-
-        // Add it
-        root.addArrangedSubview(columnView)
+        contentView.addArrangedSubview(view)
+        
+//        rootView.addArrangedSubview(square)
+//
+//        // Adds column
+//        let columnView = UIStackView(frame: CGRect.zero)
+//        columnView.axis = .vertical
+//        columnView.alignment = .fill
+//        columnView.distribution = .fill
+//        // Day header
+//        let xib = XibView(frame: CGRect.zero)
+//        xib.nibName = "DateCell"
+//        xib.xibSetup()
+//        let view = xib.contentView!
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        columnView.addArrangedSubview(view)
+//
+//        // Lay it out
+//        columnView.translatesAutoresizingMaskIntoConstraints = false
+//        columnView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.33).isActive = true
+//
+//        // Add it
+//        root.addArrangedSubview(columnView)
 
 //        data.forEach { period in
 //            // New column should be created

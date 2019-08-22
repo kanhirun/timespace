@@ -19,7 +19,7 @@ class XibView: UIView {
         contentView?.prepareForInterfaceBuilder()
     }
     
-    private func xibSetup() {
+    func xibSetup() {
         guard let view = loadViewFromNib() else {
             return
         }
