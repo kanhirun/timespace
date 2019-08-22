@@ -27,13 +27,9 @@ class CalendarViewController: UIViewController,
     // MARK: - Actions
     
     @objc func send() {
-        let layout = MSMessageTemplateLayout()
-        layout.image = getSnapshotImage()
-        let session = MSSession()
-        let msg = MSMessage(session: session)
-        msg.layout = layout
+        let calendar = composeCalendarSnapshot()
 
-        activeConversation?.insert(msg) { err in
+        activeConversation?.insert(calendar) { err in
             debugPrint(err as Any)
         }
     }
@@ -115,5 +111,15 @@ class CalendarViewController: UIViewController,
         UIGraphicsEndImageContext()
 
         return snapshotImage
+    }
+    
+    private func composeCalendarSnapshot() -> MSMessage {
+        let layout = MSMessageTemplateLayout()
+        layout.image = getSnapshotImage()
+        let session = MSSession()
+        let msg = MSMessage(session: session)
+        msg.layout = layout
+        
+        return msg
     }
 }
