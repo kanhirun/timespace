@@ -7,21 +7,12 @@ class CalendarViewController: UIViewController,
                               JTAppleCalendarViewDelegate,
                               JTAppleCalendarViewDataSource {
 
-    @IBOutlet weak var calendarView: JTAppleCalendarView!
+    @IBOutlet weak var calendarView: CalendarView!
 
     var model: CalendarViewModel!
     var activeConversation: MSConversation? = nil
     
     // MARK: - Controller
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        calendarView.allowsMultipleSelection = true
-        calendarView.scrollDirection = .horizontal
-        calendarView.scrollingMode   = .stopAtEachCalendarFrame
-        calendarView.showsHorizontalScrollIndicator = false
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -47,6 +38,7 @@ class CalendarViewController: UIViewController,
         }
     }
     
+    // TODO: Subclass JTAppleCalendarView with CalendarView that re-types the objects
     func calendar(_ calendar: JTAppleCalendarView,
                   didSelectDate date: Date,
                   cell: JTAppleCell?,
@@ -80,11 +72,10 @@ class CalendarViewController: UIViewController,
                   at indexPath: IndexPath) -> JTAppleCollectionReusableView {
         
         let header = calendar.dequeueReusableJTAppleSupplementaryView(
-            withReuseIdentifier: "DateHeader", for: indexPath) as! CalendarDateHeader
-        let refDate = range.start
-        
+            withReuseIdentifier: "DateHeader", for: indexPath) as! CalendarHeader
+
         header.sendButton.addTarget(self, action: #selector(send), for: .primaryActionTriggered)
-        header.monthLabel.text = "\(refDate.monthName(.default)) \(refDate.toFormat("YYYY"))"
+        header.updateUI(range)
         
         return header
     }
@@ -99,7 +90,7 @@ class CalendarViewController: UIViewController,
                   cellForItemAt date: Date,
                   cellState: CellState,
                   indexPath: IndexPath) -> JTAppleCell {
-        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "dateCell",for: indexPath) as! CalendarDateCell
+        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "dateCell", for: indexPath) as! CalendarDateCell
         self.calendar(calendar, willDisplay: cell, forItemAt: date, cellState: cellState, indexPath: indexPath)
         return cell
     }

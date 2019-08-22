@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSCalendarsUsageDescription</key>
-	<string>To show your availability to others, we need limited access to your calendar.</string>
-	<key>MSMessagesExtensionStoreIconName</key>
-	<string>VCAL Extension</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -24,10 +20,14 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>10</string>
+	<key>MSMessagesExtensionStoreIconName</key>
+	<string>VCAL Extension</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>To show your availability to others, we need limited access to your calendar.</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionMainStoryboard</key>
-		<string>MainInterface</string>
+		<string>iMessage</string>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.message-payload-provider</string>
 	</dict>
