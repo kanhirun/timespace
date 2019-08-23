@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		E0408F4F230E0BD700FE40B1 /* ServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F4E230E0BD700FE40B1 /* ServiceCell.swift */; };
 		E0408F60230E15DB00FE40B1 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F5F230E15DB00FE40B1 /* CalendarViewModel.swift */; };
-		E0408F62230E2BD900FE40B1 /* DateTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F61230E2BD900FE40B1 /* DateTimeViewController.swift */; };
+		E0408F62230E2BD900FE40B1 /* TimeSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F61230E2BD900FE40B1 /* TimeSheetViewController.swift */; };
 		E0408F64230E2C5700FE40B1 /* DateTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F63230E2C5700FE40B1 /* DateTimeViewModel.swift */; };
 		E0408F66230E2C6700FE40B1 /* ServiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F65230E2C6700FE40B1 /* ServiceViewModel.swift */; };
 		E0408F68230E2E6300FE40B1 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F67230E2E6300FE40B1 /* CalendarView.swift */; };
@@ -35,7 +35,7 @@
 		E09FFB7B230EE715001EF1A5 /* XibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09FFB7A230EE715001EF1A5 /* XibView.swift */; };
 		E09FFB7F230F4D6F001EF1A5 /* UIView+loadNib.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09FFB7E230F4D6F001EF1A5 /* UIView+loadNib.swift */; };
 		E09FFB90230F4DB5001EF1A5 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09FFB8F230F4DB5001EF1A5 /* DateCell.swift */; };
-		E09FFB92230F639A001EF1A5 /* Timesheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09FFB91230F639A001EF1A5 /* Timesheet.swift */; };
+		E09FFB92230F639A001EF1A5 /* TimeSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09FFB91230F639A001EF1A5 /* TimeSheetView.swift */; };
 		E0F5B904230639840043605C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F5B903230639840043605C /* AppDelegate.swift */; };
 		E0F5B906230639840043605C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F5B905230639840043605C /* ViewController.swift */; };
 		E0F5B909230639840043605C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0F5B907230639840043605C /* Main.storyboard */; };
@@ -146,7 +146,7 @@
 /* Begin PBXFileReference section */
 		E0408F4E230E0BD700FE40B1 /* ServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCell.swift; sourceTree = "<group>"; };
 		E0408F5F230E15DB00FE40B1 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
-		E0408F61230E2BD900FE40B1 /* DateTimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeViewController.swift; sourceTree = "<group>"; };
+		E0408F61230E2BD900FE40B1 /* TimeSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSheetViewController.swift; sourceTree = "<group>"; };
 		E0408F63230E2C5700FE40B1 /* DateTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeViewModel.swift; sourceTree = "<group>"; };
 		E0408F65230E2C6700FE40B1 /* ServiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceViewModel.swift; sourceTree = "<group>"; };
 		E0408F67230E2E6300FE40B1 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 		E09FFB7A230EE715001EF1A5 /* XibView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibView.swift; sourceTree = "<group>"; };
 		E09FFB7E230F4D6F001EF1A5 /* UIView+loadNib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+loadNib.swift"; sourceTree = "<group>"; };
 		E09FFB8F230F4DB5001EF1A5 /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
-		E09FFB91230F639A001EF1A5 /* Timesheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timesheet.swift; sourceTree = "<group>"; };
+		E09FFB91230F639A001EF1A5 /* TimeSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSheetView.swift; sourceTree = "<group>"; };
 		E0F5B900230639840043605C /* smartcal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smartcal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F5B903230639840043605C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0F5B905230639840043605C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -211,18 +211,25 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		E09FFB62230EDD10001EF1A5 /* Components */ = {
+		E09FFB62230EDD10001EF1A5 /* TimeSheetViewController+UI */ = {
 			isa = PBXGroup;
 			children = (
-				E09FFB91230F639A001EF1A5 /* Timesheet.swift */,
-				E09FFB7E230F4D6F001EF1A5 /* UIView+loadNib.swift */,
-				E09FFB7A230EE715001EF1A5 /* XibView.swift */,
+				E09FFB91230F639A001EF1A5 /* TimeSheetView.swift */,
 				E09FFB8F230F4DB5001EF1A5 /* DateCell.swift */,
 				E09FFB76230EDFFE001EF1A5 /* AppointmentCell.swift */,
 				E09FFB72230EDD8A001EF1A5 /* DateCell.xib */,
 				E09FFB74230EDF63001EF1A5 /* AppointmentCell.xib */,
 			);
-			path = Components;
+			path = "TimeSheetViewController+UI";
+			sourceTree = "<group>";
+		};
+		E09FFB93230F646B001EF1A5 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E09FFB7E230F4D6F001EF1A5 /* UIView+loadNib.swift */,
+				E09FFB7A230EE715001EF1A5 /* XibView.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		E0F5B8F7230639840043605C = {
@@ -278,13 +285,14 @@
 				E0408F67230E2E6300FE40B1 /* CalendarView.swift */,
 				E06B5A92230DA06600DF0CA5 /* CalendarHeader.swift */,
 				E06B5A90230D90BF00DF0CA5 /* CalendarDateCell.swift */,
-				E0408F61230E2BD900FE40B1 /* DateTimeViewController.swift */,
-				E09FFB62230EDD10001EF1A5 /* Components */,
+				E0408F61230E2BD900FE40B1 /* TimeSheetViewController.swift */,
+				E09FFB62230EDD10001EF1A5 /* TimeSheetViewController+UI */,
 				E06A5EA7230647960059524E /* ScheduleViewController.swift */,
 				E06A5EA92306481E0059524E /* AvailabilityViewController.swift */,
 				E06A5EB92306F0C30059524E /* AvailabilityCell.swift */,
 				E06B5A4E230B8F4F00DF0CA5 /* ConnectAlertViewController.swift */,
 				E06B5A65230CA7B900DF0CA5 /* Models */,
+				E09FFB93230F646B001EF1A5 /* Helpers */,
 				E0F5B9202306399C0043605C /* iMessage.storyboard */,
 				E0F5B9252306399D0043605C /* Info.plist */,
 				E0F5B9232306399D0043605C /* Assets.xcassets */,
@@ -560,10 +568,10 @@
 				E06A5EA4230642BD0059524E /* ServicesViewController.swift in Sources */,
 				E06B5A91230D90BF00DF0CA5 /* CalendarDateCell.swift in Sources */,
 				E0408F4F230E0BD700FE40B1 /* ServiceCell.swift in Sources */,
-				E09FFB92230F639A001EF1A5 /* Timesheet.swift in Sources */,
+				E09FFB92230F639A001EF1A5 /* TimeSheetView.swift in Sources */,
 				E09FFB90230F4DB5001EF1A5 /* DateCell.swift in Sources */,
 				E0F5B91F2306399C0043605C /* MessagesViewController.swift in Sources */,
-				E0408F62230E2BD900FE40B1 /* DateTimeViewController.swift in Sources */,
+				E0408F62230E2BD900FE40B1 /* TimeSheetViewController.swift in Sources */,
 				E0408F64230E2C5700FE40B1 /* DateTimeViewModel.swift in Sources */,
 				E06A5EA8230647960059524E /* ScheduleViewController.swift in Sources */,
 				E09FFB7F230F4D6F001EF1A5 /* UIView+loadNib.swift in Sources */,

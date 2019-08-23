@@ -1,31 +1,50 @@
 import UIKit
 import SwiftDate
 
-class Timesheet: UIStackView {
+class TimeSheetView: UIStackView {
     
     private let periods: [TimePeriod]
     
-    init(periods: [TimePeriod]) {
+    init(periods: [TimePeriod], frame: CGRect = CGRect.zero) {
         self.periods = periods
         
-        super.init(frame: CGRect.zero)
-        
+        super.init(frame: frame)
+
         axis = .horizontal
         alignment = .top
         distribution = .fill
         translatesAutoresizingMaskIntoConstraints = false
+
+        // Adds a white background to the stack view
+        let subView = UIView(frame: bounds)
+        subView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        subView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        insertSubview(subView, at: 0)
     }
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        createViews(view: superview!)
+    func asImage() -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, isOpaque, 0.0)
+
+        drawHierarchy(in: bounds, afterScreenUpdates: true)
+
+        let image = UIGraphicsGetImageFromCurrentImageContext()!
+
+        UIGraphicsEndImageContext()
+
+        return image.imageScaledToSize(size: CGSize(width: 200, height: 200))
     }
     
-    func createViews(view: UIView) {
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+
+        createViews()
+    }
+    
+    func createViews() {
         guard periods.count > 0 else {
             return
         }
@@ -40,10 +59,12 @@ class Timesheet: UIStackView {
                 // Create new column
                 currColumn = createColumnView(period)
                 addTimeCell(to: currColumn!, ref: period)
-                self.addArrangedSubview(currColumn!)
-                
+                addArrangedSubview(currColumn!)
+
                 // Lay it out
-                currColumn!.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
+                if let superview = superview {
+                    currColumn!.widthAnchor.constraint(equalTo: superview.widthAnchor, multiplier: 0.33).isActive = true
+                }
                 
                 currDay = period.start?.day
             // Current column should be appended

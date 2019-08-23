@@ -103,16 +103,6 @@ class CalendarViewController: UIViewController,
         }
     }
     
-    // TODO: Should be an attribute of the next controller
-    private func getSnapshotImage() -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(calendarView.bounds.size, calendarView.isOpaque, 0.0)
-        calendarView.drawHierarchy(in: calendarView.bounds, afterScreenUpdates: false)
-        let snapshotImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-
-        return snapshotImage
-    }
-    
     private func composeCalendarSnapshot() -> MSMessage {
         let layout = MSMessageTemplateLayout()
         layout.image = getSnapshotImage()
@@ -121,5 +111,45 @@ class CalendarViewController: UIViewController,
         msg.layout = layout
         
         return msg
+    }
+    
+    private func getSnapshotImage() -> UIImage {
+        let data: [TimePeriod] = [
+            TimePeriod(start: DateInRegion("2019-08-22T09:00:00Z")!, duration: 1.hours),
+            TimePeriod(start: DateInRegion("2019-08-22T16:55:55Z")!, duration: 1.hours),
+            TimePeriod(start: DateInRegion("2019-08-22T20:30:55Z")!, duration: 1.hours),
+            TimePeriod(start: DateInRegion("2019-08-23T05:00:55Z")!, duration: 1.hours),
+            TimePeriod(start: DateInRegion("2019-08-24T05:00:55Z")!, duration: 1.hours),
+        ]
+        return TimeSheetView(periods: data, frame: CGRect(x: 0, y: 0, width: 150, height: 150)).asImage()
+    }
+}
+
+
+extension UIImage {
+    func imageScaledToSize(size: CGSize) -> UIImage {
+        //create drawing context
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+
+        //draw
+        self.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+
+        //capture resultant image
+        let image = UIGraphicsGetImageFromCurrentImageContext()!
+        
+        UIGraphicsEndImageContext();
+        
+        return image
+    }
+    
+    func imageScaledToFitSize(size: CGSize) -> UIImage {
+        //calculate rect
+        let aspect = self.size.width / self.size.height
+        
+        if (size.width / aspect <= size.height) {
+            return self.imageScaledToSize(size: CGSize(width: size.width, height: size.width / aspect))
+        } else {
+            return self.imageScaledToSize(size: CGSize(width: size.height * aspect, height: size.height))
+        }
     }
 }
