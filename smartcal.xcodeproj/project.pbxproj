@@ -35,6 +35,7 @@
 		E09FFB7B230EE715001EF1A5 /* XibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09FFB7A230EE715001EF1A5 /* XibView.swift */; };
 		E09FFB7F230F4D6F001EF1A5 /* UIView+loadNib.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09FFB7E230F4D6F001EF1A5 /* UIView+loadNib.swift */; };
 		E09FFB90230F4DB5001EF1A5 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09FFB8F230F4DB5001EF1A5 /* DateCell.swift */; };
+		E09FFB92230F639A001EF1A5 /* Timesheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09FFB91230F639A001EF1A5 /* Timesheet.swift */; };
 		E0F5B904230639840043605C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F5B903230639840043605C /* AppDelegate.swift */; };
 		E0F5B906230639840043605C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F5B905230639840043605C /* ViewController.swift */; };
 		E0F5B909230639840043605C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0F5B907230639840043605C /* Main.storyboard */; };
@@ -165,6 +166,7 @@
 		E09FFB7A230EE715001EF1A5 /* XibView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibView.swift; sourceTree = "<group>"; };
 		E09FFB7E230F4D6F001EF1A5 /* UIView+loadNib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+loadNib.swift"; sourceTree = "<group>"; };
 		E09FFB8F230F4DB5001EF1A5 /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
+		E09FFB91230F639A001EF1A5 /* Timesheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timesheet.swift; sourceTree = "<group>"; };
 		E0F5B900230639840043605C /* smartcal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smartcal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F5B903230639840043605C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0F5B905230639840043605C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 		E09FFB62230EDD10001EF1A5 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E09FFB91230F639A001EF1A5 /* Timesheet.swift */,
 				E09FFB7E230F4D6F001EF1A5 /* UIView+loadNib.swift */,
 				E09FFB7A230EE715001EF1A5 /* XibView.swift */,
 				E09FFB8F230F4DB5001EF1A5 /* DateCell.swift */,
@@ -557,6 +560,7 @@
 				E06A5EA4230642BD0059524E /* ServicesViewController.swift in Sources */,
 				E06B5A91230D90BF00DF0CA5 /* CalendarDateCell.swift in Sources */,
 				E0408F4F230E0BD700FE40B1 /* ServiceCell.swift in Sources */,
+				E09FFB92230F639A001EF1A5 /* Timesheet.swift in Sources */,
 				E09FFB90230F4DB5001EF1A5 /* DateCell.swift in Sources */,
 				E0F5B91F2306399C0043605C /* MessagesViewController.swift in Sources */,
 				E0408F62230E2BD900FE40B1 /* DateTimeViewController.swift in Sources */,
