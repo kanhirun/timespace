@@ -1,11 +1,11 @@
-import Engine
-import SwiftDate
 import Foundation
+import SwiftDate
 
-class ServiceViewModel {
+public class ServiceViewModel {
     
     var selectedService: Service? = nil
-    let services = [
+
+    public let services = [
         Service(name: "Men's Haircut", duration: 45.minutes),
         Service(name: "Chemical: Color", duration: 2.hours),
         Service(name: "Blowdry", duration: 1.hours + 30.minutes),
@@ -16,13 +16,13 @@ class ServiceViewModel {
     
     private let tag = "business-hours"
     
-    init() {
+    public init() {
         filters = Filters(start: DateInRegion(Date(), region: Region.local), duration: 2.weeks)
     }
     
     // MARK: - Actions
     
-    func select(_ pos: Int) {
+    public func select(_ pos: Int) {
         selectedService = services[pos]
         
         // TODO: This will likely be part of the Service, at some point.
@@ -30,7 +30,7 @@ class ServiceViewModel {
             .min(only: (start: 9, end: 12 + 8), tag: tag)
     }
     
-    func unselect() {
+    public func unselect() {
         filters.remove(withTag: tag)
     }
 }

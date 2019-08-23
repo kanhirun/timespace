@@ -8,10 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E0408F4F230E0BD700FE40B1 /* ServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F4E230E0BD700FE40B1 /* ServiceCell.swift */; };
-		E0408F60230E15DB00FE40B1 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F5F230E15DB00FE40B1 /* CalendarViewModel.swift */; };
 		E0408F62230E2BD900FE40B1 /* TimeSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F61230E2BD900FE40B1 /* TimeSheetViewController.swift */; };
 		E0408F64230E2C5700FE40B1 /* DateTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F63230E2C5700FE40B1 /* DateTimeViewModel.swift */; };
-		E0408F66230E2C6700FE40B1 /* ServiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F65230E2C6700FE40B1 /* ServiceViewModel.swift */; };
 		E0408F68230E2E6300FE40B1 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F67230E2E6300FE40B1 /* CalendarView.swift */; };
 		E06A5EA4230642BD0059524E /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06A5EA3230642BD0059524E /* ServicesViewController.swift */; };
 		E06A5EA8230647960059524E /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06A5EA7230647960059524E /* ScheduleViewController.swift */; };
@@ -25,7 +23,6 @@
 		E06B5A4B230B43C000DF0CA5 /* Engine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0F5B941230639E70043605C /* Engine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E06B5A4C230B43C300DF0CA5 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0F5B945230639E70043605C /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E06B5A4F230B8F4F00DF0CA5 /* ConnectAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A4E230B8F4F00DF0CA5 /* ConnectAlertViewController.swift */; };
-		E06B5A76230CA7C600DF0CA5 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A75230CA7C600DF0CA5 /* Service.swift */; };
 		E06B5A8C230D8D7A00DF0CA5 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A8B230D8D7A00DF0CA5 /* CalendarViewController.swift */; };
 		E06B5A91230D90BF00DF0CA5 /* CalendarDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A90230D90BF00DF0CA5 /* CalendarDateCell.swift */; };
 		E06B5A93230DA06600DF0CA5 /* CalendarHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A92230DA06600DF0CA5 /* CalendarHeader.swift */; };
@@ -145,17 +142,14 @@
 
 /* Begin PBXFileReference section */
 		E0408F4E230E0BD700FE40B1 /* ServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCell.swift; sourceTree = "<group>"; };
-		E0408F5F230E15DB00FE40B1 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		E0408F61230E2BD900FE40B1 /* TimeSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSheetViewController.swift; sourceTree = "<group>"; };
 		E0408F63230E2C5700FE40B1 /* DateTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeViewModel.swift; sourceTree = "<group>"; };
-		E0408F65230E2C6700FE40B1 /* ServiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceViewModel.swift; sourceTree = "<group>"; };
 		E0408F67230E2E6300FE40B1 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		E06A5EA3230642BD0059524E /* ServicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		E06A5EA7230647960059524E /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		E06A5EA92306481E0059524E /* AvailabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityViewController.swift; sourceTree = "<group>"; };
 		E06A5EB92306F0C30059524E /* AvailabilityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityCell.swift; sourceTree = "<group>"; };
 		E06B5A4E230B8F4F00DF0CA5 /* ConnectAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectAlertViewController.swift; sourceTree = "<group>"; };
-		E06B5A75230CA7C600DF0CA5 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		E06B5A89230D8BEA00DF0CA5 /* JTAppleCalendar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JTAppleCalendar.framework; path = Carthage/Build/iOS/JTAppleCalendar.framework; sourceTree = "<group>"; };
 		E06B5A8B230D8D7A00DF0CA5 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		E06B5A90230D90BF00DF0CA5 /* CalendarDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateCell.swift; sourceTree = "<group>"; };
@@ -200,17 +194,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E06B5A65230CA7B900DF0CA5 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				E0408F65230E2C6700FE40B1 /* ServiceViewModel.swift */,
-				E0408F5F230E15DB00FE40B1 /* CalendarViewModel.swift */,
-				E0408F63230E2C5700FE40B1 /* DateTimeViewModel.swift */,
-				E06B5A75230CA7C600DF0CA5 /* Service.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		E09FFB62230EDD10001EF1A5 /* TimeSheetViewController+UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,12 +269,12 @@
 				E06B5A92230DA06600DF0CA5 /* CalendarHeader.swift */,
 				E06B5A90230D90BF00DF0CA5 /* CalendarDateCell.swift */,
 				E0408F61230E2BD900FE40B1 /* TimeSheetViewController.swift */,
-				E09FFB62230EDD10001EF1A5 /* TimeSheetViewController+UI */,
+				E0408F63230E2C5700FE40B1 /* DateTimeViewModel.swift */,
 				E06A5EA7230647960059524E /* ScheduleViewController.swift */,
 				E06A5EA92306481E0059524E /* AvailabilityViewController.swift */,
 				E06A5EB92306F0C30059524E /* AvailabilityCell.swift */,
 				E06B5A4E230B8F4F00DF0CA5 /* ConnectAlertViewController.swift */,
-				E06B5A65230CA7B900DF0CA5 /* Models */,
+				E09FFB62230EDD10001EF1A5 /* TimeSheetViewController+UI */,
 				E09FFB93230F646B001EF1A5 /* Helpers */,
 				E0F5B9202306399C0043605C /* iMessage.storyboard */,
 				E0F5B9252306399D0043605C /* Info.plist */,
@@ -562,8 +545,6 @@
 				E06B5A8C230D8D7A00DF0CA5 /* CalendarViewController.swift in Sources */,
 				E0408F68230E2E6300FE40B1 /* CalendarView.swift in Sources */,
 				E06A5EBA2306F0C30059524E /* AvailabilityCell.swift in Sources */,
-				E06B5A76230CA7C600DF0CA5 /* Service.swift in Sources */,
-				E0408F66230E2C6700FE40B1 /* ServiceViewModel.swift in Sources */,
 				E09FFB77230EDFFE001EF1A5 /* AppointmentCell.swift in Sources */,
 				E06A5EA4230642BD0059524E /* ServicesViewController.swift in Sources */,
 				E06B5A91230D90BF00DF0CA5 /* CalendarDateCell.swift in Sources */,
@@ -576,7 +557,6 @@
 				E06A5EA8230647960059524E /* ScheduleViewController.swift in Sources */,
 				E09FFB7F230F4D6F001EF1A5 /* UIView+loadNib.swift in Sources */,
 				E06B5A4F230B8F4F00DF0CA5 /* ConnectAlertViewController.swift in Sources */,
-				E0408F60230E15DB00FE40B1 /* CalendarViewModel.swift in Sources */,
 				E06A5EAA2306481E0059524E /* AvailabilityViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

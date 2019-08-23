@@ -2,6 +2,7 @@ import JTAppleCalendar
 import UIKit
 import SwiftDate
 import Messages
+import Engine
 
 class CalendarViewController: UIViewController,
                               JTAppleCalendarViewDelegate,
@@ -28,7 +29,7 @@ class CalendarViewController: UIViewController,
     // MARK: - Actions
     
     @objc func send() {
-        model!.apply()
+        model!.applySelections()
         let results = model.filters.apply(region: Region.local)
         let messageImage = composeCalendarSnapshot(data: results)
 
@@ -114,7 +115,7 @@ class CalendarViewController: UIViewController,
         // 300 x 400 for two
         // 600 x 540 for three
         let layout = MSMessageTemplateLayout()
-        let sheet = TimeSheetView(periods: data, frame: CGRect(x: 0, y: 0, width: 600, height: 540))
+        let sheet = TimeSheetView(periods: data, frame: CGRect(x: 0, y: 0, width: 300, height: 400))
         layout.image = sheet.asImage()
 
         let session = activeConversation?.selectedMessage?.session ?? MSSession()
