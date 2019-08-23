@@ -5,18 +5,18 @@ import Foundation
 import SwiftDate
 @testable import Engine
 
-final class FiltersTests: QuickSpec {
+final class TimePeriodFilterTests: QuickSpec {
     override func spec() {
         
         describe("init()") {
             it("creates a base from start to end") {
-                _ = Filters(start: DateInRegion(), end: DateInRegion() + 2.weeks)
+                _ = TimePeriodFilter(start: DateInRegion(), end: DateInRegion() + 2.weeks)
             }
         }
         
         describe(".add()") {
             it("pushes new filters in") {
-                let subject = Filters(
+                let subject = TimePeriodFilter(
                     start: DateInRegion("2019-08-12T00:00:00Z")!,
                     end: DateInRegion("2019-08-16T00:00:00Z")!
                 )
@@ -45,7 +45,7 @@ final class FiltersTests: QuickSpec {
         
         describe("inverse(_:)") {
             it("does the invert for empty") {
-                let subject = Filters(
+                let subject = TimePeriodFilter(
                     start: Date(timeIntervalSince1970: 0),
                     end: Date(timeIntervalSince1970: 10)
                 )
@@ -56,7 +56,7 @@ final class FiltersTests: QuickSpec {
             }
             
             it("does the invert for start touching") {
-                let subject = Filters(
+                let subject = TimePeriodFilter(
                     start: Date(timeIntervalSince1970: 0),
                     end: Date(timeIntervalSince1970: 10)
                 )
@@ -68,7 +68,7 @@ final class FiltersTests: QuickSpec {
             }
             
             it("does the invert for end touching") {
-                let subject = Filters(
+                let subject = TimePeriodFilter(
                     start: Date(timeIntervalSince1970: 0),
                     end: Date(timeIntervalSince1970: 10)
                 )
@@ -79,7 +79,7 @@ final class FiltersTests: QuickSpec {
             }
             
             it("does the invert for enclosing") {
-                let subject = Filters(
+                let subject = TimePeriodFilter(
                     start: Date(timeIntervalSince1970: 0),
                     end: Date(timeIntervalSince1970: 10)
                 )
@@ -91,7 +91,7 @@ final class FiltersTests: QuickSpec {
             }
             
             it("does the invert for complex") {
-                let subject = Filters(
+                let subject = TimePeriodFilter(
                     start: Date(timeIntervalSince1970: 0),
                     end: Date(timeIntervalSince1970: 10)
                 )
@@ -104,7 +104,7 @@ final class FiltersTests: QuickSpec {
         
         describe(".remove(at:)") {
             it("deletes a filter at some position") {
-                let subject = Filters(
+                let subject = TimePeriodFilter(
                     start: DateInRegion("2019-08-12T00:00:00Z")!,
                     end: DateInRegion("2019-08-16T00:00:00Z")!
                 )

@@ -4,19 +4,27 @@ import Foundation
 public class CalendarViewModel {
     
     public var selectedPeriods =  [TimePeriod]()
-    
-    public var filters: Filters
-    
     public let start: DateInRegion
     public let end: DateInRegion
+    
+    private var filters: TimePeriodFilter
+    private let tag = "CalendarViewModel"
+    private let service: Service
 
     public init(from model: ServiceViewModel) {
         filters = model.filters
-        start = model.filters!.start
-        end = model.filters!.end
+        service = model.selectedService!
+        start = model.filters.start
+        end = model.filters.end
     }
     
     // MARK: - Actions
+    
+    public func getResultsToSend() -> [TimePeriod] {
+        return filters.min(only: selectedPeriods, tag: tag)
+                      .quantize(unit: service.duration, tag: tag)!
+                      .apply(region: Region.local)
+    }
     
     public func select(_ aDate: Date) {
         let aDateInRegion = aDate.convertTo(region: Region.local).dateAtStartOf(.day)
@@ -30,9 +38,5 @@ public class CalendarViewModel {
         selectedPeriods.removeAll { period -> Bool in
             period.start?.day == aDate.day
         }
-    }
-    
-    public func applySelections() {
-        _ = filters.min(only: selectedPeriods, tag: "CalendarViewModel")
     }
 }

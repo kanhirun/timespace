@@ -12,12 +12,12 @@ public class ServiceViewModel {
         Service(name: "Updo", duration: 1.hours),
     ]
     
-    var filters: Filters! = nil
+    let filters: TimePeriodFilter
     
     private let tag = "business-hours"
     
     public init() {
-        filters = Filters(start: DateInRegion(Date(), region: Region.local), duration: 2.weeks)
+        filters = TimePeriodFilter(start: DateInRegion(Date(), region: Region.local), duration: 2.weeks)
     }
     
     // MARK: - Actions

@@ -15,7 +15,7 @@ final class CalendarDataSourceTests: QuickSpec {
                     let connected = GoogleCalendarV3(calid: "some-email@gmail.com", sessionManager: postmanSessionManager)
                     let region = Region(calendar: Calendars.gregorian, zone: Zones.americaNewYork, locale: Locales.english)
                     
-                    let subject = Filters(start: DateInRegion(Date("2019-07-15T00:00:00-04:00")!, region: region),
+                    let subject = TimePeriodFilter(start: DateInRegion(Date("2019-07-15T00:00:00-04:00")!, region: region),
                                           end: DateInRegion(Date("2019-07-22T00:00:00-04:00")!, region: region))
                     
                     waitUntil(timeout: 2) { done in

@@ -33,18 +33,18 @@ func quantized(_ periods: [TimePeriod], unit: DateComponents) -> [TimePeriod] {
     return res
 }
 
-public final class Filters {
-    
-    typealias Filter = (tag: String, contents: [TimePeriod])
-    
-    /// Tracks the operations applied
-    private var stack = [Filter]()
-    
-    /// Represents the absolute lower and upper bounds of time periods
-    private let window: [TimePeriod]
+public final class TimePeriodFilter {
     
     public let start: DateInRegion
     public let end: DateInRegion
+    
+    typealias Filter = (tag: String, contents: [TimePeriod])
+
+    /// Tracks the operations applied
+    private var stack = [Filter]()
+
+    /// Represents the absolute lower and upper bounds of all periods
+    private let window: [TimePeriod]
     
     // MARK: - Create
     
@@ -76,32 +76,33 @@ public final class Filters {
     // MARK: - Filter
     
     @discardableResult
-    public func min(only hours: (start: Int, end: Int)..., tag: String) -> Filters {
+    public func min(only hours: (start: Int, end: Int)..., tag: String) -> TimePeriodFilter {
         let filtered = window.only(fromHours: hours)
         stack.append( (tag: tag, contents: filtered) )
         return self
     }
     
     @discardableResult
-    public func min(only weekdays: WeekDay..., tag: String) -> Filters {
+    public func min(only weekdays: WeekDay..., tag: String) -> TimePeriodFilter {
         let filtered = window.only(weekdays: weekdays)
         stack.append( (tag: tag, contents: filtered) )
         return self
     }
     
     @discardableResult
-    public func min(only periods: TimePeriod..., tag: String) -> Filters {
+    public func min(only periods: TimePeriod..., tag: String) -> TimePeriodFilter {
         return self.min(only: periods, tag: tag)
     }
     
-    public func min(only periods: [TimePeriod], tag: String) -> Filters {
+    @discardableResult
+    public func min(only periods: [TimePeriod], tag: String) -> TimePeriodFilter {
         let filtered = window.only(periods: periods)
         stack.append( (tag: tag, contents: filtered) )
         return self
     }
     
     @discardableResult
-    public func subtract(with periods: [TimePeriod], tag: String) -> Filters {
+    public func subtract(with periods: [TimePeriod], tag: String) -> TimePeriodFilter {
         let input = inversed(periods)
         let filtered = window.only(periods: input)
 
@@ -111,7 +112,7 @@ public final class Filters {
     }
     
     @discardableResult
-    public func subtract(with periods: TimePeriod..., tag: String) -> Filters {
+    public func subtract(with periods: TimePeriod..., tag: String) -> TimePeriodFilter {
         return subtract(with: periods, tag: tag)
     }
     
@@ -136,7 +137,7 @@ public final class Filters {
     
     /// MARK: - Transform
     
-    public func quantize(unit: DateComponents, tag: String) -> Filters? {
+    public func quantize(unit: DateComponents, tag: String) -> TimePeriodFilter? {
         let results = quantized(apply(region: .UTC), unit: unit)
 
         stack.append( (tag: tag, contents: results) )

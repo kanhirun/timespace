@@ -29,12 +29,14 @@ class CalendarViewController: UIViewController,
     // MARK: - Actions
     
     @objc func send() {
-        model!.applySelections()
-        let results = model.filters.apply(region: Region.local)
+        let results = model.getResultsToSend()
         let messageImage = composeCalendarSnapshot(data: results)
 
         activeConversation?.insert(messageImage) { err in
-            debugPrint(err as Any)
+            if let err = err {
+                debugPrint(err)
+                return
+            }
         }
     }
     

@@ -51,6 +51,7 @@ class MessagesViewController: MSMessagesAppViewController {
     
     override func didStartSending(_ message: MSMessage, conversation: MSConversation) {
         // Called when the user taps the send button.
+        dismiss()
     }
     
     override func didCancelSending(_ message: MSMessage, conversation: MSConversation) {
