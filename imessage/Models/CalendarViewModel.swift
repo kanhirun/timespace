@@ -4,16 +4,17 @@ import Engine
 
 class CalendarViewModel {
     
-    private var selectedPeriods =  [TimePeriod]()
+    var selectedPeriods =  [TimePeriod]()
     
-    private var filters: Filters
+    var filters: Filters
     
-    // TODO: Should derive from filters.
-    let startDate = Date("2019-08-19T00:00:00Z")!
-    let endDate   = Date("2019-08-25T00:00:00Z")!
+    let start: DateInRegion
+    let end: DateInRegion
 
     init(from model: ServiceViewModel) {
         filters = model.filters
+        start = model.filters!.start
+        end = model.filters!.end
     }
     
     // MARK: - Actions
@@ -30,5 +31,9 @@ class CalendarViewModel {
         selectedPeriods.removeAll { period -> Bool in
             period.start?.day == aDate.day
         }
+    }
+    
+    func apply() {
+        filters.min(only: selectedPeriods, tag: "CalendarViewModel")
     }
 }

@@ -13,15 +13,20 @@ class CalendarDateCell: JTAppleCell {
     
     func updateUI(_ cellState: CellState) {
         dateLabel.text = cellState.text
-
-        backgroundColor = cellState.date.isToday ? .lightGray : .white
-
+        
         if cellState.isSelected {
             selectedView.isHidden = false
             dateLabel.textColor = .white
         } else {
             selectedView.isHidden = true
-            dateLabel.textColor = .black
+
+            if cellState.date.isInPast && !cellState.date.isToday {
+                isUserInteractionEnabled = false
+                dateLabel.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            } else {
+                isUserInteractionEnabled = true
+                dateLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            }
         }
     }
 }

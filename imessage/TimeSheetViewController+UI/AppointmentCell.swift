@@ -10,28 +10,13 @@ class AppointmentCell: UIView {
     }
 }
 
-@IBDesignable
+
 class TimeButton: UIButton {
-
-    @IBInspectable
-    var cornerRadius: CGFloat = 0 {
-        didSet {
-            layer.cornerRadius  = cornerRadius
-            layer.masksToBounds = cornerRadius > 0
-        }
-    }
-
-    @IBInspectable
-    var borderWidth: CGFloat = 0 {
-        didSet {
-            layer.borderWidth = borderWidth
-        }
-    }
-
-    @IBInspectable
-    var borderColor: UIColor? {
-        didSet {
-            layer.borderColor = self.titleLabel?.textColor.cgColor
-        }
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        layer.cornerRadius = 10
+        layer.borderWidth = 1
+        layer.borderColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
     }
 }

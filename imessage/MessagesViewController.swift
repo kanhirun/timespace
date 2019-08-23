@@ -16,8 +16,8 @@ class MessagesViewController: MSMessagesAppViewController {
         super.viewWillAppear(animated)
 
         let nav: UINavigationController = {
-            let rootVC = self.storyboard!.instantiateViewController(withIdentifier: "TimeSheetViewController") as! TimeSheetViewController
-//            rootVC.activeConversation = activeConversation
+            let rootVC = self.storyboard!.instantiateViewController(withIdentifier: "ServicesViewController") as! ServicesViewController
+            rootVC.activeConversation = activeConversation
             return UINavigationController(rootViewController: rootVC)
         }()
 

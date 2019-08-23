@@ -43,6 +43,9 @@ public final class Filters {
     /// Represents the absolute lower and upper bounds of time periods
     private let window: [TimePeriod]
     
+    public let start: DateInRegion
+    public let end: DateInRegion
+    
     // MARK: - Create
     
     public convenience init(start: DateInRegion, duration: DateComponents) {
@@ -54,6 +57,8 @@ public final class Filters {
     }
     
     public init(start: DateInRegion, end: DateInRegion) {
+        self.start = start
+        self.end = end
         self.window = [TimePeriod(start: start, end: end)]
         let copy  = [TimePeriod(start: start, end: end)]
 
@@ -86,6 +91,10 @@ public final class Filters {
     
     @discardableResult
     public func min(only periods: TimePeriod..., tag: String) -> Filters {
+        return self.min(only: periods, tag: tag)
+    }
+    
+    public func min(only periods: [TimePeriod], tag: String) -> Filters {
         let filtered = window.only(periods: periods)
         stack.append( (tag: tag, contents: filtered) )
         return self

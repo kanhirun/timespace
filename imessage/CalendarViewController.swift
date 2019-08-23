@@ -10,6 +10,7 @@ class CalendarViewController: UIViewController,
     @IBOutlet weak var calendarView: CalendarView!
 
     var model: CalendarViewModel!
+
     var activeConversation: MSConversation? = nil
     
     // MARK: - Controller
@@ -27,9 +28,11 @@ class CalendarViewController: UIViewController,
     // MARK: - Actions
     
     @objc func send() {
-        let calendar = composeCalendarSnapshot()
+        model!.apply()
+        let results = model.filters.apply(region: Region.local)
+        let messageImage = composeCalendarSnapshot(data: results)
 
-        activeConversation?.insert(calendar) { err in
+        activeConversation?.insert(messageImage) { err in
             debugPrint(err as Any)
         }
     }
@@ -40,12 +43,15 @@ class CalendarViewController: UIViewController,
                   cell: JTAppleCell?,
                   cellState: CellState) {
         updateUI(cell, with: cellState)
+        
         model.select(date)
+        print(model.selectedPeriods)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         updateUI(cell, with: cellState)
         model.unselect(date)
+        print(model.selectedPeriods)
     }
     
     // MARK: - Calendar Appearance
@@ -53,8 +59,8 @@ class CalendarViewController: UIViewController,
     // Adjusts calendar view
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
         return ConfigurationParameters(
-            startDate: model.startDate,
-            endDate:  model.endDate,
+            startDate: model!.start.date,
+            endDate:  model!.end.date,
             numberOfRows: 2,
             generateOutDates: .tillEndOfRow,
             firstDayOfWeek: .monday,
@@ -103,25 +109,19 @@ class CalendarViewController: UIViewController,
         }
     }
     
-    private func composeCalendarSnapshot() -> MSMessage {
+    private func composeCalendarSnapshot(data: [TimePeriod]) -> MSMessage {
+        // 200 x 500 for one
+        // 300 x 400 for two
+        // 600 x 540 for three
         let layout = MSMessageTemplateLayout()
-        layout.image = getSnapshotImage()
-        let session = MSSession()
+        let sheet = TimeSheetView(periods: data, frame: CGRect(x: 0, y: 0, width: 600, height: 540))
+        layout.image = sheet.asImage()
+
+        let session = activeConversation?.selectedMessage?.session ?? MSSession()
         let msg = MSMessage(session: session)
         msg.layout = layout
-        
+
         return msg
-    }
-    
-    private func getSnapshotImage() -> UIImage {
-        let data: [TimePeriod] = [
-            TimePeriod(start: DateInRegion("2019-08-22T09:00:00Z")!, duration: 1.hours),
-            TimePeriod(start: DateInRegion("2019-08-22T16:55:55Z")!, duration: 1.hours),
-            TimePeriod(start: DateInRegion("2019-08-22T20:30:55Z")!, duration: 1.hours),
-            TimePeriod(start: DateInRegion("2019-08-23T05:00:55Z")!, duration: 1.hours),
-            TimePeriod(start: DateInRegion("2019-08-24T05:00:55Z")!, duration: 1.hours),
-        ]
-        return TimeSheetView(periods: data, frame: CGRect(x: 0, y: 0, width: 150, height: 150)).asImage()
     }
 }
 
