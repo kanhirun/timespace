@@ -6,12 +6,6 @@ import SwiftyJSON
 /// The validity of this can be checked when putting these new items into a TimePeriodGroup and querying duration.
 public extension Array where Element : TimePeriod {
     
-    func toJSON() -> JSON {
-        let arr = self.map { $0.toJSON() }
-
-        return JSON(arr)
-    }
-    
     func only(periods: [TimePeriod]) -> [TimePeriod] {
         let arr = self + periods
         

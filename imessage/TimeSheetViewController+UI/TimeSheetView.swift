@@ -33,9 +33,11 @@ private extension UIImage {
 class TimeSheetView: UIStackView {
     
     private let periods: [TimePeriod]
+    private weak var controller: TimeSheetViewController?
     
-    init(periods: [TimePeriod], frame: CGRect = CGRect.zero) {
+    init(periods: [TimePeriod], controller: TimeSheetViewController? = nil, frame: CGRect = CGRect.zero) {
         self.periods = periods
+        self.controller = controller
         
         super.init(frame: frame)
 
@@ -104,8 +106,14 @@ class TimeSheetView: UIStackView {
 
             let timeCell: AppointmentCell = .fromNib()
             timeCell.updateUI(period)
+            timeCell.timeButton.addTarget(self, action: #selector(TimeSheetView.selectAppointment(sender:)), for: .primaryActionTriggered)
+
             currColumn.addArrangedSubview(timeCell)
         }
+    }
+    
+    @objc func selectAppointment(sender: TimeButton) {
+        controller?.selectAppointment(period: sender.period)
     }
     
     private func createColumnView(_ period: TimePeriod) -> UIStackView {

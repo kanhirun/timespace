@@ -4,20 +4,13 @@ import SwiftDate
 class TimeSheetViewController: UIViewController {
     
     var contentView: TimeSheetView? = nil
+    var data: [TimePeriod]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let data: [TimePeriod] = [
-            TimePeriod(start: DateInRegion("2019-08-22T09:00:00Z")!, duration: 1.hours),
-            TimePeriod(start: DateInRegion("2019-08-22T16:55:55Z")!, duration: 1.hours),
-            TimePeriod(start: DateInRegion("2019-08-22T20:30:55Z")!, duration: 1.hours),
-            TimePeriod(start: DateInRegion("2019-08-23T05:00:55Z")!, duration: 1.hours),
-            TimePeriod(start: DateInRegion("2019-08-24T05:00:55Z")!, duration: 1.hours),
-        ]
 
         // Define
-        contentView = TimeSheetView(periods: data)
+        contentView = TimeSheetView(periods: data, controller: self)
 
         // Add
         view.addSubview(contentView!)
@@ -26,5 +19,24 @@ class TimeSheetViewController: UIViewController {
         let safeArea = view.safeAreaLayoutGuide
         contentView!.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor).isActive = true
         contentView!.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
+    // MARK: - Actions
+    
+    func selectAppointment(period: TimePeriod) {
+        print(period)
+        
+        // navigation to confirmation screen
+        // pass along period and service
     }
 }

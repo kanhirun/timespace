@@ -1,13 +1,8 @@
-//
-//  MessagesViewController.swift
-//  imessage
-//
-//  Created by Feynman on 8/15/19.
-//  Copyright © 2019 Feynman. All rights reserved.
-//
-
 import UIKit
 import Messages
+
+import SwiftyJSON
+import SwiftDate
 import struct Engine.AuthState
 
 class MessagesViewController: MSMessagesAppViewController {
@@ -28,11 +23,31 @@ class MessagesViewController: MSMessagesAppViewController {
                 debugPrint("no url components")
                 return
             }
+            guard let queryItems = components.queryItems else {
+                debugPrint("no query items")
+                return
+            }
             
-            debugPrint(components.queryItems as Any)
+            let queryItem = queryItems.first!
+            let value = queryItem.value!
+            
+            let json = JSON(parseJSON: value)
+            let res = [TimePeriod].fromJSON(json)
+
+            present(instantiateTimeSheetViewController(res), animated: false, completion: nil)
         } else {
             present(instantiateServiceViewController(conversation), animated: false, completion: nil)
         }
+    }
+    
+    func instantiateTimeSheetViewController(_ data: [TimePeriod]) -> UIViewController {
+        let nav: UINavigationController = {
+            let rootVC = self.storyboard!.instantiateViewController(withIdentifier: "TimeSheetViewController") as! TimeSheetViewController
+            rootVC.data = data
+            return UINavigationController(rootViewController: rootVC)
+        }()
+        
+        return nav
     }
     
     func instantiateServiceViewController(_ conversation: MSConversation) -> UIViewController {

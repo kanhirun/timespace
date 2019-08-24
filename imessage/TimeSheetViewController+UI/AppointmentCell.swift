@@ -5,6 +5,8 @@ class AppointmentCell: UIView {
     @IBOutlet var timeButton: TimeButton!
     
     func updateUI(_ period: TimePeriod) {
+        timeButton.period = period
+
         let ref = period.start!
         timeButton.setTitle("\(ref.toFormat("h:mm"))\(ref.toFormat("a").lowercased())", for: .normal)
     }
@@ -12,6 +14,8 @@ class AppointmentCell: UIView {
 
 
 class TimeButton: UIButton {
+    var period: TimePeriod!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         
