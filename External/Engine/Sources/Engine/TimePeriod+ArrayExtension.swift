@@ -1,9 +1,16 @@
 import SwiftDate
+import SwiftyJSON
 
 /// The functions below are various ways of "filtering" time periods
 /// It is not filtering in the normal sense, but semantically when it comes to concepts like ranges.
 /// The validity of this can be checked when putting these new items into a TimePeriodGroup and querying duration.
 public extension Array where Element : TimePeriod {
+    
+    func toJSON() -> JSON {
+        let arr = self.map { $0.toJSON() }
+
+        return JSON(arr)
+    }
     
     func only(periods: [TimePeriod]) -> [TimePeriod] {
         let arr = self + periods

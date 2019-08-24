@@ -32,9 +32,14 @@ class CalendarViewController: UIViewController,
         model.getResultsToSend(completion: { result in
             switch result {
             case .success(let response):
-                let messageImage = self.composeCalendarSnapshot(data: response)
+                let message = self.composeCalendarSnapshot(data: response)
 
-                self.activeConversation?.insert(messageImage) { err in
+                var components = URLComponents()
+                components.queryItems = [URLQueryItem(name: "foo", value: "baz")]
+
+                message.url = components.url!
+
+                self.activeConversation?.insert(message) { err in
                     if let err = err {
                         debugPrint(err)
                         return
@@ -119,9 +124,6 @@ class CalendarViewController: UIViewController,
     }
     
     private func composeCalendarSnapshot(data: [TimePeriod]) -> MSMessage {
-        // 200 x 500 for one
-        // 300 x 400 for two
-        // 600 x 540 for three
         let layout = MSMessageTemplateLayout()
         let sheet = TimeSheetView(periods: data, frame: CGRect(x: 0, y: 0, width: 300, height: 400))
         layout.image = sheet.asImage()
@@ -131,34 +133,5 @@ class CalendarViewController: UIViewController,
         msg.layout = layout
 
         return msg
-    }
-}
-
-
-extension UIImage {
-    func imageScaledToSize(size: CGSize) -> UIImage {
-        //create drawing context
-        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-
-        //draw
-        self.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-
-        //capture resultant image
-        let image = UIGraphicsGetImageFromCurrentImageContext()!
-        
-        UIGraphicsEndImageContext();
-        
-        return image
-    }
-    
-    func imageScaledToFitSize(size: CGSize) -> UIImage {
-        //calculate rect
-        let aspect = self.size.width / self.size.height
-        
-        if (size.width / aspect <= size.height) {
-            return self.imageScaledToSize(size: CGSize(width: size.width, height: size.width / aspect))
-        } else {
-            return self.imageScaledToSize(size: CGSize(width: size.height * aspect, height: size.height))
-        }
     }
 }

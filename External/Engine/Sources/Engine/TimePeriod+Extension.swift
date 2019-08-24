@@ -1,5 +1,6 @@
 import Foundation
 import SwiftDate
+import SwiftyJSON
 
 // TODO: TimeIntervals should be designed as half-open intervals
 
@@ -50,6 +51,13 @@ extension TimePeriod {
         }
         
         return res
+    }
+    
+    func toJSON() -> JSON {
+        return JSON([
+            "start": start!.toISO(),
+            "end": end!.toISO()
+        ])
     }
 
 }

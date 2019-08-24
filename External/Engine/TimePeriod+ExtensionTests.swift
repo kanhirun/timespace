@@ -55,6 +55,20 @@ final class TimePeriodArrayTests: QuickSpec {
                 expect(results.end!.timeIntervalSince1970) == 4
             }
         }
+        
+        describe("toJSON()") {
+            it("converts to JSON") {
+                let subject = TimePeriod(
+                    start: DateInRegion("2019-08-01T00:00:00Z")!,
+                    end: DateInRegion("2019-09-22T22:22:22Z")!
+                )
+                
+                let json = subject.toJSON()
+                
+                expect(json["start"].stringValue) == "2019-08-01T00:00:00Z"
+                expect(json["end"].stringValue) == "2019-09-22T22:22:22Z"
+            }
+        }
 
     }
 

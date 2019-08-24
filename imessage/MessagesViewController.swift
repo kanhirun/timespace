@@ -12,24 +12,37 @@ import struct Engine.AuthState
 
 class MessagesViewController: MSMessagesAppViewController {
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        let nav: UINavigationController = {
-            let rootVC = self.storyboard!.instantiateViewController(withIdentifier: "ServicesViewController") as! ServicesViewController
-            rootVC.activeConversation = activeConversation
-            return UINavigationController(rootViewController: rootVC)
-        }()
-
-        present(nav, animated: false, completion: nil)
-    }
-    
     // MARK: - Conversation Handling
     
     override func willBecomeActive(with conversation: MSConversation) {
         // Called when the extension is about to move from the inactive to active state.
         // This will happen when the extension is about to present UI.
         // Use this method to configure the extension and restore previously stored state.
+        
+        if let message = conversation.selectedMessage  {
+            guard let url = message.url else {
+                debugPrint("no url")
+                return
+            }
+            guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: false) else {
+                debugPrint("no url components")
+                return
+            }
+            
+            debugPrint(components.queryItems as Any)
+        } else {
+            present(instantiateServiceViewController(conversation), animated: false, completion: nil)
+        }
+    }
+    
+    func instantiateServiceViewController(_ conversation: MSConversation) -> UIViewController {
+        let nav: UINavigationController = {
+            let rootVC = self.storyboard!.instantiateViewController(withIdentifier: "ServicesViewController") as! ServicesViewController
+            rootVC.activeConversation = conversation
+            return UINavigationController(rootViewController: rootVC)
+        }()
+        
+        return nav
     }
     
     override func didResignActive(with conversation: MSConversation) {
