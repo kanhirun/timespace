@@ -11,6 +11,7 @@
 		E0408F62230E2BD900FE40B1 /* TimeSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F61230E2BD900FE40B1 /* TimeSheetViewController.swift */; };
 		E0408F64230E2C5700FE40B1 /* DateTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F63230E2C5700FE40B1 /* DateTimeViewModel.swift */; };
 		E0408F68230E2E6300FE40B1 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F67230E2E6300FE40B1 /* CalendarView.swift */; };
+		E06117DB23118FA8001DEE6B /* JTAppleCalendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06B5A89230D8BEA00DF0CA5 /* JTAppleCalendar.framework */; };
 		E06A5EA4230642BD0059524E /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06A5EA3230642BD0059524E /* ServicesViewController.swift */; };
 		E06A5EA8230647960059524E /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06A5EA7230647960059524E /* ScheduleViewController.swift */; };
 		E06A5EAA2306481E0059524E /* AvailabilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06A5EA92306481E0059524E /* AvailabilityViewController.swift */; };
@@ -187,6 +188,7 @@
 				E06A5EB223064A430059524E /* Alamofire.framework in Frameworks */,
 				E06A5EB023064A1C0059524E /* SwiftyJSON.framework in Frameworks */,
 				E0F5B95023063A080043605C /* Engine.framework in Frameworks */,
+				E06117DB23118FA8001DEE6B /* JTAppleCalendar.framework in Frameworks */,
 				E0F5B91C2306399C0043605C /* Messages.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -316,8 +318,8 @@
 				E0F5B8FC230639840043605C /* Sources */,
 				E0F5B8FE230639840043605C /* Resources */,
 				E0F5B92C2306399D0043605C /* Embed App Extensions */,
-				E06B5A46230B3AFD00DF0CA5 /* Copy Frameworks (Carthage) */,
 				E06B5A47230B436F00DF0CA5 /* Embed Frameworks */,
+				E06B5A46230B3AFD00DF0CA5 /* Copy Frameworks (Carthage) */,
 			);
 			buildRules = (
 			);
@@ -335,7 +337,6 @@
 			buildPhases = (
 				E0F5B9152306399C0043605C /* Sources */,
 				E0F5B9162306399C0043605C /* Frameworks */,
-				E06B5A8E230D8E5E00DF0CA5 /* Copy Frameworks (Carthage) */,
 				E0F5B9172306399C0043605C /* Resources */,
 			);
 			buildRules = (
@@ -493,31 +494,13 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/OAuthSwift.framework",
-			);
-			name = "Copy Frameworks (Carthage)";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/OAuthSwift.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
-		E06B5A8E230D8E5E00DF0CA5 /* Copy Frameworks (Carthage) */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/JTAppleCalendar.framework",
 			);
 			name = "Copy Frameworks (Carthage)";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/OAuthSwift.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/JTAppleCalendar.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

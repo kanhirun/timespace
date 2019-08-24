@@ -19,11 +19,19 @@ public class CalendarViewModel {
     }
     
     // MARK: - Actions
-    
-    public func getResultsToSend() -> [TimePeriod] {
-        return filters.min(only: selectedPeriods, tag: tag)
-                      .quantize(unit: service.duration, tag: tag)!
-                      .apply(region: Region.local)
+
+    public func getResultsToSend(completion: @escaping (Result<[TimePeriod], Error>) -> Void) {
+        let calendar = AppleCalendar()
+
+        filters.min(only: selectedPeriods, tag: tag)
+            .subtract(fromSource: calendar, tag: tag) { result in
+                let newResults = result.flatMap { filter -> Result<[TimePeriod], Error> in
+                    Result { filter.quantize(unit: self.service.duration, tag: self.tag)
+                                   .apply(region: Region.local) }
+                }
+
+                completion(newResults)
+            }
     }
     
     public func select(_ aDate: Date) {

@@ -29,15 +29,21 @@ class CalendarViewController: UIViewController,
     // MARK: - Actions
     
     @objc func send() {
-        let results = model.getResultsToSend()
-        let messageImage = composeCalendarSnapshot(data: results)
+        model.getResultsToSend(completion: { result in
+            switch result {
+            case .success(let response):
+                let messageImage = self.composeCalendarSnapshot(data: response)
 
-        activeConversation?.insert(messageImage) { err in
-            if let err = err {
+                self.activeConversation?.insert(messageImage) { err in
+                    if let err = err {
+                        debugPrint(err)
+                        return
+                    }
+                }
+            case .failure(let err):
                 debugPrint(err)
-                return
             }
-        }
+        })
     }
     
     // TODO: Subclass JTAppleCalendarView with CalendarView that re-types the objects

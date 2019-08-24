@@ -22,6 +22,10 @@ public class ServiceViewModel {
     
     // MARK: - Actions
     
+    public func requestAccess() {
+        AppleCalendar().requestAccess()
+    }
+
     public func select(_ pos: Int) {
         selectedService = services[pos]
         

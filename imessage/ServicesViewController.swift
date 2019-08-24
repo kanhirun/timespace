@@ -17,6 +17,8 @@ final class ServicesViewController: UITableViewController {
         title = "Services"
         tableView.dataSource = self
         tableView.sizeToFit()
+        
+        model.requestAccess()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

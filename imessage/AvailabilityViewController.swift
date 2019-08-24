@@ -24,19 +24,17 @@ class AvailabilityViewController: UICollectionViewController {
         let appleCalendar = AppleCalendar()
         appleCalendar.requestAccess()
 
-        model.subtract(
-            fromSource: appleCalendar,
-            tag: title!,
-            onSuccess: {
+        model.subtract(fromSource: appleCalendar, tag: title!, completion: { result in
+            switch result {
+            case .success(_):
                 self.results = self.model
-                    .quantize(unit: self.selectedService!.duration, tag: self.title!)?
+                    .quantize(unit: self.selectedService!.duration, tag: self.title!)
                     .apply(region: Region.local)
                 self.availabilityView.reloadData()
-            },
-            onFailure: { err in
+            case .failure(let err):
                 debugPrint(err)
             }
-        )
+        })
     }
     
     override func viewWillDisappear(_ animated: Bool) {

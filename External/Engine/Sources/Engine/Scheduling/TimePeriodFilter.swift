@@ -120,24 +120,23 @@ public final class TimePeriodFilter {
 
     public func subtract(fromSource source: CalendarDataSource,
                          tag: String,
-                         onSuccess: (() -> Void)?,
-                         onFailure: ((Error) -> Void)?) {
+                         completion: @escaping (Result<(TimePeriodFilter), Error>) -> Void) {
         let start = window.first!.start!
         let end = window.first!.end!
         
         source.timePeriods(from: start, until: end,
                            onSuccess: { results in
                                 self.subtract(with: results, tag: tag)
-                                onSuccess?()
+                                completion(.success(self))
                             },
                            onFailure: { err in
-                                onFailure?(err)
+                                completion(.failure(err))
                            })
     }
     
     /// MARK: - Transform
     
-    public func quantize(unit: DateComponents, tag: String) -> TimePeriodFilter? {
+    public func quantize(unit: DateComponents, tag: String) -> TimePeriodFilter {
         let results = quantized(apply(region: .UTC), unit: unit)
 
         stack.append( (tag: tag, contents: results) )

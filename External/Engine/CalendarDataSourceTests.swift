@@ -20,19 +20,24 @@ final class CalendarDataSourceTests: QuickSpec {
                     
                     waitUntil(timeout: 2) { done in
                         subject.min(only: (start: 9, end: 17), tag: "some-tag")
-                        subject.subtract(fromSource: connected, tag: "some-tag", onSuccess: {
-                            let response = subject.apply(region: region)
-
-                            expect(response.count) == 8
-
-                            expect(response.first?.start?.toISO()) == "2019-07-15T09:00:00-04:00"
-                            expect(response.first?.end?.toISO()) == "2019-07-15T17:00:00-04:00"
-
-                            expect(response.last?.start?.toISO()) == "2019-07-21T09:00:00-04:00"
-                            expect(response.last?.end?.toISO()) == "2019-07-21T16:00:00-04:00"
-                            
-                            done()
-                        }, onFailure: nil)
+                        subject.subtract(fromSource: connected, tag: "some-tag", completion: { result in
+                            switch result {
+                            case .success(let subject):
+                                let response = subject.apply(region: region)
+                                
+                                expect(response.count) == 8
+                                
+                                expect(response.first?.start?.toISO()) == "2019-07-15T09:00:00-04:00"
+                                expect(response.first?.end?.toISO()) == "2019-07-15T17:00:00-04:00"
+                                
+                                expect(response.last?.start?.toISO()) == "2019-07-21T09:00:00-04:00"
+                                expect(response.last?.end?.toISO()) == "2019-07-21T16:00:00-04:00"
+                                
+                                done()
+                            default:
+                                break
+                            }
+                        })
                     }
                 }
             }
