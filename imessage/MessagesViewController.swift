@@ -34,16 +34,18 @@ class MessagesViewController: MSMessagesAppViewController {
             let json = JSON(parseJSON: value)
             let res = [TimePeriod].fromJSON(json)
 
-            present(instantiateTimeSheetViewController(res), animated: false, completion: nil)
+            present(instantiateTimeSheetViewController(res, conversation), animated: false, completion: nil)
         } else {
             present(instantiateServiceViewController(conversation), animated: false, completion: nil)
         }
     }
     
-    func instantiateTimeSheetViewController(_ data: [TimePeriod]) -> UIViewController {
+    func instantiateTimeSheetViewController(_ data: [TimePeriod], _ conversation: MSConversation) -> UIViewController {
         let nav: UINavigationController = {
             let rootVC = self.storyboard!.instantiateViewController(withIdentifier: "TimeSheetViewController") as! TimeSheetViewController
             rootVC.data = data
+            rootVC.activeConversation = conversation
+            rootVC.controller = self
             return UINavigationController(rootViewController: rootVC)
         }()
         

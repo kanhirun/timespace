@@ -1,10 +1,15 @@
 import UIKit
 import SwiftDate
+import Messages
+import Engine
 
 class TimeSheetViewController: UIViewController {
     
     var contentView: TimeSheetView? = nil
     var data: [TimePeriod]!
+    var activeConversation: MSConversation? = nil
+    weak var controller: MessagesViewController? = nil
+    var service: Service!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,9 +39,20 @@ class TimeSheetViewController: UIViewController {
     // MARK: - Actions
     
     func selectAppointment(period: TimePeriod) {
-        print(period)
+        let layout = MSMessageTemplateLayout()
+        let view: ConfirmationView = .fromNib()
+        view.updateUI(period, service)
+        layout.image = view.asImage()
+
+        let message = MSMessage(session: activeConversation!.selectedMessage!.session!)
+        message.layout = layout
         
-        // navigation to confirmation screen
-        // pass along period and service
+        activeConversation?.insert(message) { err in
+            if let err = err {
+                debugPrint(err)
+            }
+            
+            self.controller!.dismiss()
+        }
     }
 }

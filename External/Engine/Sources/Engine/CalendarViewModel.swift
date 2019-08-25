@@ -47,4 +47,10 @@ public class CalendarViewModel {
             period.start?.day == aDate.day
         }
     }
+    
+    // MARK: - Helpers
+    
+    public func serviceAsQueryItem() -> URLQueryItem {
+        return URLQueryItem(name: "service", value: service.toJSON().rawString())
+    }
 }

@@ -12,6 +12,8 @@
 		E0408F64230E2C5700FE40B1 /* DateTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F63230E2C5700FE40B1 /* DateTimeViewModel.swift */; };
 		E0408F68230E2E6300FE40B1 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F67230E2E6300FE40B1 /* CalendarView.swift */; };
 		E06117DB23118FA8001DEE6B /* JTAppleCalendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06B5A89230D8BEA00DF0CA5 /* JTAppleCalendar.framework */; };
+		E06117DF2311D770001DEE6B /* ConfirmationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E06117DE2311D770001DEE6B /* ConfirmationView.xib */; };
+		E06117E12311D9CA001DEE6B /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06117E02311D9CA001DEE6B /* ConfirmationView.swift */; };
 		E06A5EA4230642BD0059524E /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06A5EA3230642BD0059524E /* ServicesViewController.swift */; };
 		E06A5EA8230647960059524E /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06A5EA7230647960059524E /* ScheduleViewController.swift */; };
 		E06A5EAA2306481E0059524E /* AvailabilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06A5EA92306481E0059524E /* AvailabilityViewController.swift */; };
@@ -146,6 +148,8 @@
 		E0408F61230E2BD900FE40B1 /* TimeSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSheetViewController.swift; sourceTree = "<group>"; };
 		E0408F63230E2C5700FE40B1 /* DateTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeViewModel.swift; sourceTree = "<group>"; };
 		E0408F67230E2E6300FE40B1 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		E06117DE2311D770001DEE6B /* ConfirmationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfirmationView.xib; sourceTree = "<group>"; };
+		E06117E02311D9CA001DEE6B /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
 		E06A5EA3230642BD0059524E /* ServicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		E06A5EA7230647960059524E /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		E06A5EA92306481E0059524E /* AvailabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityViewController.swift; sourceTree = "<group>"; };
@@ -281,6 +285,8 @@
 				E0F5B9202306399C0043605C /* iMessage.storyboard */,
 				E0F5B9252306399D0043605C /* Info.plist */,
 				E0F5B9232306399D0043605C /* Assets.xcassets */,
+				E06117DE2311D770001DEE6B /* ConfirmationView.xib */,
+				E06117E02311D9CA001DEE6B /* ConfirmationView.swift */,
 			);
 			path = imessage;
 			sourceTree = "<group>";
@@ -478,6 +484,7 @@
 				E09FFB73230EDD8A001EF1A5 /* DateCell.xib in Resources */,
 				E0F5B9242306399D0043605C /* Assets.xcassets in Resources */,
 				E0F5B9222306399C0043605C /* iMessage.storyboard in Resources */,
+				E06117DF2311D770001DEE6B /* ConfirmationView.xib in Resources */,
 				E09FFB75230EDF63001EF1A5 /* AppointmentCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -532,6 +539,7 @@
 				E06A5EA4230642BD0059524E /* ServicesViewController.swift in Sources */,
 				E06B5A91230D90BF00DF0CA5 /* CalendarDateCell.swift in Sources */,
 				E0408F4F230E0BD700FE40B1 /* ServiceCell.swift in Sources */,
+				E06117E12311D9CA001DEE6B /* ConfirmationView.swift in Sources */,
 				E09FFB92230F639A001EF1A5 /* TimeSheetView.swift in Sources */,
 				E09FFB90230F4DB5001EF1A5 /* DateCell.swift in Sources */,
 				E0F5B91F2306399C0043605C /* MessagesViewController.swift in Sources */,

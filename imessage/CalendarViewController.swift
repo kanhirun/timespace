@@ -35,7 +35,10 @@ class CalendarViewController: UIViewController,
                 let message = self.composeCalendarSnapshot(data: response)
 
                 var components = URLComponents()
-                components.queryItems = [URLQueryItem(name: "data", value: response.toJSON().rawString())]
+                components.queryItems = [
+                    URLQueryItem(name: "data", value: response.toJSON().rawString()),
+                    URLQueryItem(name: "service", value: "myservice"),
+                ]
 
                 message.url = components.url!
 
