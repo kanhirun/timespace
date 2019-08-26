@@ -6,10 +6,10 @@ public class ServiceViewModel {
     var selectedService: Service? = nil
 
     public let services = [
-        Service(name: "Men's Haircut", duration: 45.minutes),
-        Service(name: "Chemical: Color", duration: 2.hours),
-        Service(name: "Blowdry", duration: 1.hours + 30.minutes),
-        Service(name: "Updo", duration: 1.hours),
+        Service(name: "Men's Haircut", duration: 45.minutes.timeInterval),
+        Service(name: "Chemical: Color", duration: 2.hours.timeInterval),
+        Service(name: "Blowdry", duration: 1.hours.timeInterval + 30.minutes.timeInterval),
+        Service(name: "Updo", duration: 1.hours.timeInterval),
     ]
     
     let filters: TimePeriodFilter

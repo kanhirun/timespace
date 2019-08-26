@@ -4,29 +4,25 @@ import SwiftyJSON
 
 public struct Service {
     public let name: String
-    public let duration: DateComponents
+    public let duration: TimeInterval
     
     // MARK: - JSON
     
-    init(name: String, duration: DateComponents) {
+    init(name: String, duration: TimeInterval) {
         self.name = name
         self.duration = duration
     }
     
-    init(fromJSON json: JSON) {
+    public init(fromJSON json: JSON) {
         self.name = json["name"].stringValue
-        self.duration = toDateComponents(json["duration"].stringValue)
+        self.duration = TimeInterval(json["duration"].stringValue)!
     }
 
     func toJSON() -> JSON {
         var res = JSON()
         res["name"].string = name
-        res["duration"].string = duration.timeInterval.toString()
+        res["duration"].string = String(duration)
         
         return res
     }
-}
-
-private func toDateComponents(_ str: String) -> DateComponents {
-    return DateComponents(second: Int(str)!)
 }

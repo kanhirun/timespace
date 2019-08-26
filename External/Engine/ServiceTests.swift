@@ -10,12 +10,12 @@ final class ServiceTests: QuickSpec {
 
             describe("JSON") {
                 it("converts into JSON type") {
-                    let service = Service(name: "service-name", duration: 10.days)
+                    let service = Service(name: "service-name", duration: 10.days.timeInterval)
                     
                     let subject = service.toJSON()
                     
                     expect(subject["name"].string) == "service-name"
-                    expect(subject["duration"].string) == 10.days.timeInterval.toString()
+                    expect(subject["duration"].string) == String(10.days.timeInterval)
                 }
                 
                 it("converts from JSON type") {
@@ -26,7 +26,7 @@ final class ServiceTests: QuickSpec {
                     let subject = Service(fromJSON: json)
                     
                     expect(subject.name) == "service-name"
-                    expect(subject.duration) == 432000.seconds
+                    expect(subject.duration) == 432000.seconds.timeInterval
                 }
             }
             

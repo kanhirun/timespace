@@ -1,19 +1,19 @@
 import Foundation
 import SwiftDate
 
-func quantized(_ periods: [TimePeriod], unit: DateComponents) -> [TimePeriod] {
+func quantized(_ periods: [TimePeriod], unit: TimeInterval) -> [TimePeriod] {
     let res = periods
         // Maps the time periods into smaller, unit-sized chunks, if possible
         .compactMap { period -> [TimePeriod] in
             var res = [TimePeriod]()
 
             // if the unit is larger than the period, then drop.
-            guard period.duration >= unit.timeInterval else {
+            guard period.duration >= unit else {
                 return res
             }
 
             var i: TimeInterval = 0
-            let n: TimeInterval = floor(period.duration / unit.timeInterval)
+            let n: TimeInterval = floor(period.duration / unit)
             var increment = period.start!
 
             while i < n {
@@ -21,7 +21,7 @@ func quantized(_ periods: [TimePeriod], unit: DateComponents) -> [TimePeriod] {
 
                 res.append(chunk)
 
-                increment = increment.addingTimeInterval(unit.timeInterval)
+                increment = increment.addingTimeInterval(unit)
                 i += 1
             }
 
@@ -136,7 +136,7 @@ public final class TimePeriodFilter {
     
     /// MARK: - Transform
     
-    public func quantize(unit: DateComponents, tag: String) -> TimePeriodFilter {
+    public func quantize(unit: TimeInterval, tag: String) -> TimePeriodFilter {
         let results = quantized(apply(region: .UTC), unit: unit)
 
         stack.append( (tag: tag, contents: results) )

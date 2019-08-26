@@ -25,6 +25,6 @@ class ConfirmationView: UIView {
     }
     
     private func formatted(_ date: DateInRegion) -> String {
-        return date.toString(.time(.medium))
+        return date.toString(.time(.short))
     }
 }

@@ -9,7 +9,7 @@ class ServiceCell: UITableViewCell {
     func updateUI(_ service: Service) {
         titleLabel?.text = service.name
 
-        detailTextLabel?.text = service.duration.timeInterval.toString {
+        detailTextLabel?.text = service.duration.toString {
             $0.unitsStyle = .abbreviated
         }
     }

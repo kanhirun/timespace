@@ -20,14 +20,23 @@ public class CalendarViewModel {
     
     // MARK: - Actions
 
-    public func getResultsToSend(completion: @escaping (Result<[TimePeriod], Error>) -> Void) {
+    public func getResultsToSend(completion: @escaping (Result<([TimePeriod], URLComponents), Error>) -> Void) {
         let calendar = AppleCalendar()
 
         filters.min(only: selectedPeriods, tag: tag)
             .subtract(fromSource: calendar, tag: tag) { result in
-                let newResults = result.flatMap { filter -> Result<[TimePeriod], Error> in
-                    Result { filter.quantize(unit: self.service.duration, tag: self.tag)
-                                   .apply(region: Region.local) }
+                let newResults = result.flatMap { filter -> Result<([TimePeriod], URLComponents), Error> in
+                    
+                    let periods = filter.quantize(unit: self.service.duration, tag: self.tag)
+                                        .apply(region: Region.local)
+
+                    var components = URLComponents()
+                    components.queryItems = [
+                        URLQueryItem(name: "data", value: periods.toJSON().rawString()),
+                        URLQueryItem(name: "service", value: self.service.toJSON().rawString()),
+                    ]
+
+                    return Result { (periods, components) }
                 }
 
                 completion(newResults)
@@ -46,11 +55,5 @@ public class CalendarViewModel {
         selectedPeriods.removeAll { period -> Bool in
             period.start?.day == aDate.day
         }
-    }
-    
-    // MARK: - Helpers
-    
-    public func serviceAsQueryItem() -> URLQueryItem {
-        return URLQueryItem(name: "service", value: service.toJSON().rawString())
     }
 }

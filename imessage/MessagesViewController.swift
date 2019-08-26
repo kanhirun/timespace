@@ -3,7 +3,7 @@ import Messages
 
 import SwiftyJSON
 import SwiftDate
-import struct Engine.AuthState
+import Engine
 
 class MessagesViewController: MSMessagesAppViewController {
 
@@ -28,24 +28,30 @@ class MessagesViewController: MSMessagesAppViewController {
                 return
             }
             
-            let queryItem = queryItems.first!
-            let value = queryItem.value!
-            
+            // get data
+            let data = queryItems.first { $0.name == "data" }!
+            let value = data.value!
             let json = JSON(parseJSON: value)
-            let res = [TimePeriod].fromJSON(json)
+            let periods = [TimePeriod].fromJSON(json)
+            
+            let data2 = queryItems.first { $0.name == "service" }!
+            let value2 = data2.value!
+            let json2 = JSON(parseJSON: value2)
+            let service = Service(fromJSON: json2)
 
-            present(instantiateTimeSheetViewController(res, conversation), animated: false, completion: nil)
+            present(instantiateTimeSheetViewController(periods, conversation, service), animated: false, completion: nil)
         } else {
             present(instantiateServiceViewController(conversation), animated: false, completion: nil)
         }
     }
     
-    func instantiateTimeSheetViewController(_ data: [TimePeriod], _ conversation: MSConversation) -> UIViewController {
+    func instantiateTimeSheetViewController(_ data: [TimePeriod], _ conversation: MSConversation, _ service: Service) -> UIViewController {
         let nav: UINavigationController = {
             let rootVC = self.storyboard!.instantiateViewController(withIdentifier: "TimeSheetViewController") as! TimeSheetViewController
             rootVC.data = data
             rootVC.activeConversation = conversation
             rootVC.controller = self
+            rootVC.service = service
             return UINavigationController(rootViewController: rootVC)
         }()
         

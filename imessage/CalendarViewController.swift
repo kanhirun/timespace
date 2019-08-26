@@ -31,14 +31,8 @@ class CalendarViewController: UIViewController,
     @objc func send() {
         model.getResultsToSend(completion: { result in
             switch result {
-            case .success(let response):
+            case .success(let response, let components):
                 let message = self.composeCalendarSnapshot(data: response)
-
-                var components = URLComponents()
-                components.queryItems = [
-                    URLQueryItem(name: "data", value: response.toJSON().rawString()),
-                    URLQueryItem(name: "service", value: "myservice"),
-                ]
 
                 message.url = components.url!
 
@@ -62,13 +56,11 @@ class CalendarViewController: UIViewController,
         updateUI(cell, with: cellState)
         
         model.select(date)
-        print(model.selectedPeriods)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         updateUI(cell, with: cellState)
         model.unselect(date)
-        print(model.selectedPeriods)
     }
     
     // MARK: - Calendar Appearance
