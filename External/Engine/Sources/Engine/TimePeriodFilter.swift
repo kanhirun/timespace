@@ -118,24 +118,17 @@ public final class TimePeriodFilter {
     
     // MARK: - Filter - Calendar
 
-    public func subtract(fromSource source: CalendarDataSource,
-                         tag: String,
-                         completion: @escaping (Result<(TimePeriodFilter), Error>) -> Void) {
+    @discardableResult
+    public func subtract(fromSource source: CalendarDataSource, tag: String) -> TimePeriodFilter {
         let start = window.first!.start!
         let end = window.first!.end!
         
-        source.timePeriods(from: start, until: end,
-                           onSuccess: { results in
-                                self.subtract(with: results, tag: tag)
-                                completion(.success(self))
-                            },
-                           onFailure: { err in
-                                completion(.failure(err))
-                           })
+        return self.subtract(with: source.timePeriods(from: start, until: end), tag: tag)
     }
     
     /// MARK: - Transform
     
+    @discardableResult
     public func quantize(unit: TimeInterval, tag: String) -> TimePeriodFilter {
         let results = quantized(apply(region: .UTC), unit: unit)
 

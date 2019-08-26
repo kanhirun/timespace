@@ -22,29 +22,19 @@ public class CalendarViewModel {
     
     // MARK: - Actions
 
-    public func getResultsToSend(completion: @escaping (Result<([TimePeriod], URLComponents), Error>) -> Void) {
-        // 1. Returns availability against dates picked
-        filters.min(only: selectedPeriods, tag: tag)
-        // 2. Remove any time periods which are already occupied
-               .subtract(fromSource: calendar, tag: tag) { result in
-                    let newResults = result.flatMap { filter -> Result<([TimePeriod], URLComponents), Error> in
-                    
-        // 3. Break down options for times that are service-length long
-                    let periods = filter.quantize(unit: self.service.duration, tag: self.tag)
-        // 4. Show results based on user timezone
-                                        .apply(region: Region.local)
+    public func getResultsToSend() -> ([TimePeriod], URLComponents) {
+        let periods = filters.min(only: selectedPeriods, tag: tag)
+                             .subtract(fromSource: calendar, tag: tag)
+                             .quantize(unit: self.service.duration, tag: self.tag)
+                             .apply(region: Region.local)
 
-                    // Package the results into query items for messaging
-                    var components = URLComponents()
-                    components.queryItems = [
-                        periods.queryItem,
-                        self.service.queryItem,
-                    ]
+        var components = URLComponents()
+        components.queryItems = [
+            periods.queryItem,
+            self.service.queryItem,
+        ]
 
-                    return Result { (periods, components) }
-                }
-                completion(newResults)
-            }
+        return (periods, components)
     }
     
     public func select(_ aDate: Date) {

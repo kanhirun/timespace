@@ -37,12 +37,7 @@ public class AppleCalendar: CalendarDataSource {
         
     }
     
-    public func timePeriods(from: DateInRegion,
-                     until: DateInRegion,
-                     onSuccess: @escaping ([TimePeriod]) -> Void,
-                     onFailure: @escaping (Error) -> Void) {
-
-        
+    public func timePeriods(from: DateInRegion, until: DateInRegion) -> [TimePeriod] {
         // Retrieve events from all calendars
         let predicate = store.predicateForEvents(withStart: from.date,
                                                  end: until.date,
@@ -62,7 +57,7 @@ public class AppleCalendar: CalendarDataSource {
                 TimePeriod(startDate: event.startDate, endDate: event.endDate)
             }
 
-        onSuccess(results)
+        return results
     }
     
     

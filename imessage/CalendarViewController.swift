@@ -29,20 +29,13 @@ class CalendarViewController: UIViewController,
     // MARK: - Actions
     
     @objc func send() {
-        model.getResultsToSend(completion: { result in
-            switch result {
-            case .success(let response, let components):
-                let message = self.composeCalendarSnapshot(data: response)
+        let (response, components) = model.getResultsToSend()
+        let message = self.composeCalendarSnapshot(data: response)
+        message.url = components.url!
 
-                message.url = components.url!
-
-                self.activeConversation!.insert(message) { err in
-                    debugPrint("Attempting to insert message.", "Error: \(String(describing: err))")
-                }
-            case .failure(let err):
-                debugPrint(err)
-            }
-        })
+        self.activeConversation!.insert(message) { err in
+            debugPrint("Attempting to insert message.", "Error: \(String(describing: err))")
+        }
     }
     
     func calendar(_ calendar: JTAppleCalendarView,
