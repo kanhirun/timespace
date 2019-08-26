@@ -1,7 +1,12 @@
 import SwiftDate
 import EventKit
 
+
 public class AppleCalendar: CalendarDataSource {
+    
+    public enum CalendarError: Error {
+        case cannotSaveEvent
+    }
     
     private let store = EKEventStore()
     
@@ -14,6 +19,26 @@ public class AppleCalendar: CalendarDataSource {
         store.requestAccess(to: .event) { hasConsented, err in
             debugPrint(hasConsented, err as Any)
         }
+    }
+    
+
+    public func book(service: Service, period: TimePeriod) -> Bool {
+        let newEvent = EKEvent(eventStore: store)
+        let defaultCalendar = store.defaultCalendarForNewEvents  // events are saved into a default calendar
+        
+        newEvent.title = service.name
+        newEvent.startDate = period.startDate
+        newEvent.endDate = period.endDate
+        newEvent.calendar = defaultCalendar
+        
+        do {
+            try store.save(newEvent, span: .thisEvent)
+            
+            return true
+        } catch {
+            return false
+        }
+        
     }
     
     public func timePeriods(from: DateInRegion,

@@ -42,6 +42,10 @@ public final class GoogleCalendarV3: CalendarDataSource {
         }
     }
     
+    public func book(service: Service, period: TimePeriod) -> Bool {
+        fatalError("Not yet implemented")
+    }
+    
     /// Returns a list of events from the user's Google calendar
     public func timePeriods(from: DateInRegion,
                             until: DateInRegion,
