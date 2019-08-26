@@ -4,10 +4,6 @@ import EventKit
 
 public class AppleCalendar: CalendarDataSource {
     
-    public enum CalendarError: Error {
-        case cannotSaveEvent
-    }
-    
     private let store = EKEventStore()
     
     /// Indicates whether the user has authorized the app to use their calendar

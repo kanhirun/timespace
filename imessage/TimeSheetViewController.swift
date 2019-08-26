@@ -7,8 +7,11 @@ class TimeSheetViewController: UIViewController {
     
     var contentView: TimeSheetView? = nil
     var data: [TimePeriod]!
+
     var activeConversation: MSConversation? = nil
+
     weak var controller: MessagesViewController? = nil
+
     var service: Service!
     
     override func viewDidLoad() {
@@ -51,6 +54,9 @@ class TimeSheetViewController: UIViewController {
             if let err = err {
                 debugPrint(err)
             }
+            
+            let calendar = AppleCalendar()
+            _ = calendar.book(service: self.service, period: period)
             
             self.controller!.dismiss()
         }

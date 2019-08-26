@@ -9,3 +9,7 @@ public protocol CalendarDataSource {
                      onSuccess: @escaping ([TimePeriod]) -> Void,
                      onFailure: @escaping (Error) -> Void)
 }
+
+public enum CalendarError: Error {
+    case cannotSaveEvent
+}
