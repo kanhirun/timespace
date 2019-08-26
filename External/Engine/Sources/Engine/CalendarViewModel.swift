@@ -38,7 +38,7 @@ public class CalendarViewModel {
                     var components = URLComponents()
                     components.queryItems = [
                         URLQueryItem(name: "data", value: periods.toJSON().rawString()),
-                        URLQueryItem(name: "service", value: self.service.toJSON().rawString()),
+                        self.service.queryItem,
                     ]
 
                     return Result { (periods, components) }

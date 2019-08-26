@@ -10,19 +10,4 @@ public struct Service {
         self.name = name
         self.duration = duration
     }
-    
-    // MARK: - JSON
-    
-    public init(fromJSON json: JSON) {
-        self.name = json["name"].stringValue
-        self.duration = TimeInterval(json["duration"].stringValue)!
-    }
-
-    func toJSON() -> JSON {
-        var res = JSON()
-        res["name"].string = name
-        res["duration"].string = String(duration)
-        
-        return res
-    }
 }
