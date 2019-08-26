@@ -6,12 +6,12 @@ public struct Service {
     public let name: String
     public let duration: TimeInterval
     
-    // MARK: - JSON
-    
     init(name: String, duration: TimeInterval) {
         self.name = name
         self.duration = duration
     }
+    
+    // MARK: - JSON
     
     public init(fromJSON json: JSON) {
         self.name = json["name"].stringValue
