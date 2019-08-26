@@ -25,7 +25,6 @@
 		E06B5A4A230B43BE00DF0CA5 /* SwiftDate.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0F5B949230639E70043605C /* SwiftDate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E06B5A4B230B43C000DF0CA5 /* Engine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0F5B941230639E70043605C /* Engine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E06B5A4C230B43C300DF0CA5 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0F5B945230639E70043605C /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E06B5A4F230B8F4F00DF0CA5 /* ConnectAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A4E230B8F4F00DF0CA5 /* ConnectAlertViewController.swift */; };
 		E06B5A8C230D8D7A00DF0CA5 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A8B230D8D7A00DF0CA5 /* CalendarViewController.swift */; };
 		E06B5A91230D90BF00DF0CA5 /* CalendarDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A90230D90BF00DF0CA5 /* CalendarDateCell.swift */; };
 		E06B5A93230DA06600DF0CA5 /* CalendarHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A92230DA06600DF0CA5 /* CalendarHeader.swift */; };
@@ -153,7 +152,6 @@
 		E06A5EA7230647960059524E /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		E06A5EA92306481E0059524E /* AvailabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityViewController.swift; sourceTree = "<group>"; };
 		E06A5EB92306F0C30059524E /* AvailabilityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityCell.swift; sourceTree = "<group>"; };
-		E06B5A4E230B8F4F00DF0CA5 /* ConnectAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectAlertViewController.swift; sourceTree = "<group>"; };
 		E06B5A89230D8BEA00DF0CA5 /* JTAppleCalendar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JTAppleCalendar.framework; path = Carthage/Build/iOS/JTAppleCalendar.framework; sourceTree = "<group>"; };
 		E06B5A8B230D8D7A00DF0CA5 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		E06B5A90230D90BF00DF0CA5 /* CalendarDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateCell.swift; sourceTree = "<group>"; };
@@ -277,7 +275,6 @@
 				E06A5EA7230647960059524E /* ScheduleViewController.swift */,
 				E06A5EA92306481E0059524E /* AvailabilityViewController.swift */,
 				E06A5EB92306F0C30059524E /* AvailabilityCell.swift */,
-				E06B5A4E230B8F4F00DF0CA5 /* ConnectAlertViewController.swift */,
 				E09FFB93230F646B001EF1A5 /* Helpers */,
 				E0F5B9202306399C0043605C /* iMessage.storyboard */,
 				E0F5B9252306399D0043605C /* Info.plist */,
@@ -543,7 +540,6 @@
 				E0408F64230E2C5700FE40B1 /* DateTimeViewModel.swift in Sources */,
 				E06A5EA8230647960059524E /* ScheduleViewController.swift in Sources */,
 				E09FFB7F230F4D6F001EF1A5 /* UIView+loadNib.swift in Sources */,
-				E06B5A4F230B8F4F00DF0CA5 /* ConnectAlertViewController.swift in Sources */,
 				E06A5EAA2306481E0059524E /* AvailabilityViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
