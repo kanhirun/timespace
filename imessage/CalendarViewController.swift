@@ -36,11 +36,8 @@ class CalendarViewController: UIViewController,
 
                 message.url = components.url!
 
-                self.activeConversation?.insert(message) { err in
-                    if let err = err {
-                        debugPrint(err)
-                        return
-                    }
+                self.activeConversation!.insert(message) { err in
+                    debugPrint("Attempting to insert message.", "Error: \(String(describing: err))")
                 }
             case .failure(let err):
                 debugPrint(err)
@@ -48,13 +45,11 @@ class CalendarViewController: UIViewController,
         })
     }
     
-    // TODO: Subclass JTAppleCalendarView with CalendarView that re-types the objects
     func calendar(_ calendar: JTAppleCalendarView,
                   didSelectDate date: Date,
                   cell: JTAppleCell?,
                   cellState: CellState) {
         updateUI(cell, with: cellState)
-        
         model.select(date)
     }
     
@@ -96,7 +91,7 @@ class CalendarViewController: UIViewController,
         return MonthSize(defaultSize: 100)
     }
     
-    // Adjusts calendar date cell
+    // Show calendar date cell
     func calendar(_ calendar: JTAppleCalendarView,
                   cellForItemAt date: Date,
                   cellState: CellState,
@@ -121,6 +116,7 @@ class CalendarViewController: UIViewController,
     private func composeCalendarSnapshot(data: [TimePeriod]) -> MSMessage {
         let layout = MSMessageTemplateLayout()
         let sheet = TimeSheetView(periods: data, frame: CGRect(x: 0, y: 0, width: 300, height: 400))
+        sheet.translatesAutoresizingMaskIntoConstraints = true
         layout.image = sheet.asImage()
 
         let session = activeConversation?.selectedMessage?.session ?? MSSession()

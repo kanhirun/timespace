@@ -10,6 +10,8 @@ public class CalendarViewModel {
     private var filters: TimePeriodFilter
     private let tag = "CalendarViewModel"
     private let service: Service
+    
+    private let calendar = AppleCalendar()
 
     public init(from model: ServiceViewModel) {
         filters = model.filters
@@ -21,15 +23,18 @@ public class CalendarViewModel {
     // MARK: - Actions
 
     public func getResultsToSend(completion: @escaping (Result<([TimePeriod], URLComponents), Error>) -> Void) {
-        let calendar = AppleCalendar()
-
+        // 1. Returns availability against dates picked
         filters.min(only: selectedPeriods, tag: tag)
-            .subtract(fromSource: calendar, tag: tag) { result in
-                let newResults = result.flatMap { filter -> Result<([TimePeriod], URLComponents), Error> in
+        // 2. Remove any time periods which are already occupied
+               .subtract(fromSource: calendar, tag: tag) { result in
+                    let newResults = result.flatMap { filter -> Result<([TimePeriod], URLComponents), Error> in
                     
+        // 3. Break down options for times that are service-length long
                     let periods = filter.quantize(unit: self.service.duration, tag: self.tag)
+        // 4. Show results based on user timezone
                                         .apply(region: Region.local)
 
+                    // Package the results into query items for messaging
                     var components = URLComponents()
                     components.queryItems = [
                         URLQueryItem(name: "data", value: periods.toJSON().rawString()),
@@ -38,7 +43,6 @@ public class CalendarViewModel {
 
                     return Result { (periods, components) }
                 }
-
                 completion(newResults)
             }
     }

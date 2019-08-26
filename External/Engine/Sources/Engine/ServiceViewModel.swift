@@ -17,7 +17,7 @@ public class ServiceViewModel {
     private let tag = "business-hours"
     
     public init() {
-        filters = TimePeriodFilter(start: DateInRegion(Date(), region: Region.local), duration: 2.weeks)
+        filters = TimePeriodFilter(start: DateInRegion(Date(), region: Region.local), duration: 3.months)
     }
     
     // MARK: - Actions

@@ -44,10 +44,7 @@ class TimeSheetView: UIStackView {
         axis = .horizontal
         alignment = .top
         distribution = .fill
-        translatesAutoresizingMaskIntoConstraints = false
         
-        clipsToBounds = false
-
         // Adds a white background to the stack view
         let subView = UIView(frame: bounds)
         subView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)

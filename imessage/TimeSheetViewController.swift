@@ -19,7 +19,8 @@ class TimeSheetViewController: UIViewController {
 
         // Define
         contentView = TimeSheetView(periods: data, controller: self)
-
+        contentView?.translatesAutoresizingMaskIntoConstraints = false
+        
         // Add
         view.addSubview(contentView!)
         
