@@ -1,18 +1,9 @@
 import Foundation
 import SwiftDate
-import SwiftyJSON
-
-// TODO: TimeIntervals should be designed as half-open intervals
-
-extension TimePeriod: CustomDebugStringConvertible {
-    public var debugDescription: String {
-        return "TimePeriod<[\(start?.toISO() ?? "∞") - \(end?.toISO() ?? "∞"))>"
-    }
-}
 
 extension TimePeriod {
+
     /// Returns a new period representing the overlap between the two
-    /// TODO: Handle non-finite cases
     func overlappedPeriod(_ other: TimePeriodProtocol) -> TimePeriodProtocol? {
         guard overlaps(with: other) else {
             return nil
@@ -52,12 +43,4 @@ extension TimePeriod {
         
         return res
     }
-    
-    func toJSON() -> JSON {
-        return JSON([
-            "start": start!.toISO(),
-            "end": end!.toISO()
-        ])
-    }
-
 }

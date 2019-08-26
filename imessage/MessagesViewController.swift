@@ -28,12 +28,7 @@ class MessagesViewController: MSMessagesAppViewController {
                 return
             }
             
-            // get data
-            let data = queryItems.first { $0.name == "data" }!
-            let value = data.value!
-            let json = JSON(parseJSON: value)
-            let periods = [TimePeriod].fromJSON(json)
-            
+            let periods = [TimePeriod].fromQueryItems(queryItems)!
             let service = Service(fromQueryItems: queryItems)!
 
             present(instantiateTimeSheetViewController(periods, conversation, service), animated: false, completion: nil)

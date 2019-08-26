@@ -1,6 +1,15 @@
 import SwiftDate
 import SwiftyJSON
 
+extension TimePeriod {
+    func toJSON() -> JSON {
+        return JSON([
+            "start": start!.toISO(),
+            "end": end!.toISO()
+        ])
+    }
+}
+
 public extension Array where Element : TimePeriod {
     func toJSON() -> JSON {
         let arr = self.map { $0.toJSON() }

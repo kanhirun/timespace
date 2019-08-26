@@ -37,7 +37,7 @@ public class CalendarViewModel {
                     // Package the results into query items for messaging
                     var components = URLComponents()
                     components.queryItems = [
-                        URLQueryItem(name: "data", value: periods.toJSON().rawString()),
+                        periods.queryItem,
                         self.service.queryItem,
                     ]
 
