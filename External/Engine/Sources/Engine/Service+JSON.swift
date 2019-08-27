@@ -2,9 +2,11 @@ import SwiftyJSON
 import Foundation
 
 extension Service {
-    public init(fromJSON json: JSON) {
-        self.name = json["name"].stringValue
-        self.duration = TimeInterval(json["duration"].stringValue)!
+    public convenience init(fromJSON json: JSON) {
+        let name = json["name"].stringValue
+        let duration = TimeInterval(json["duration"].stringValue)!
+
+        self.init(name: name, duration: duration)
     }
 
     func toJSON() -> JSON {

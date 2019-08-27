@@ -4,17 +4,18 @@ import SwiftyJSON
 
 extension Array: QueryItemRepresentable where Element : TimePeriod {
     var queryItem: URLQueryItem {
-        return URLQueryItem(name: [TimePeriod].queryItemKey, value: self.toJSON().rawString())
+        return URLQueryItem(name: [TimePeriod].queryItemKey,
+                            value: try! String(data: self.toJSON().rawData(), encoding: .ascii))
     }
-    
+
     static var queryItemKey: String {
         return "TimePeriods"
     }
     
     public static func fromQueryItems(_ queryItems: [URLQueryItem]) -> [TimePeriod]? {
         for queryItem in queryItems {
-            if let value = queryItem.value, queryItem.name == [TimePeriod].queryItemKey {
-                let json = JSON(parseJSON: value)
+            if let jsonString = queryItem.value, queryItem.name == [TimePeriod].queryItemKey {
+                let json = JSON(parseJSON: jsonString)
                 return [TimePeriod].fromJSON(json)
             }
         }
