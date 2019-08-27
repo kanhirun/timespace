@@ -15,21 +15,8 @@ class MessagesViewController: MSMessagesAppViewController {
         // Use this method to configure the extension and restore previously stored state.
         
         if let message = conversation.selectedMessage  {
-            guard let url = message.url else {
-                debugPrint("no url")
-                return
-            }
-            guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: false) else {
-                debugPrint("no url components")
-                return
-            }
-            guard let queryItems = components.queryItems else {
-                debugPrint("no query items")
-                return
-            }
-            
-            let periods = [TimePeriod].fromQueryItems(queryItems)!
-            let service = Service(fromQueryItems: queryItems)!
+            let periods = [TimePeriod].fromMessage(message)
+            let service = Service(message: message)
 
             present(instantiateTimeSheetViewController(periods, conversation, service), animated: false, completion: nil)
         } else {
