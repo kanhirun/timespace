@@ -13,15 +13,17 @@ class MessagesViewController: MSMessagesAppViewController {
         // Called when the extension is about to move from the inactive to active state.
         // This will happen when the extension is about to present UI.
         // Use this method to configure the extension and restore previously stored state.
-        
-        if let message = conversation.selectedMessage  {
-            let periods = [TimePeriod].fromMessage(message)
-            let service = Service(message: message)
-
-            present(instantiateTimeSheetViewController(periods, conversation, service), animated: false, completion: nil)
-        } else {
-            present(instantiateServiceViewController(conversation), animated: false, completion: nil)
-        }
+        let vc = UIStoryboard(name: "TimeSheet", bundle: Bundle.main).instantiateInitialViewController()! as! TimeSheetCollectionViewControllerV2
+        vc.conversation = conversation
+        present(vc, animated: false, completion: nil)
+//        if let message = conversation.selectedMessage  {
+//            let periods = [TimePeriod].fromMessage(message)
+//            let service = Service(message: message)
+//
+//            present(instantiateTimeSheetViewController(periods, conversation, service), animated: false, completion: nil)
+//        } else {
+//            present(instantiateServiceViewController(conversation), animated: false, completion: nil)
+//        }
     }
     
     func instantiateTimeSheetViewController(_ data: [TimePeriod], _ conversation: MSConversation, _ service: Service) -> UIViewController {

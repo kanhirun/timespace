@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gLe-R5-sXP">
+    <device id="retina6_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Time Sheet Collection View ControllerV2-->
+        <scene sceneID="E5J-pc-GQp">
+            <objects>
+                <viewController storyboardIdentifier="TimeSheetCollectionViewControllerV2" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gLe-R5-sXP" customClass="TimeSheetCollectionViewControllerV2" customModule="imessage" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="M01-IR-cgQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView verifyAmbiguity="ignoreSizes" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3Ls-HX-Q5H" customClass="TimeSheetCollectionViewV2" customModule="imessage" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" sectionInsetReference="layoutMargins" id="Egi-nj-lC5">
+                                    <size key="itemSize" width="100" height="100"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TimeSheetCollectionViewCell" id="9DW-JO-DcU" customClass="TimeSheetCollectionViewCell" customModule="imessage" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="58" width="100" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vXA-HH-8nR" userLabel="Time Label" customClass="TimeButtonV2" customModule="imessage" customModuleProvider="target">
+                                                    <rect key="frame" x="-0.6666666666666643" y="21" width="101.33333333333331" height="58"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <inset key="contentEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
+                                                    <state key="normal" title="10:00PM"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="10"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </button>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="vXA-HH-8nR" firstAttribute="centerX" secondItem="9DW-JO-DcU" secondAttribute="centerX" id="7Fe-yA-92m"/>
+                                            <constraint firstItem="vXA-HH-8nR" firstAttribute="centerY" secondItem="9DW-JO-DcU" secondAttribute="centerY" id="BEu-Ik-OWr"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="timeButton" destination="vXA-HH-8nR" id="5Ip-Wi-sSg"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TimeSheetHeaderView" id="7NA-Wl-Jwb" customClass="TimeSheetHeaderView" customModule="imessage" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="8" width="414" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FwQ-5u-epB">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                            <subviews>
+                                                <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3SC-XY-1ML" userLabel="Sub-Header Views">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                                </stackView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="3SC-XY-1ML" firstAttribute="centerX" secondItem="FwQ-5u-epB" secondAttribute="centerX" id="9U0-kV-dSr"/>
+                                                <constraint firstItem="3SC-XY-1ML" firstAttribute="top" secondItem="FwQ-5u-epB" secondAttribute="top" id="Dpl-m9-gEg"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="FwQ-5u-epB" secondAttribute="trailing" id="MLA-ji-a8L"/>
+                                        <constraint firstItem="FwQ-5u-epB" firstAttribute="top" secondItem="7NA-Wl-Jwb" secondAttribute="top" id="fIN-JE-x6a"/>
+                                        <constraint firstAttribute="bottom" secondItem="FwQ-5u-epB" secondAttribute="bottom" id="hTb-IN-w9P"/>
+                                        <constraint firstItem="FwQ-5u-epB" firstAttribute="leading" secondItem="7NA-Wl-Jwb" secondAttribute="leading" id="p7A-qn-V9q"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="contentView" destination="FwQ-5u-epB" id="pJd-Vc-qL4"/>
+                                        <outlet property="subHeadersView" destination="3SC-XY-1ML" id="hen-ZG-z5u"/>
+                                    </connections>
+                                </collectionReusableView>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="e47-H4-Kr0" firstAttribute="top" secondItem="3Ls-HX-Q5H" secondAttribute="top" id="2sn-Kp-eGH"/>
+                            <constraint firstItem="3Ls-HX-Q5H" firstAttribute="centerX" secondItem="e47-H4-Kr0" secondAttribute="centerX" id="Lyy-cn-hr1"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="e47-H4-Kr0"/>
+                    </view>
+                    <connections>
+                        <outlet property="contentView" destination="3Ls-HX-Q5H" id="J6B-mI-kNv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Hi-9f-6PK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>
