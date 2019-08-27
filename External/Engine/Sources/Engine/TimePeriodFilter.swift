@@ -1,6 +1,10 @@
 import Foundation
 import SwiftDate
 
+func quantized(_ periods: [TimePeriod], unit: DateComponents) -> [TimePeriod] {
+    return quantized(periods, unit: unit.timeInterval)
+}
+
 func quantized(_ periods: [TimePeriod], unit: TimeInterval) -> [TimePeriod] {
     let res = periods
         // Maps the time periods into smaller, unit-sized chunks, if possible

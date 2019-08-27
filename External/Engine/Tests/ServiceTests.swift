@@ -10,7 +10,7 @@ final class ServiceTests: QuickSpec {
 
             describe("JSON") {
                 it("converts into JSON type") {
-                    let service = Service(name: "service-name", duration: 10.days.timeInterval)
+                    let service = Service(name: "service-name", duration: 10.days)
                     
                     let subject = service.toJSON()
                     

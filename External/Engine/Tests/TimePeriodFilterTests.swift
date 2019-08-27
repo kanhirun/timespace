@@ -126,7 +126,7 @@ final class TimePeriodFilterTests: QuickSpec {
         
         describe(".quantize(_:unit:)") {
             it("decomposes the time period") {
-                let unit = 1.hours.timeInterval
+                let unit = 1.hours
                 let periods = [
                     TimePeriod(end: DateInRegion(), duration: 5.hours)
                 ]
@@ -135,12 +135,12 @@ final class TimePeriodFilterTests: QuickSpec {
                 
                 expect(res.count) == 5
                 expect(res.allSatisfy { period in
-                    period.duration == unit
+                    period.duration == unit.timeInterval
                 }).to(beTrue())
             }
 
             it("zeros out the time period if unit is larger") {
-                let larger = 1.hours.timeInterval
+                let larger = 1.hours
                 let smaller = [
                     TimePeriod(end: DateInRegion(), duration: 10.minutes)
                 ]
@@ -151,7 +151,7 @@ final class TimePeriodFilterTests: QuickSpec {
             }
 
             it("decomposes the time period, and disposes the rest") {
-                let unit = 1.hours.timeInterval
+                let unit = 1.hours
                 let extra = [
                     TimePeriod(end: DateInRegion(), duration: 3.hours + 45.minutes)
                 ]
