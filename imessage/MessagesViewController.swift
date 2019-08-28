@@ -5,7 +5,14 @@ import SwiftyJSON
 import SwiftDate
 import Engine
 
-class MessagesViewController: MSMessagesAppViewController {
+class MessagesViewController: MSMessagesAppViewController, TimeSheetCollectionViewDelegate {
+
+    func didAction(action: ViewAction) {
+        switch action {
+        case .booked(_):
+            dismiss()
+        }
+    }
 
     // MARK: - Conversation Handling
     
@@ -13,30 +20,33 @@ class MessagesViewController: MSMessagesAppViewController {
         // Called when the extension is about to move from the inactive to active state.
         // This will happen when the extension is about to present UI.
         // Use this method to configure the extension and restore previously stored state.
-        let vc = UIStoryboard(name: "TimeSheet", bundle: Bundle.main).instantiateInitialViewController()! as! TimeSheetCollectionViewControllerV2
-        vc.conversation = conversation
-        present(vc, animated: false, completion: nil)
-//        if let message = conversation.selectedMessage  {
-//            let periods = [TimePeriod].fromMessage(message)
-//            let service = Service(message: message)
-//
-//            present(instantiateTimeSheetViewController(periods, conversation, service), animated: false, completion: nil)
-//        } else {
-//            present(instantiateServiceViewController(conversation), animated: false, completion: nil)
-//        }
+
+        if let message = conversation.selectedMessage  {
+            let periods = [TimePeriod].fromMessage(message)
+            let service = Service(message: message)
+
+            present(instantiateTimeSheetViewController(periods, conversation, service), animated: false, completion: nil)
+        } else {
+            present(instantiateServiceViewController(conversation), animated: false, completion: nil)
+        }
     }
     
     func instantiateTimeSheetViewController(_ data: [TimePeriod], _ conversation: MSConversation, _ service: Service) -> UIViewController {
-        let nav: UINavigationController = {
-            let rootVC = self.storyboard!.instantiateViewController(withIdentifier: "TimeSheetViewController") as! TimeSheetViewController
-            rootVC.data = data
-            rootVC.activeConversation = conversation
-            rootVC.controller = self
-            rootVC.service = service
-            return UINavigationController(rootViewController: rootVC)
-        }()
+        let destination = UIStoryboard(name: "TimeSheet", bundle: Bundle.main).instantiateInitialViewController() as! TimeSheetCollectionViewControllerV2
         
-        return nav
+        destination.viewModel = ViewModel(
+            periods: data,
+            service: service,
+            conversation: conversation
+        )
+        destination.conversation = conversation
+        destination.actionDelegate = self
+//        destination.data = data
+//        destination.activeConversation = conversation
+//        destination.controller = self
+//        destination.service = service
+        
+        return destination
     }
     
     func instantiateServiceViewController(_ conversation: MSConversation) -> UIViewController {

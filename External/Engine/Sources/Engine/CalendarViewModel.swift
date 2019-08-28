@@ -9,7 +9,7 @@ public class CalendarViewModel {
     
     private var filters: TimePeriodFilter
     private let tag = "CalendarViewModel"
-    private let service: Service
+    public let service: Service
     
     private let calendar = AppleCalendar()
 

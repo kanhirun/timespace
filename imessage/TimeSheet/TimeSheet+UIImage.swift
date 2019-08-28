@@ -1,8 +1,9 @@
 import UIKit
 
 extension TimeSheetCollectionViewV2 {
-    static func toImage() -> UIImage {
+    static func toImage(viewModel: ViewModel) -> UIImage {
         let vc = UIStoryboard(name: "TimeSheet", bundle: Bundle.main).instantiateInitialViewController()! as! TimeSheetCollectionViewControllerV2
+        vc.viewModel = viewModel
         _ = vc.view
         let viewToSnapshot = vc.contentView!
         

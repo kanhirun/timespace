@@ -1,34 +1,23 @@
 import SwiftDate
 import Foundation
-
-//let periods = [
-//    TimePeriod(start: DateInRegion("2019-08-01T10:00:00Z")!, duration: 1.hours),
-//    TimePeriod(start: DateInRegion("2019-08-01T09:00:00Z")!, duration: 1.hours),
-//    TimePeriod(start: DateInRegion("2019-08-01T08:00:00Z")!, duration: 1.hours),
-//    TimePeriod(start: DateInRegion("2019-08-01T07:00:00Z")!, duration: 1.hours),
-//    TimePeriod(start: DateInRegion("2019-08-01T06:00:00Z")!, duration: 1.hours),
-//    TimePeriod(start: DateInRegion("2019-08-01T05:00:00Z")!, duration: 1.hours),
-//
-////    TimePeriod(start: DateInRegion("2019-08-02T10:00:00Z")!, duration: 1.hours),
-////    TimePeriod(start: DateInRegion("2019-08-02T11:00:00Z")!, duration: 1.hours),
-////
-////    TimePeriod(start: DateInRegion("2019-08-03T20:00:00Z")!, duration: 1.hours),
-////    TimePeriod(start: DateInRegion("2019-08-03T21:00:00Z")!, duration: 1.hours),
-////    TimePeriod(start: DateInRegion("2019-08-03T22:00:00Z")!, duration: 1.hours),
-//]
-
-let periods = Array(repeating: TimePeriod(start: DateInRegion("2019-08-01T10:00:00Z")!, duration: 1.hours), count: 50)
+import Messages
+import Engine
 
 struct ViewModel {
 
     let subHeaderViewModels: [HeaderViewModel]
     let cellViewModels: [[CellViewModel]]
     
-    init() {
-        (self.subHeaderViewModels, self.cellViewModels) = ViewModel.generateModels(periods: periods)
+    private let service: Service
+    private let conversation: MSConversation
+    
+    init(periods: [TimePeriod], service: Service, conversation: MSConversation) {
+        (self.subHeaderViewModels, self.cellViewModels) = ViewModel.generateModels(periods: periods, service: service)
+        self.service = service
+        self.conversation = conversation
     }
     
-    private static func generateModels(periods: [TimePeriod]) -> ( [HeaderViewModel], [[CellViewModel]] ) {
+    private static func generateModels(periods: [TimePeriod], service: Service) -> ( [HeaderViewModel], [[CellViewModel]] ) {
         var headers = [HeaderViewModel]()
         var cells = [ [CellViewModel] ]()
 
@@ -46,11 +35,20 @@ struct ViewModel {
                 headerIndex += 1
             }
             
-            let cell = CellViewModel(period)
+            let cell = CellViewModel(timePeriod: period, service: service)
             cells[headerIndex].append(cell)
         }
         
         return (headers, cells)
+    }
+    
+    func composeMessage() -> MSMessage {
+        let message = MSMessage(session: conversation.selectedMessage?.session ?? MSSession())
+        let layout = MSMessageTemplateLayout()
+        layout.image = TimeSheetCollectionViewV2.toImage(viewModel: self)
+        message.layout = layout
+
+        return message
     }
 
 }
@@ -68,8 +66,13 @@ struct HeaderViewModel {
 struct CellViewModel {
     let timeText: String
     
-    init(_ timePeriod: TimePeriod) {
+    let service: Service
+    let period: TimePeriod
+    
+    init(timePeriod: TimePeriod, service: Service) {
         let ref = timePeriod.start!
         self.timeText = "\(ref.toFormat("h:mm"))\(ref.toFormat("a").lowercased())"
+        self.service = service
+        self.period = timePeriod
     }
 }

@@ -107,15 +107,6 @@ class CalendarViewController: UIViewController,
     }
     
     private func composeCalendarSnapshot(data: [TimePeriod]) -> MSMessage {
-        let layout = MSMessageTemplateLayout()
-        let sheet = TimeSheetView(periods: data, frame: CGRect(x: 0, y: 0, width: 300, height: 400))
-        sheet.translatesAutoresizingMaskIntoConstraints = true
-        layout.image = sheet.asImage()
-
-        let session = activeConversation?.selectedMessage?.session ?? MSSession()
-        let msg = MSMessage(session: session)
-        msg.layout = layout
-
-        return msg
+        return ViewModel(periods: data, service: model!.service, conversation: activeConversation!).composeMessage()
     }
 }
