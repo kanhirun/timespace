@@ -93,7 +93,18 @@ final class TimePeriodArrayTests: QuickSpec {
 
                 expect(rounded.start!.dateComponents.hour) == 10
                 expect(rounded.start!.dateComponents.minute) == 15
-                expect(subject.duration) == rounded.duration
+            }
+            
+            it("does not shift when no rounding occurs") {
+                let subject = TimePeriod(
+                    start: DateInRegion("2019-08-01T10:00:00Z")!,
+                    end: DateInRegion("2019-08-01T1:30:00Z")!
+                )
+                
+                let rounded = subject.periodRounded(.toFloorMins(60))
+                
+                expect(rounded.start!.dateComponents.hour) == 10
+                expect(rounded.start!.dateComponents.minute) == 0
             }
         }
     }
