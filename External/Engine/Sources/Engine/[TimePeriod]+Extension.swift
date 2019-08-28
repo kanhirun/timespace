@@ -19,7 +19,7 @@ public extension Array where Element : TimePeriod {
         
         while i < n {
             while j < n {
-                if let overlap = arr[i].overlappedPeriod(arr[j]) {
+                if let overlap = arr[i].periodOverlapped(arr[j]) {
                     res.append(overlap as! TimePeriod)
                 }
                 

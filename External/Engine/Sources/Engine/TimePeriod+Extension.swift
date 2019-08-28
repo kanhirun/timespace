@@ -7,7 +7,7 @@ extension TimePeriod {
     ///
     /// - Parameter other: the given period
     /// - Returns: An overlapping period or `nil` otherwise
-    func overlappedPeriod(_ other: TimePeriodProtocol) -> TimePeriodProtocol? {
+    func periodOverlapped(_ other: TimePeriodProtocol) -> TimePeriodProtocol? {
         guard overlaps(with: other) else { return nil }
 
         return TimePeriod(start: max(other.start!, start!), end: min(other.end!, end!))
