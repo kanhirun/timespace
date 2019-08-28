@@ -1,21 +1,23 @@
 import SwiftDate
 import Foundation
 
-let periods = [
-    TimePeriod(start: DateInRegion("2019-08-01T10:00:00Z")!, duration: 1.hours),
-    TimePeriod(start: DateInRegion("2019-08-01T09:00:00Z")!, duration: 1.hours),
-    TimePeriod(start: DateInRegion("2019-08-01T08:00:00Z")!, duration: 1.hours),
-    TimePeriod(start: DateInRegion("2019-08-01T07:00:00Z")!, duration: 1.hours),
-    TimePeriod(start: DateInRegion("2019-08-01T06:00:00Z")!, duration: 1.hours),
-    TimePeriod(start: DateInRegion("2019-08-01T05:00:00Z")!, duration: 1.hours),
-    
-    TimePeriod(start: DateInRegion("2019-08-02T10:00:00Z")!, duration: 1.hours),
-    TimePeriod(start: DateInRegion("2019-08-02T11:00:00Z")!, duration: 1.hours),
-    
-    TimePeriod(start: DateInRegion("2019-08-03T20:00:00Z")!, duration: 1.hours),
-    TimePeriod(start: DateInRegion("2019-08-03T21:00:00Z")!, duration: 1.hours),
-    TimePeriod(start: DateInRegion("2019-08-03T22:00:00Z")!, duration: 1.hours),
-]
+//let periods = [
+//    TimePeriod(start: DateInRegion("2019-08-01T10:00:00Z")!, duration: 1.hours),
+//    TimePeriod(start: DateInRegion("2019-08-01T09:00:00Z")!, duration: 1.hours),
+//    TimePeriod(start: DateInRegion("2019-08-01T08:00:00Z")!, duration: 1.hours),
+//    TimePeriod(start: DateInRegion("2019-08-01T07:00:00Z")!, duration: 1.hours),
+//    TimePeriod(start: DateInRegion("2019-08-01T06:00:00Z")!, duration: 1.hours),
+//    TimePeriod(start: DateInRegion("2019-08-01T05:00:00Z")!, duration: 1.hours),
+//
+////    TimePeriod(start: DateInRegion("2019-08-02T10:00:00Z")!, duration: 1.hours),
+////    TimePeriod(start: DateInRegion("2019-08-02T11:00:00Z")!, duration: 1.hours),
+////
+////    TimePeriod(start: DateInRegion("2019-08-03T20:00:00Z")!, duration: 1.hours),
+////    TimePeriod(start: DateInRegion("2019-08-03T21:00:00Z")!, duration: 1.hours),
+////    TimePeriod(start: DateInRegion("2019-08-03T22:00:00Z")!, duration: 1.hours),
+//]
+
+let periods = Array(repeating: TimePeriod(start: DateInRegion("2019-08-01T10:00:00Z")!, duration: 1.hours), count: 50)
 
 struct ViewModel {
 

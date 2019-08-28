@@ -70,14 +70,16 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FwQ-5u-epB">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                             <subviews>
-                                                <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3SC-XY-1ML" userLabel="Sub-Header Views">
+                                                <stackView verifyAmbiguity="off" opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="3SC-XY-1ML" userLabel="Sub-Header Views">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                                 </stackView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="3SC-XY-1ML" firstAttribute="centerX" secondItem="FwQ-5u-epB" secondAttribute="centerX" id="9U0-kV-dSr"/>
+                                                <constraint firstAttribute="bottom" secondItem="3SC-XY-1ML" secondAttribute="bottom" id="BVW-XT-ekX"/>
                                                 <constraint firstItem="3SC-XY-1ML" firstAttribute="top" secondItem="FwQ-5u-epB" secondAttribute="top" id="Dpl-m9-gEg"/>
+                                                <constraint firstItem="3SC-XY-1ML" firstAttribute="leading" secondItem="FwQ-5u-epB" secondAttribute="leading" id="PEX-RZ-BdU"/>
+                                                <constraint firstAttribute="trailing" secondItem="3SC-XY-1ML" secondAttribute="trailing" id="bok-7o-qqM"/>
                                             </constraints>
                                         </view>
                                     </subviews>

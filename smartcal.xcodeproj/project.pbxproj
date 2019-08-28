@@ -40,6 +40,7 @@
 		E0A424212315B88500084386 /* TimeSheet+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A424202315B88500084386 /* TimeSheet+UIImage.swift */; };
 		E0A424232315B97F00084386 /* TimeSheet+ViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A424222315B97F00084386 /* TimeSheet+ViewModels.swift */; };
 		E0A424252316062200084386 /* TimeSheet.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0A424242316062200084386 /* TimeSheet.storyboard */; };
+		E0A424272316BF3900084386 /* TimeSheet+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A424262316BF3900084386 /* TimeSheet+Layout.swift */; };
 		E0F5B904230639840043605C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F5B903230639840043605C /* AppDelegate.swift */; };
 		E0F5B909230639840043605C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0F5B907230639840043605C /* Main.storyboard */; };
 		E0F5B90B230639860043605C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0F5B90A230639860043605C /* Assets.xcassets */; };
@@ -173,6 +174,7 @@
 		E0A424202315B88500084386 /* TimeSheet+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeSheet+UIImage.swift"; sourceTree = "<group>"; };
 		E0A424222315B97F00084386 /* TimeSheet+ViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeSheet+ViewModels.swift"; sourceTree = "<group>"; };
 		E0A424242316062200084386 /* TimeSheet.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TimeSheet.storyboard; sourceTree = "<group>"; };
+		E0A424262316BF3900084386 /* TimeSheet+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeSheet+Layout.swift"; sourceTree = "<group>"; };
 		E0F5B900230639840043605C /* smartcal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smartcal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F5B903230639840043605C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0F5B908230639840043605C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 				E0A424242316062200084386 /* TimeSheet.storyboard */,
 				E06CA3FC231562C800546547 /* TimeSheet+ViewController.swift */,
 				E0A4240D2315858000084386 /* TimeSheet+Views.swift */,
+				E0A424262316BF3900084386 /* TimeSheet+Layout.swift */,
 				E0A424222315B97F00084386 /* TimeSheet+ViewModels.swift */,
 				E0A424202315B88500084386 /* TimeSheet+UIImage.swift */,
 			);
@@ -569,6 +572,7 @@
 				E0A424232315B97F00084386 /* TimeSheet+ViewModels.swift in Sources */,
 				E09FFB7F230F4D6F001EF1A5 /* UIView+loadNib.swift in Sources */,
 				E06A5EAA2306481E0059524E /* AvailabilityViewController.swift in Sources */,
+				E0A424272316BF3900084386 /* TimeSheet+Layout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
