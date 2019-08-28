@@ -12,7 +12,9 @@ struct ViewModel {
     private let conversation: MSConversation
     
     init(periods: [TimePeriod], service: Service, conversation: MSConversation) {
-        (self.subHeaderViewModels, self.cellViewModels) = ViewModel.generateModels(periods: periods, service: service)
+        let localizedRegionPeriods = periods.map { TimePeriod(start: $0.start?.convertTo(region: Region.local), end: $0.end?.convertTo(region: Region.local)) }
+        
+        (self.subHeaderViewModels, self.cellViewModels) = ViewModel.generateModels(periods: localizedRegionPeriods, service: service)
         self.service = service
         self.conversation = conversation
     }
