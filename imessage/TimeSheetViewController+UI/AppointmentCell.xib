@@ -18,6 +18,7 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aUJ-fP-eFw" userLabel="Time Button" customClass="TimeButton" customModule="imessage" customModuleProvider="target">
                     <rect key="frame" x="16" y="44" width="154" height="49"/>
+                    <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                     <inset key="contentEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
                     <state key="normal" title="10:00am"/>

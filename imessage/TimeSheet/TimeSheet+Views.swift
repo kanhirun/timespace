@@ -17,11 +17,11 @@ class TimeSheetCollectionViewV2: UICollectionView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        dataSource = self
         
+        dataSource = self
         showsVerticalScrollIndicator = false
-        makeStickyHeaders()
+        
+        collectionViewLayout = TimeSheetLayout()
     }
     
     override func didMoveToSuperview() {
@@ -35,11 +35,97 @@ class TimeSheetCollectionViewV2: UICollectionView {
             bottomAnchor.constraint(equalTo: superview.bottomAnchor).isActive = true
         }
     }
+}
+
+
+// MARK: - Custom Layout
+
+
+class TimeSheetLayout: UICollectionViewLayout {
     
-    private func makeStickyHeaders() {
-        let layout = collectionViewLayout as? UICollectionViewFlowLayout
-        layout?.sectionHeadersPinToVisibleBounds = true
+    private var numberOfColumns: Int {
+        return collectionView!.numberOfSections
     }
+
+    private var cellPadding: CGFloat = 6
+
+    private var cache = [UICollectionViewLayoutAttributes]()
+    
+    private let cellHeight: CGFloat = 60
+    
+    private var contentHeight: CGFloat = 0
+
+    private var contentWidth: CGFloat {
+        guard let collectionView = collectionView else {
+            return 0
+        }
+        let insets = collectionView.contentInset
+        return collectionView.bounds.width - (insets.left + insets.right)
+    }
+    
+    override var collectionViewContentSize: CGSize {
+        return CGSize(width: contentWidth, height: contentHeight)
+    }
+    
+    override func prepare() {
+        guard cache.isEmpty == true, let collectionView = collectionView else {
+            return
+        }
+
+        // Tracking offsets
+        let columnWidth = contentWidth / CGFloat(numberOfColumns)
+        var xOffset = [CGFloat]()
+        for column in 0 ..< numberOfColumns {
+            xOffset.append(CGFloat(column) * columnWidth)
+        }
+        var yOffset = [CGFloat](repeating: 0, count: numberOfColumns)
+
+        // Handles the rest of the content
+        for column in 0 ..< collectionView.numberOfSections {
+            for item in 0 ..< collectionView.numberOfItems(inSection: column) {
+                let indexPath = IndexPath(item: item, section: column)
+                
+                // Calculates frame
+                let height = cellPadding * 2 + cellHeight
+                let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
+                let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
+                
+                // Sets attrs to cell at indexPath
+                let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+                attributes.frame = insetFrame
+                cache.append(attributes)
+                
+                // Expands content height
+                contentHeight = max(contentHeight, frame.maxY)
+                yOffset[column] = yOffset[column] + height
+            }
+            
+            xOffset[column] = xOffset[column] + columnWidth
+        }
+        
+    }
+    
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        var visibleLayoutAttributes = [UICollectionViewLayoutAttributes]()
+
+        // Loop through the cache and look for items in the rect
+        for attributes in cache {
+            if attributes.frame.intersects(rect) {
+                visibleLayoutAttributes.append(attributes)
+            }
+        }
+
+        return visibleLayoutAttributes
+    }
+    
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return cache[indexPath.item]
+    }
+    
+    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return cache[indexPath.item]
+    }
+
 }
 
 
@@ -49,7 +135,11 @@ class TimeSheetCollectionViewV2: UICollectionView {
 extension TimeSheetCollectionViewV2: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.numberOfCells
+        return viewModel.cellViewModels[section].count
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return viewModel.cellViewModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -57,29 +147,9 @@ extension TimeSheetCollectionViewV2: UICollectionViewDataSource {
                                                       for: indexPath) as! TimeSheetCollectionViewCell
 
         cell.delegate = actionDelegate
-        cell.viewModel = viewModel.cellViewModels[indexPath.row]
+        cell.viewModel = viewModel.cellViewModels[indexPath.section][indexPath.row]
 
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind {
-        case UICollectionView.elementKindSectionHeader:
-            let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: "TimeSheetHeaderView", for: indexPath
-                ) as! TimeSheetHeaderView
-            
-            header.subHeaderViewModels = viewModel.subHeaderViewModels
-            
-            return header
-        default:
-            return UICollectionReusableView()
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0);
     }
 }
 
@@ -89,34 +159,21 @@ extension TimeSheetCollectionViewV2: UICollectionViewDataSource {
 
 class TimeSheetHeaderView: UICollectionReusableView {
     
-    static let fixedHeaderHeight: CGFloat = 62
-    static let widthRatio: CGFloat = 0.3
-    
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var subHeadersView: UIStackView!
-    
+    @IBOutlet weak var subHeaderViews: UIStackView!
+
     var subHeaderViewModels: [HeaderViewModel]? {
         didSet {
             installSubHeaders()
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        subHeadersView.arrangedSubviews.forEach { view in
-            let widthRatio = TimeSheetHeaderView.widthRatio
-            view.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: widthRatio).isActive = true
-        }
-    }
-    
     private func installSubHeaders() {
-        subHeaderViewModels?.forEach { headerVM in
+        subHeaderViewModels?.forEach { subHeaderVM in
             let subHeaderView: DateCell = .fromNib()
 
-            subHeaderView.viewModel = headerVM
+            subHeaderView.viewModel = subHeaderVM
 
-            self.subHeadersView.addArrangedSubview(subHeaderView)
+            self.subHeaderViews.addArrangedSubview(subHeaderView)
         }
     }
 }
@@ -145,6 +202,7 @@ class TimeSheetCollectionViewCell: UICollectionViewCell {
     @objc func didAction() {
         delegate?.didAction()
     }
+
 }
 
 class TimeButtonV2: UIButton {
@@ -153,5 +211,9 @@ class TimeButtonV2: UIButton {
         layer.cornerRadius = 10
         layer.borderWidth = 1
         layer.borderColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 105, height: 60)
     }
 }

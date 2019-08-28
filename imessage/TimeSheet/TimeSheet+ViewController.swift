@@ -2,8 +2,7 @@ import UIKit
 import Messages
 
 class TimeSheetCollectionViewControllerV2: UIViewController,
-                                           TimeSheetCollectionViewDelegate,
-                                           UICollectionViewDelegateFlowLayout {
+                                           TimeSheetCollectionViewDelegate {
 
     @IBOutlet var contentView: TimeSheetCollectionViewV2!
     
@@ -13,7 +12,6 @@ class TimeSheetCollectionViewControllerV2: UIViewController,
         super.viewDidLoad()
         
         contentView.actionDelegate = self
-        contentView.delegate = self
     }
     
     func didAction() {
@@ -23,11 +21,5 @@ class TimeSheetCollectionViewControllerV2: UIViewController,
         message.layout = layout
 
         conversation.insert(message, completionHandler: nil)
-    }
-    
-    // todo: Not sure why this didn't work delegating to collectionView!
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.intrinsicContentSize.width,
-                      height: TimeSheetHeaderView.fixedHeaderHeight)
     }
 }

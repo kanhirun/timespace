@@ -2,26 +2,34 @@ import SwiftDate
 import Foundation
 
 struct ViewModel {
-    
-    var numberOfCells: Int {
-        return cellViewModels.count
-    }
 
     let subHeaderViewModels: [HeaderViewModel]
-    let cellViewModels: [CellViewModel]
+    let cellViewModels: [ [CellViewModel] ]
     
     init() {
         self.subHeaderViewModels = [
             HeaderViewModel(DateComponents(month: 1, day: 12, weekday: 1)),
-            HeaderViewModel(DateComponents(month: 1, day: 12, weekday: 1)),
-            HeaderViewModel(DateComponents(month: 1, day: 12, weekday: 1)),
+            HeaderViewModel(DateComponents(month: 1, day: 13, weekday: 2)),
+            HeaderViewModel(DateComponents(month: 1, day: 14, weekday: 3)),
         ]
+
         self.cellViewModels = [
-            CellViewModel(TimePeriod(start: DateInRegion(), end: DateInRegion())),
-            CellViewModel(TimePeriod(start: 2.days.fromNow.inDefaultRegion(), end: DateInRegion())),
-            CellViewModel(TimePeriod(start: 2.days.fromNow.inDefaultRegion(), end: DateInRegion())),
-            CellViewModel(TimePeriod(start: 2.days.fromNow.inDefaultRegion(), end: DateInRegion())),
-            CellViewModel(TimePeriod(start: 2.days.fromNow.inDefaultRegion(), end: DateInRegion())),
+            [
+                CellViewModel(TimePeriod(start: DateInRegion("2019-01-12T01:00:00Z")!, end: DateInRegion())),
+                CellViewModel(TimePeriod(start: DateInRegion("2019-01-12T02:00:00Z")!, end: DateInRegion())),
+                CellViewModel(TimePeriod(start: DateInRegion("2019-01-12T03:00:00Z")!, end: DateInRegion())),
+            ],
+            [
+                CellViewModel(TimePeriod(start: DateInRegion("2019-01-13T11:00:00Z")!, end: DateInRegion())),
+                CellViewModel(TimePeriod(start: DateInRegion("2019-01-13T12:00:00Z")!, end: DateInRegion())),
+                CellViewModel(TimePeriod(start: DateInRegion("2019-01-13T13:00:00Z")!, end: DateInRegion())),
+                CellViewModel(TimePeriod(start: DateInRegion("2019-01-13T14:00:00Z")!, end: DateInRegion())),
+            ],
+            [
+                CellViewModel(TimePeriod(start: DateInRegion("2019-01-14T20:00:00Z")!, end: DateInRegion())),
+                CellViewModel(TimePeriod(start: DateInRegion("2019-01-14T21:00:00Z")!, end: DateInRegion())),
+                CellViewModel(TimePeriod(start: DateInRegion("2019-01-14T22:00:00Z")!, end: DateInRegion())),
+            ],
         ]
     }
     

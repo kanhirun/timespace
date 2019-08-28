@@ -88,8 +88,7 @@
                                         <constraint firstItem="FwQ-5u-epB" firstAttribute="leading" secondItem="7NA-Wl-Jwb" secondAttribute="leading" id="p7A-qn-V9q"/>
                                     </constraints>
                                     <connections>
-                                        <outlet property="contentView" destination="FwQ-5u-epB" id="pJd-Vc-qL4"/>
-                                        <outlet property="subHeadersView" destination="3SC-XY-1ML" id="hen-ZG-z5u"/>
+                                        <outlet property="subHeaderViews" destination="3SC-XY-1ML" id="c2V-My-KQT"/>
                                     </connections>
                                 </collectionReusableView>
                             </collectionView>
