@@ -7,7 +7,6 @@ import SwiftDate
 @testable import Engine
 
 final class TimePeriodArrayTests: QuickSpec {
-    
     override func spec() {
 
         describe(".overlappedPeriods()") {
@@ -70,6 +69,33 @@ final class TimePeriodArrayTests: QuickSpec {
             }
         }
 
+        describe(".periodRounded(_:)") {
+            it("shifts the time period to the rounded value") {
+                let subject = TimePeriod(
+                    start: DateInRegion("2019-08-01T00:15:00Z")!,
+                    end: DateInRegion("2019-08-01T1:30:00Z")!
+                )
+                
+                let rounded = subject.periodRounded(.toCeil30Mins)
+
+                expect(rounded.start!.dateComponents.hour) == 0
+                expect(rounded.start!.dateComponents.minute) == 30
+                expect(subject.duration) == rounded.duration
+            }
+            
+            it("shifts the time period to the floored value") {
+                let subject = TimePeriod(
+                    start: DateInRegion("2019-08-01T10:18:00Z")!,
+                    end: DateInRegion("2019-08-01T1:30:00Z")!
+                )
+                
+                let rounded = subject.periodRounded(.toFloorMins(15))
+
+                expect(rounded.start!.dateComponents.hour) == 10
+                expect(rounded.start!.dateComponents.minute) == 15
+                expect(subject.duration) == rounded.duration
+            }
+        }
     }
 
 }

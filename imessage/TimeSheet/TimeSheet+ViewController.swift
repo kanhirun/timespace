@@ -36,9 +36,12 @@ class TimeSheetCollectionViewControllerV2: UIViewController,
                 }
                 
                 let calendar = AppleCalendar()
-                _ = calendar.book(service: service, period: period)
-                
-                self.actionDelegate?.didAction(action: action)
+
+                if calendar.book(service: service, period: period) {
+                    self.actionDelegate?.didAction(action: action)
+                } else {
+                    debugPrint("booking failed")
+                }
             }
         }
     }

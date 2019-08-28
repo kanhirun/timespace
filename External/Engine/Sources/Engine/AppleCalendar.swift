@@ -21,7 +21,7 @@ public class AppleCalendar: CalendarDataSource {
     public func book(service: Service, period: TimePeriod) -> Bool {
         let newEvent = EKEvent(eventStore: store)
         let defaultCalendar = store.defaultCalendarForNewEvents  // events are saved into a default calendar
-        
+
         newEvent.title = service.name
         newEvent.startDate = period.startDate
         newEvent.endDate = period.endDate

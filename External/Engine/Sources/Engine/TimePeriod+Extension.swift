@@ -3,16 +3,28 @@ import SwiftDate
 
 extension TimePeriod {
 
-    /// Returns a new period representing the overlap between the two
+    /// Returns a new period which overlaps between the two
+    ///
+    /// - Parameter other: the given period
+    /// - Returns: An overlapping period or `nil` otherwise
     func overlappedPeriod(_ other: TimePeriodProtocol) -> TimePeriodProtocol? {
-        guard overlaps(with: other) else {
-            return nil
-        }
-        
+        guard overlaps(with: other) else { return nil }
+
         return TimePeriod(start: max(other.start!, start!), end: min(other.end!, end!))
     }
     
-    /// Decomposes the time period into smaller ones based on criteria
+    func periodRounded(_ mode: RoundDateMode) -> TimePeriod {
+        guard hasFiniteRange else {
+            fatalError("Cannot round infinite time periods.")
+        }
+
+        let roundedStart = start!.dateRoundedAt(mode)
+        let dt = roundedStart.timeIntervalSince(start!)
+
+        return shifted(by: dt)
+    }
+    
+    /// Decomposes the time period into smaller ones
     internal func _filter(by criteria: (DateInRegion) -> Bool, increment: Calendar.Component) -> [TimePeriod] {
         var res = [TimePeriod]()
 
