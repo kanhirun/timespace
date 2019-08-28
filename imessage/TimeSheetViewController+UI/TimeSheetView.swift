@@ -1,34 +1,6 @@
 import UIKit
 import SwiftDate
 
-private extension UIImage {
-    func imageScaledToSize(size: CGSize) -> UIImage {
-        //create drawing context
-        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-        
-        //draw
-        self.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-        
-        //capture resultant image
-        let image = UIGraphicsGetImageFromCurrentImageContext()!
-        
-        UIGraphicsEndImageContext();
-        
-        return image
-    }
-    
-    func imageScaledToFitSize(size: CGSize) -> UIImage {
-        //calculate rect
-        let aspect = self.size.width / self.size.height
-        
-        if (size.width / aspect <= size.height) {
-            return self.imageScaledToSize(size: CGSize(width: size.width, height: size.width / aspect))
-        } else {
-            return self.imageScaledToSize(size: CGSize(width: size.height * aspect, height: size.height))
-        }
-    }
-}
-
 
 class TimeSheetView: UIStackView {
     

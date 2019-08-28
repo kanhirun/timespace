@@ -22,7 +22,9 @@ class MessagesViewController: MSMessagesAppViewController, TimeSheetCollectionVi
         // Use this method to configure the extension and restore previously stored state.
 
         if let message = conversation.selectedMessage  {
-            let periods = [TimePeriod].fromMessage(message)
+            guard let periods = [TimePeriod].fromMessage(message) else {
+                return
+            }
             let service = Service(message: message)
 
             present(instantiateTimeSheetViewController(periods, conversation, service), animated: false, completion: nil)

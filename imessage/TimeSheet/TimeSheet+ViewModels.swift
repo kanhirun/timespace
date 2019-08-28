@@ -46,6 +46,8 @@ struct ViewModel {
         let message = MSMessage(session: conversation.selectedMessage?.session ?? MSSession())
         let layout = MSMessageTemplateLayout()
         layout.image = TimeSheetCollectionViewV2.toImage(viewModel: self)
+        layout.caption = "What times work for you?"
+        layout.subcaption = "Tap for options"
         message.layout = layout
 
         return message
