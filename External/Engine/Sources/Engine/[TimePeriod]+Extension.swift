@@ -34,12 +34,12 @@ public extension Array where Element : TimePeriod {
     }
     
     func encloses(with period: TimePeriod) -> Bool {
-        return self.contains { $0.encloses(with: period) }
+        return periodsShallowMerged().contains { $0.encloses(with: period) }
     }
 
     /// Returns a list of `TimePeriod` that is rounded, if possible
     func periodsRounded(_ mode: RoundDateMode, within availability: [TimePeriod]) -> [TimePeriod] {
-        let res = self.compactMap { period -> TimePeriod? in
+        let res = self.compactMap { (period: TimePeriod) -> TimePeriod? in
             let suggestion = period.periodRounded(mode)
 
             if availability.encloses(with: suggestion) {

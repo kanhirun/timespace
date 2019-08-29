@@ -135,8 +135,9 @@ public final class TimePeriodFilter {
     @discardableResult
     public func quantize(unit: TimeInterval, tag: String) -> TimePeriodFilter {
         let results = quantized(apply(region: .UTC), unit: unit)
+        let rounded = results.periodsRounded(.toCeilMins(60), within: results).periodsShallowMerged()
 
-        stack.append( (tag: tag, contents: results) )
+        stack.append( (tag: tag, contents: rounded) )
         
         return self
     }

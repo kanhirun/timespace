@@ -25,7 +25,7 @@ public class CalendarViewModel {
     public func getResultsToSend() -> ([TimePeriod], URLComponents) {
         let periods = filters.min(only: selectedPeriods, tag: tag)
                              .subtract(fromSource: calendar, tag: tag)
-                             .quantize(unit: self.service.duration, tag: self.tag)
+                             .quantize(unit: self.service.duration, tag: tag)
                              .apply(region: Region.local)
 
         var components = URLComponents()

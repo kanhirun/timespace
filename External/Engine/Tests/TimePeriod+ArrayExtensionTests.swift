@@ -182,6 +182,20 @@ final class TimePeriodTests: QuickSpec {
             xit("recursively merges the periods") {}
         }
         
+        describe("encloses(with:)") {
+            it("returns true") {
+                let subject = [
+                    aPeriod(0, 10),
+                    aPeriod(10, 20)
+                ]
+                let suggestion = aPeriod(5, 15)
+                
+                let res = subject.encloses(with: suggestion)
+
+                expect(res) == true
+            }
+        }
+        
         describe("periodsRoundedIf(_:)") {
             it("cannot round because no availability") {
                 let subject = [
@@ -210,6 +224,13 @@ final class TimePeriodTests: QuickSpec {
 
             it("cannot round because disjoint") {
 //                fatalError("Not yet implemented")
+            }
+            
+            it("does not cause a double round error") {
+                let subject = [
+                    TimePeriod(start: DateInRegion("2019-08-01T04:32:00Z")!, duration: 1.hours),
+                    TimePeriod(start: DateInRegion("2019-08-01T04:32:00Z")!, duration: 1.hours),
+                ]
             }
         }
 
