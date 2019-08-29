@@ -26,6 +26,27 @@ final class TimePeriodTests: QuickSpec {
             }
         }
         
+        describe("periodMerged") {
+            it("returns nil if it doesn't merge") {
+                let noMerge = aPeriod(0, 5).periodMerged(aPeriod(10, 20))
+                expect(noMerge).to(beNil())
+            }
+            
+            it("returns merged period if overlapping") {
+                let merged = aPeriod(0, 10).periodMerged(aPeriod(10, 20))
+                
+                expect(merged?.start?.timeIntervalSince1970) == 0
+                expect(merged?.end?.timeIntervalSince1970) == 20
+            }
+            
+            it("returns merged period otherwise") {
+                let merged = aPeriod(0, 10).periodMerged(aPeriod(5, 10))
+                
+                expect(merged?.start?.timeIntervalSince1970) == 0
+                expect(merged?.end?.timeIntervalSince1970) == 10
+            }
+        }
+        
         describe(".only(weekdays:)") {
 
             beforeEach {
@@ -122,6 +143,73 @@ final class TimePeriodTests: QuickSpec {
                 let results = subject.only(fromHours: [(start: 9, end: 17)])
 
                 expect(results.count) == 2
+            }
+        }
+        
+        describe("periodsMerged()") {
+            it("merges the overlapped periods") {
+                let overlapping = [
+                    aPeriod(0, 10),
+                    aPeriod(5, 10),
+                    aPeriod(20, 30),
+                    aPeriod(30, 40),
+                ]
+                
+                let merged = overlapping.periodsShallowMerged()
+                
+                expect(merged.count) == 2
+                expect(merged.first?.start?.timeIntervalSince1970) == 0
+                expect(merged.first?.end?.timeIntervalSince1970) == 10
+                expect(merged.last?.start?.timeIntervalSince1970) == 20
+                expect(merged.last?.end?.timeIntervalSince1970) == 40
+            }
+
+            it("does not merge distinct periods") {
+                let distinct = [
+                    aPeriod(0, 5),
+                    aPeriod(10, 20),
+                ]
+                
+                let noMerge = distinct.periodsShallowMerged()
+                
+                expect(noMerge.count) == 2
+                expect(noMerge.first?.start?.timeIntervalSince1970) == 0
+                expect(noMerge.first?.end?.timeIntervalSince1970) == 5
+                expect(noMerge.last?.start?.timeIntervalSince1970) == 10
+                expect(noMerge.last?.end?.timeIntervalSince1970) == 20
+            }
+
+            xit("recursively merges the periods") {}
+        }
+        
+        describe("periodsRoundedIf(_:)") {
+            it("cannot round because no availability") {
+                let subject = [
+                    TimePeriod(start: DateInRegion("2019-08-01T04:32:00Z")!, duration: 1.hours)
+                ]
+                
+                let rounded = subject.periodsRounded(.toCeilMins(60), within: subject)
+
+                expect(rounded).to(beEmpty())
+            }
+            
+            it("rounds") {
+                let subject = [
+                    TimePeriod(start: DateInRegion("2019-08-01T04:32:00Z")!, duration: 1.hours),
+                    TimePeriod(start: DateInRegion("2019-08-01T05:32:00Z")!, duration: 1.hours),
+                ]
+                
+                let rounded = subject.periodsRounded(.toCeilMins(60), within: [TimePeriod(startDate: Date.distantPast, endDate: Date.distantFuture)])
+                
+                expect(rounded.count) == 2
+                expect(rounded.first?.start?.dateComponents.hour) == 5
+                expect(rounded.first?.start?.dateComponents.minute) == 0
+                expect(rounded.last?.start?.dateComponents.hour) == 6
+                expect(rounded.first?.start?.dateComponents.minute) == 0
+            }
+
+            it("cannot round because disjoint") {
+//                fatalError("Not yet implemented")
             }
         }
 

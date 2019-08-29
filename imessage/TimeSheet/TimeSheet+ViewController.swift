@@ -21,7 +21,7 @@ class TimeSheetCollectionViewControllerV2: UIViewController,
     
     func didAction(action: ViewAction) {
         switch action {
-        case .booked(let service, let period):
+        case .willBook(let service, let period):
             let layout = MSMessageTemplateLayout()
             let view: ConfirmationView = .fromNib()
             view.updateUI(period, service)
@@ -38,11 +38,13 @@ class TimeSheetCollectionViewControllerV2: UIViewController,
                 let calendar = AppleCalendar()
 
                 if calendar.book(service: service, period: period) {
-                    self.actionDelegate?.didAction(action: action)
+                    self.actionDelegate?.didAction(action: .didBook(service: service, period: period))
                 } else {
                     debugPrint("booking failed")
                 }
             }
+        default:
+            return
         }
     }
 }

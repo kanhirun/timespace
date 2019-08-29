@@ -3,7 +3,8 @@ import SwiftDate
 import Engine
 
 enum ViewAction {
-    case booked(service: Service, period: TimePeriod)
+    case willBook(service: Service, period: TimePeriod)
+    case didBook(service: Service, period: TimePeriod)
 }
 
 protocol TimeSheetCollectionViewDelegate {
@@ -132,7 +133,7 @@ class TimeSheetCollectionViewCell: UICollectionViewCell {
         let service = viewModel!.service
         let period = viewModel!.period
 
-        delegate?.didAction(action: .booked(service: service, period: period))
+        delegate?.didAction(action: .willBook(service: service, period: period))
     }
 
 }

@@ -9,8 +9,10 @@ class MessagesViewController: MSMessagesAppViewController, TimeSheetCollectionVi
 
     func didAction(action: ViewAction) {
         switch action {
-        case .booked(_):
+        case .didBook(_):
             dismiss()
+        default:
+            return
         }
     }
 

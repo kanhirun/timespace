@@ -1,18 +1,59 @@
 import Foundation
 import SwiftDate
 
-extension TimePeriod {
 
-    /// Returns a new period which overlaps between the two
-    ///
+extension TimePeriodProtocol {
+    /// Returns `Bool` on whether one encloses the other
+    func encloses(with period: TimePeriodProtocol) -> Bool {
+        switch relation(to: period) {
+        case .enclosingStartTouching: fallthrough
+        case .enclosing: fallthrough
+        case .enclosingEndTouching: fallthrough
+        case .exactMatch:
+            return true
+        default:
+            return false
+        }
+    }
+}
+
+extension TimePeriod {
+    
+    /// Returns the intersected `TimePeriod`
+    /// ```
+    ///     o-------o
+    ///         o------o
+    ///         o---o     <- result
+    /// ```
     /// - Parameter other: the given period
     /// - Returns: An overlapping period or `nil` otherwise
-    func periodOverlapped(_ other: TimePeriodProtocol) -> TimePeriodProtocol? {
-        guard overlaps(with: other) else { return nil }
+    func periodIntersected(_ otherPeriod: TimePeriodProtocol) -> TimePeriodProtocol? {
+        guard overlaps(with: otherPeriod) else { return nil }
 
-        return TimePeriod(start: max(other.start!, start!), end: min(other.end!, end!))
+        return TimePeriod(start: max(otherPeriod.start!, start!), end: min(otherPeriod.end!, end!))
     }
     
+    /// Returns a merged `TimePeriod`
+    /// ```
+    ///     o-------o
+    ///         o------o
+    ///     o----------o   <- result
+    /// ```
+    /// - Parameter other: the given period
+    /// - Returns: A merged period or `nil` otherwise
+    func periodMerged(_ otherPeriod: TimePeriodProtocol) -> TimePeriodProtocol? {
+        guard intersects(with: otherPeriod) else { return nil }
+
+        return TimePeriod(start: min(otherPeriod.start!, start!), end: max(otherPeriod.end!, end!))
+    }
+    
+    /// Returns a new `TimePeriod` that is **shifted** to the rounded value
+    /// ```
+    ///     o--*----o
+    ///        o-------o  <- result (shifted)
+    /// ```
+    /// - Parameter mode: an enum describing how to round the period
+    /// - Returns: A new `TimePeriod` that is shifted to the rounded value
     func periodRounded(_ mode: RoundDateMode) -> TimePeriod {
         guard hasFiniteRange else {
             fatalError("Cannot round infinite time periods.")
@@ -20,11 +61,20 @@ extension TimePeriod {
 
         let roundedStart = start!.dateRoundedAt(mode)
         let dt = roundedStart.timeIntervalSince(start!)
-
+        
         return shifted(by: dt)
     }
     
-    /// Decomposes the time period into smaller ones
+    /// Splits `TimePeriod` into smaller ones
+    /// ```
+    ///     o------------o
+    ///
+    ///     o---o  o-----o   <- result (stays within bounds)
+    /// ```
+    /// - Parameters:
+    ///   - criteria: A closure that determines whether to decompose this date, or not
+    ///   - increment: Tells the function when to check
+    /// - Returns: A list of time periods that are smaller in range
     internal func _filter(by criteria: (DateInRegion) -> Bool, increment: Calendar.Component) -> [TimePeriod] {
         var res = [TimePeriod]()
 

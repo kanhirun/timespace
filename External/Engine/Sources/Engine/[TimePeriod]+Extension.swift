@@ -19,8 +19,8 @@ public extension Array where Element : TimePeriod {
         
         while i < n {
             while j < n {
-                if let overlap = arr[i].periodOverlapped(arr[j]) {
-                    res.append(overlap as! TimePeriod)
+                if let intersected = arr[i].periodIntersected(arr[j]) {
+                    res.append(intersected as! TimePeriod)
                 }
                 
                 j += 1
@@ -33,6 +33,57 @@ public extension Array where Element : TimePeriod {
         return res
     }
     
+    func encloses(with period: TimePeriod) -> Bool {
+        return self.contains { $0.encloses(with: period) }
+    }
+
+    /// Returns a list of `TimePeriod` that is rounded, if possible
+    func periodsRounded(_ mode: RoundDateMode, within availability: [TimePeriod]) -> [TimePeriod] {
+        let res = self.compactMap { period -> TimePeriod? in
+            let suggestion = period.periodRounded(mode)
+
+            if availability.encloses(with: suggestion) {
+                return suggestion
+            } else {
+                return nil
+            }
+        }
+
+        return res
+    }
+    
+    // TODO: recursive merging? or better to say flatten?
+    func periodsShallowMerged() -> [TimePeriod] {
+        var i = 0
+        var j = i+1
+        let arr = self
+        let n = arr.count
+        var isMerged = false
+
+        var res = [TimePeriod]()
+
+        while i < n {
+            while j < n {
+                if let merged = arr[i].periodMerged(arr[j]) {
+                    res.append(merged as! TimePeriod)
+                    isMerged = true
+                }
+                
+                j += 1
+            }
+            
+            if !isMerged {
+                res.append(arr[i])
+                isMerged = false
+            }
+
+            i += 1
+            j = i+1
+        }
+        
+        return res
+    }
+
     func only(fromHours hours: [(start: Int, end: Int)]) -> [TimePeriod] {
         func matchesHourlyPeriods(_ curr: DateInRegion) -> Bool {
             return hours.first(where: { start, end in start <= curr.hour && curr.hour < end }) != nil

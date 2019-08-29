@@ -9,7 +9,7 @@ import SwiftDate
 final class TimePeriodArrayTests: QuickSpec {
     override func spec() {
 
-        describe(".periodOverlappeds()") {
+        describe(".periodIntersecteds()") {
             it("returns nil when no there is no overlapping") {
                 let before = aPeriod(1, 5)
                 let touchingStart = aPeriod(15, 20)
@@ -17,18 +17,18 @@ final class TimePeriodArrayTests: QuickSpec {
                 let touchingEnd = aPeriod(1, 10) // 10 is touching
                 let subject = aPeriod(10, 15)
                 
-                expect(subject.periodOverlapped(before)).to(beNil())
-                expect(subject.periodOverlapped(touchingEnd)).to(beNil())
-                expect(touchingEnd.periodOverlapped(subject)).to(beNil())  // order doesn't matter
-                expect(subject.periodOverlapped(touchingStart)).to(beNil())
-                expect(after.periodOverlapped(subject)).to(beNil())
+                expect(subject.periodIntersected(before)).to(beNil())
+                expect(subject.periodIntersected(touchingEnd)).to(beNil())
+                expect(touchingEnd.periodIntersected(subject)).to(beNil())  // order doesn't matter
+                expect(subject.periodIntersected(touchingStart)).to(beNil())
+                expect(after.periodIntersected(subject)).to(beNil())
             }
             
             it("returns the same period when exact") {
                 let subject = aPeriod(1, 5)
                 let exact = subject
                 
-                let results = subject.periodOverlapped(exact)!
+                let results = subject.periodIntersected(exact)!
                 
                 expect(results.start!.timeIntervalSince1970) == 1
                 expect(results.end!.timeIntervalSince1970) == 5
@@ -38,7 +38,7 @@ final class TimePeriodArrayTests: QuickSpec {
                 let short = aPeriod(1, 5)
                 let long = aPeriod(1, 10)
                 
-                let results = short.periodOverlapped(long)!
+                let results = short.periodIntersected(long)!
                 
                 expect(results.start!.timeIntervalSince1970) == 1
                 expect(results.end!.timeIntervalSince1970) == 5
@@ -48,7 +48,7 @@ final class TimePeriodArrayTests: QuickSpec {
                 let big = aPeriod(1, 10)
                 let enclosed = aPeriod(2, 4)
                 
-                let results = big.periodOverlapped(enclosed)!
+                let results = big.periodIntersected(enclosed)!
                 
                 expect(results.start!.timeIntervalSince1970) == 2
                 expect(results.end!.timeIntervalSince1970) == 4
