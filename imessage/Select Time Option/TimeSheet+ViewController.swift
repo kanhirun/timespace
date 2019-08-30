@@ -3,14 +3,14 @@ import Messages
 import Engine
 
 class TimeSheetCollectionViewControllerV2: UIViewController,
-                                           TimeSheetCollectionViewDelegate {
+                                           ActionDelegate {
 
     @IBOutlet var contentView: TimeSheetCollectionViewV2!
     
     var conversation: MSConversation!
     var viewModel: ViewModel!
     
-    var actionDelegate: TimeSheetCollectionViewDelegate?
+    var actionDelegate: ActionDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

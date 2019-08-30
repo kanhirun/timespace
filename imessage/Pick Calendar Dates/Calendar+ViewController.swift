@@ -6,7 +6,8 @@ import Engine
 
 class CalendarViewController: UIViewController,
                               JTAppleCalendarViewDelegate,
-                              JTAppleCalendarViewDataSource {
+                              JTAppleCalendarViewDataSource,
+                              ActionDelegate {
 
     @IBOutlet weak var calendarView: CalendarView!
 
@@ -27,14 +28,21 @@ class CalendarViewController: UIViewController,
     }
     
     // MARK: - Actions
-    
-    @objc func send() {
-        let (response, components) = model.getResultsToSend()
-        let message = self.composeCalendarSnapshot(data: response)
-        message.url = components.url!
 
-        self.activeConversation!.insert(message) { err in
-            debugPrint("Attempting to insert message.", "Error: \(String(describing: err))")
+    func didAction(action: ViewAction) {
+        switch action {
+        case .willBook(_): break
+        case .didBook(_): break
+        case .willSend:
+            let (response, components) = model.getResultsToSend()
+            let message = self.composeCalendarSnapshot(data: response)
+            message.url = components.url!
+            
+            self.activeConversation!.insert(message) { err in
+                if let err = err {
+                    debugPrint("Attempting to insert message.", "Error: \(String(describing: err))")
+                }
+            }
         }
     }
     
@@ -69,13 +77,12 @@ class CalendarViewController: UIViewController,
     func calendar(_ calendar: JTAppleCalendarView,
                   headerViewForDateRange range: (start: Date, end: Date),
                   at indexPath: IndexPath) -> JTAppleCollectionReusableView {
-        
         let header = calendar.dequeueReusableJTAppleSupplementaryView(
             withReuseIdentifier: "DateHeader", for: indexPath) as! CalendarHeader
 
-        header.sendButton.addTarget(self, action: #selector(send), for: .primaryActionTriggered)
+        header.actionDelegate = self
         header.updateUI(range)
-        
+
         return header
     }
     

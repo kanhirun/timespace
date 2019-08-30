@@ -5,7 +5,7 @@ import SwiftyJSON
 import SwiftDate
 import Engine
 
-class MessagesViewController: MSMessagesAppViewController, TimeSheetCollectionViewDelegate {
+class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
 
     func didAction(action: ViewAction) {
         switch action {

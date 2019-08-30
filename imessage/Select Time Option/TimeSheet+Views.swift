@@ -2,22 +2,9 @@ import UIKit
 import SwiftDate
 import Engine
 
-enum ViewAction {
-    case willBook(service: Service, period: TimePeriod)
-    case didBook(service: Service, period: TimePeriod)
-}
-
-protocol TimeSheetCollectionViewDelegate {
-    func didAction(action: ViewAction)
-}
-
-
-// MARK: - Collection View
-
-
 class TimeSheetCollectionViewV2: UICollectionView {
 
-    var actionDelegate: TimeSheetCollectionViewDelegate?
+    var actionDelegate: ActionDelegate?
     
     var viewModel: ViewModel!
     
@@ -122,7 +109,7 @@ class TimeSheetCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var delegate: TimeSheetCollectionViewDelegate?
+    var delegate: ActionDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
