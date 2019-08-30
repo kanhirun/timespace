@@ -4,7 +4,7 @@ import SwiftDate
 
 extension TimePeriodProtocol {
 
-    /// Returns `Bool` on whether one encloses the other
+    /// Returns true when one period encloses the other
     func encloses(with period: TimePeriodProtocol) -> Bool {
         switch relation(to: period) {
         case .enclosingStartTouching: fallthrough
@@ -30,7 +30,7 @@ extension TimePeriod: Equatable {
 
 extension TimePeriod {
     
-    /// Returns the intersected `TimePeriod`
+    /// Returns the intersected `TimePeriod`, otherwise nil
     /// ```
     ///     o-------*          is (A)
     ///         *------o       is overlapping with (A)
@@ -40,12 +40,14 @@ extension TimePeriod {
     /// - Parameter otherPeriod: the given period
     /// - Returns: The intersected period or `nil` otherwise
     func periodIntersected(_ otherPeriod: TimePeriodProtocol) -> TimePeriod? {
-        guard overlaps(with: otherPeriod) else { return nil }
+        guard overlaps(with: otherPeriod) else {
+            return nil
+        }
 
         return TimePeriod(start: max(otherPeriod.start!, start!), end: min(otherPeriod.end!, end!))
     }
     
-    /// Returns a merged `TimePeriod`
+    /// Returns the merged `TimePeriod`, otherwise nil
     /// ```
     ///     *-------o
     ///         o------*
@@ -55,7 +57,9 @@ extension TimePeriod {
     /// - Parameter other: the given period
     /// - Returns: A merged period or `nil` otherwise
     func periodMerged(_ otherPeriod: TimePeriodProtocol) -> TimePeriodProtocol? {
-        guard intersects(with: otherPeriod) else { return nil }
+        guard intersects(with: otherPeriod) else {
+            return nil
+        }
 
         return TimePeriod(start: min(otherPeriod.start!, start!), end: max(otherPeriod.end!, end!))
     }
@@ -70,7 +74,7 @@ extension TimePeriod {
     /// - Returns: A new `TimePeriod` that is shifted to the rounded value
     func periodRounded(_ mode: RoundDateMode) -> TimePeriod {
         guard hasFiniteRange else {
-            fatalError("Cannot round infinite time periods.")
+            fatalError("Does not support rounding infinite time periods yet.")
         }
 
         let roundedStart = start!.dateRoundedAt(mode)
@@ -80,14 +84,15 @@ extension TimePeriod {
     }
     
     /// Splits `TimePeriod` into chunks
+    // TODO: Remove `increment` by using a fast-forward voting-based model; this will add support for multi-select
     /// ```
     ///     1------------5
     ///
     ///     1---*  *-----5   -> returns splitted
     /// ```
     /// - Parameters:
-    ///   - criteria: A closure that determines whether to decompose this date, or not
-    ///   - increment: Tells the function when to check
+    ///   - criteria: A closure that determines whether to split on this date or not
+    ///   - increment: Indicates how frequently (and accurately) the loop should check
     /// - Returns: A list of time periods that are smaller in range
     internal func _filter(by criteria: (DateInRegion) -> Bool, increment: Calendar.Component) -> [TimePeriod] {
         var res = [TimePeriod]()
