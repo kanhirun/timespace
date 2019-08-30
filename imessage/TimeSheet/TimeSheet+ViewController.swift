@@ -26,6 +26,8 @@ class TimeSheetCollectionViewControllerV2: UIViewController,
             let view: ConfirmationView = .fromNib()
             view.updateUI(period, service)
             layout.image = view.asImage()
+            layout.caption = "This time works for me"
+            layout.subcaption = "Add to calendar"
             
             let message = MSMessage(session: conversation.selectedMessage!.session!)
             message.layout = layout
