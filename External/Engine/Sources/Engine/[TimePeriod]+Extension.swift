@@ -56,7 +56,7 @@ public extension Array where Element : TimePeriod {
         while i < n {
             while j < n {
                 if let intersected = arr[i].periodIntersected(arr[j]) {
-                    res.append(intersected as! TimePeriod)
+                    res.append(intersected)
                 }
                 
                 j += 1

@@ -5,7 +5,17 @@ import SwiftyJSON
 import SwiftDate
 import Engine
 
+
+protocol PresentationViewDelegate {
+    
+    func willTransition(to presentationStyle: MSMessagesAppPresentationStyle)
+    func didTransition(to presentationStyle: MSMessagesAppPresentationStyle)
+
+}
+
 class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
+    
+    var presentationDelegate : PresentationViewDelegate?
 
     func didAction(action: ViewAction) {
         switch action {
@@ -23,16 +33,19 @@ class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
         // This will happen when the extension is about to present UI.
         // Use this method to configure the extension and restore previously stored state.
 
-        if let message = conversation.selectedMessage  {
-            guard let periods = [TimePeriod].fromMessage(message) else {
-                return
-            }
-            let service = Service(message: message)
-
-            present(instantiateTimeSheetViewController(periods, conversation, service), animated: false, completion: nil)
-        } else {
-            present(instantiateServiceViewController(conversation), animated: false, completion: nil)
-        }
+        let vc = UIStoryboard(name: "Calendar", bundle: Bundle.main).instantiateInitialViewController()!
+        presentationDelegate = vc as? PresentationViewDelegate
+        present(vc, animated: true, completion: nil)
+//        if let message = conversation.selectedMessage  {
+//            guard let periods = [TimePeriod].fromMessage(message) else {
+//                return
+//            }
+//            let service = Service(message: message)
+//
+//            present(instantiateTimeSheetViewController(periods, conversation, service), animated: false, completion: nil)
+//        } else {
+//            present(instantiateServiceViewController(conversation), animated: false, completion: nil)
+//        }
     }
     
     func instantiateTimeSheetViewController(_ data: [TimePeriod], _ conversation: MSConversation, _ service: Service) -> UIViewController {
@@ -45,10 +58,6 @@ class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
         )
         destination.conversation = conversation
         destination.actionDelegate = self
-//        destination.data = data
-//        destination.activeConversation = conversation
-//        destination.controller = self
-//        destination.service = service
         
         return destination
     }
@@ -92,15 +101,11 @@ class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
     }
     
     override func willTransition(to presentationStyle: MSMessagesAppPresentationStyle) {
-        // Called before the extension transitions to a new presentation style.
-    
-        // Use this method to prepare for the change in presentation style.
+        presentationDelegate?.willTransition(to: presentationStyle)
     }
     
     override func didTransition(to presentationStyle: MSMessagesAppPresentationStyle) {
-        // Called after the extension transitions to a new presentation style.
-    
-        // Use this method to finalize any behaviors associated with the change in presentation style.
+        presentationDelegate?.didTransition(to: presentationStyle)
     }
 
 }
