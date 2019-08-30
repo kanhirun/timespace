@@ -3,6 +3,7 @@ import SwiftDate
 
 
 extension TimePeriodProtocol {
+
     /// Returns `Bool` on whether one encloses the other
     func encloses(with period: TimePeriodProtocol) -> Bool {
         switch relation(to: period) {
@@ -15,19 +16,30 @@ extension TimePeriodProtocol {
             return false
         }
     }
+
+}
+
+extension TimePeriod: Equatable {
+
+    /// Returns true when start and end dates match, otherwise false
+    public static func == (lhs: TimePeriod, rhs: TimePeriod) -> Bool {
+        return lhs.start == rhs.start && lhs.end == rhs.end
+    }
+
 }
 
 extension TimePeriod {
     
     /// Returns the intersected `TimePeriod`
     /// ```
-    ///     o-------o
-    ///         o------o
-    ///         o---o     <- result
+    ///     o-------*          is (A)
+    ///         *------o       is overlapping with (A)
+    ///
+    ///         *---*          -> returns intersected
     /// ```
-    /// - Parameter other: the given period
-    /// - Returns: An overlapping period or `nil` otherwise
-    func periodIntersected(_ otherPeriod: TimePeriodProtocol) -> TimePeriodProtocol? {
+    /// - Parameter otherPeriod: the given period
+    /// - Returns: The intersected period or `nil` otherwise
+    func periodIntersected(_ otherPeriod: TimePeriodProtocol) -> TimePeriod? {
         guard overlaps(with: otherPeriod) else { return nil }
 
         return TimePeriod(start: max(otherPeriod.start!, start!), end: min(otherPeriod.end!, end!))
@@ -35,9 +47,10 @@ extension TimePeriod {
     
     /// Returns a merged `TimePeriod`
     /// ```
-    ///     o-------o
-    ///         o------o
-    ///     o----------o   <- result
+    ///     *-------o
+    ///         o------*
+    ///
+    ///     *----------*   -> returns merged
     /// ```
     /// - Parameter other: the given period
     /// - Returns: A merged period or `nil` otherwise
@@ -49,8 +62,9 @@ extension TimePeriod {
     
     /// Returns a new `TimePeriod` that is **shifted** to the rounded value
     /// ```
-    ///     o--*----o
-    ///        o-------o  <- result (shifted)
+    ///     o--*----o  *     will be rounded
+    ///
+    ///        *-------*  -> returns shifted
     /// ```
     /// - Parameter mode: an enum describing how to round the period
     /// - Returns: A new `TimePeriod` that is shifted to the rounded value
@@ -65,11 +79,11 @@ extension TimePeriod {
         return shifted(by: dt)
     }
     
-    /// Splits `TimePeriod` into smaller ones
+    /// Splits `TimePeriod` into chunks
     /// ```
-    ///     o------------o
+    ///     1------------5
     ///
-    ///     o---o  o-----o   <- result (stays within bounds)
+    ///     1---*  *-----5   -> returns splitted
     /// ```
     /// - Parameters:
     ///   - criteria: A closure that determines whether to decompose this date, or not
