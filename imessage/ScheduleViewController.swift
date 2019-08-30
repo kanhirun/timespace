@@ -13,7 +13,7 @@ final class ScheduleViewController: UITableViewController {
     
     var selectedService: Service? = nil
     
-    var model: TimePeriodFilter!
+    var model: ScheduleService!
     
     override func viewDidLoad() {
         super.viewDidLoad()

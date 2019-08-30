@@ -7,7 +7,7 @@ public class CalendarViewModel {
     public let start: DateInRegion
     public let end: DateInRegion
     
-    private var filters: TimePeriodFilter
+    private var filters: ScheduleService
     private let tag = "CalendarViewModel"
     public let service: Service
     

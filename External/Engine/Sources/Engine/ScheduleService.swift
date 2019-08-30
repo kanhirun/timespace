@@ -1,57 +1,21 @@
 import Foundation
 import SwiftDate
 
-func quantized(_ periods: [TimePeriod], unit: DateComponents) -> [TimePeriod] {
-    return quantized(periods, unit: unit.timeInterval)
-}
-
-func quantized(_ periods: [TimePeriod], unit: TimeInterval) -> [TimePeriod] {
-    let res = periods
-        // Maps the time periods into smaller, unit-sized chunks, if possible
-        .compactMap { period -> [TimePeriod] in
-            var res = [TimePeriod]()
-
-            // if the unit is larger than the period, then drop.
-            guard period.duration >= unit else {
-                return res
-            }
-
-            var i: TimeInterval = 0
-            let n: TimeInterval = floor(period.duration / unit)
-            var increment = period.start!
-
-            while i < n {
-                let chunk = TimePeriod(start: increment, duration: unit)
-
-                res.append(chunk)
-
-                increment = increment.addingTimeInterval(unit)
-                i += 1
-            }
-
-            return res
-        }
-        // Flattens the results
-        .reduce([], +)
-
-    return res
-}
-
-public final class TimePeriodFilter {
+public final class ScheduleService {
+    
+    typealias Layer = (tag: String, contents: [TimePeriod])
     
     public let start: DateInRegion
     public let end: DateInRegion
-    
-    typealias Filter = (tag: String, contents: [TimePeriod])
 
     /// Tracks the operations applied
-    private var stack = [Filter]()
+    private var layers = [Layer]()
 
     /// Represents the absolute lower and upper bounds of all periods
     private let window: [TimePeriod]
     
     // MARK: - Create
-    
+
     public convenience init(start: DateInRegion, duration: DateComponents) {
         self.init(start: start, end: start + duration)
     }
@@ -66,13 +30,13 @@ public final class TimePeriodFilter {
         self.window = [TimePeriod(start: start, end: end)]
         let copy  = [TimePeriod(start: start, end: end)]
 
-        stack.append((tag: "base", contents: copy))
+        layers.append((tag: "base", contents: copy))
     }
     
     // MARK: - Reduce
     
     public func apply(region: Region) -> [TimePeriod] {
-        return stack.map { $0.contents }
+        return layers.map { $0.contents }
                     .reduce(window) { res, next  in res.only(periods: next) }
                     .map { TimePeriod(start: $0.start?.convertTo(region: region), end: $0.end?.convertTo(region: region)) }
     }
@@ -80,50 +44,50 @@ public final class TimePeriodFilter {
     // MARK: - Filter
     
     @discardableResult
-    public func min(only hours: (start: Int, end: Int)..., tag: String) -> TimePeriodFilter {
+    public func min(only hours: (start: Int, end: Int)..., tag: String) -> Self {
         let filtered = window.only(fromHours: hours)
-        stack.append( (tag: tag, contents: filtered) )
+        layers.append( (tag: tag, contents: filtered) )
         return self
     }
     
     @discardableResult
-    public func min(only weekdays: WeekDay..., tag: String) -> TimePeriodFilter {
+    public func min(only weekdays: WeekDay..., tag: String) -> Self {
         let filtered = window.only(weekdays: weekdays)
-        stack.append( (tag: tag, contents: filtered) )
+        layers.append( (tag: tag, contents: filtered) )
         return self
     }
     
     @discardableResult
-    public func min(only periods: TimePeriod..., tag: String) -> TimePeriodFilter {
+    public func min(only periods: TimePeriod..., tag: String) -> Self {
         return self.min(only: periods, tag: tag)
     }
     
     @discardableResult
-    public func min(only periods: [TimePeriod], tag: String) -> TimePeriodFilter {
+    public func min(only periods: [TimePeriod], tag: String) -> Self {
         let filtered = window.only(periods: periods)
-        stack.append( (tag: tag, contents: filtered) )
+        layers.append( (tag: tag, contents: filtered) )
         return self
     }
     
     @discardableResult
-    public func subtract(with periods: [TimePeriod], tag: String) -> TimePeriodFilter {
+    public func subtract(with periods: [TimePeriod], tag: String) -> Self {
         let input = inversed(periods)
         let filtered = window.only(periods: input)
 
-        stack.append( (tag: tag, contents: filtered) )
+        layers.append( (tag: tag, contents: filtered) )
         
         return self
     }
     
     @discardableResult
-    public func subtract(with periods: TimePeriod..., tag: String) -> TimePeriodFilter {
+    public func subtract(with periods: TimePeriod..., tag: String) -> Self {
         return subtract(with: periods, tag: tag)
     }
     
     // MARK: - Filter - Calendar
 
     @discardableResult
-    public func subtract(fromSource source: CalendarDataSource, tag: String) -> TimePeriodFilter {
+    public func subtract(fromSource source: CalendarDataSource, tag: String) -> Self {
         let start = window.first!.start!
         let end = window.first!.end!
         
@@ -133,11 +97,11 @@ public final class TimePeriodFilter {
     /// MARK: - Transform
     
     @discardableResult
-    public func quantize(unit: TimeInterval, tag: String) -> TimePeriodFilter {
+    public func quantize(unit: TimeInterval, tag: String) -> Self {
         let results = quantized(apply(region: .UTC), unit: unit)
         let rounded = results.periodsRounded(.toCeilMins(60), within: results).periodsShallowMerged()
 
-        stack.append( (tag: tag, contents: rounded) )
+        layers.append( (tag: tag, contents: rounded) )
         
         return self
     }
@@ -145,7 +109,7 @@ public final class TimePeriodFilter {
     /// MARK: - Delete
     
     public func remove(withTag target: String) {
-        stack.removeAll { filter -> Bool in filter.tag == target }
+        layers.removeAll { filter -> Bool in filter.tag == target }
     }
     
     /// MARK: - Helpers

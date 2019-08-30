@@ -9,7 +9,7 @@ class AvailabilityViewController: UICollectionViewController {
     @IBOutlet weak var availabilityView: UICollectionView!
 
     var selectedService: Service!
-    var model: TimePeriodFilter!
+    var model: ScheduleService!
     var results: [TimePeriod]?
 
     override func viewDidLoad() {

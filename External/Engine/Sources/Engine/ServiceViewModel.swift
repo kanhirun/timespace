@@ -10,11 +10,11 @@ public class ServiceViewModel {
         Service(name: "Blowdry", duration: 1.hours + 30.minutes),
         Service(name: "Updo", duration: 1.hours),
     ]
-    let filters: TimePeriodFilter
+    let filters: ScheduleService
     private let tag = "business-hours"
     
     public init() {
-        filters = TimePeriodFilter(start: DateInRegion(Date(), region: Region.local), duration: 3.months)
+        filters = ScheduleService(start: DateInRegion(Date(), region: Region.local), duration: 3.months)
     }
     
     // MARK: - Actions
