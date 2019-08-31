@@ -92,6 +92,7 @@ class PickCalendarDatesViewModel: JTAppleCalendarViewDataSource {
                                 .dateAtStartOf(.day).date
             let endDate = startDate.dateByAdding(1, .day).date
             let wholeDayPeriod = TimePeriod(startDate: startDate, endDate: endDate)
+
             selectedPeriods.append(wholeDayPeriod)
         }
     }
@@ -100,7 +101,7 @@ class PickCalendarDatesViewModel: JTAppleCalendarViewDataSource {
         if viewModel.viewState == .selected {
             viewModel.deselect()
 
-            selectedPeriods.removeAll { $0.contains(date: DateInRegion(date, region: date.region)) }
+            selectedPeriods.removeAll { $0.startDate == date }
         }
     }
     
