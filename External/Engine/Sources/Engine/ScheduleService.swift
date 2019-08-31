@@ -35,10 +35,10 @@ public final class ScheduleService {
     
     // MARK: - Reduce
     
-    public func apply(region: Region) -> [TimePeriod] {
+    public func render(region: Region) -> [TimePeriod] {
         return layers.map { $0.contents }
-                    .reduce(window) { res, next  in res.only(periods: next) }
-                    .map { TimePeriod(start: $0.start?.convertTo(region: region), end: $0.end?.convertTo(region: region)) }
+                     .reduce(window) { res, next  in res.only(periods: next) }
+                     .map { TimePeriod(start: $0.start?.convertTo(region: region), end: $0.end?.convertTo(region: region)) }
     }
     
     // MARK: - Filter
@@ -98,7 +98,7 @@ public final class ScheduleService {
     
     @discardableResult
     public func quantize(unit: TimeInterval, tag: String) -> Self {
-        let results = quantized(apply(region: .UTC), unit: unit)
+        let results = quantized(render(region: .UTC), unit: unit)
         let rounded = results.periodsRounded(.toCeilMins(60), within: results).periodsShallowMerged()
 
         layers.append( (tag: tag, contents: rounded) )

@@ -21,7 +21,7 @@ final class ScheduleServiceTests: QuickSpec {
                        .min(only: .monday, .wednesday, tag: "business-hours")
                        .subtract(with: lunchPeriod, yogaClass, tag: "google-calendar")
                 
-                let res = subject.apply(region: Region.UTC)
+                let res = subject.render(region: Region.UTC)
                 
                 expect(res.count) == 3
 
@@ -105,15 +105,15 @@ final class ScheduleServiceTests: QuickSpec {
                 subject.min(only: (start: 9, end: 12 + 5), tag: "hours")
                        .min(only: .monday, .wednesday, tag: "weekdays")
                 
-                expect(subject.apply(region: Region.UTC).count) == 2
+                expect(subject.render(region: Region.UTC).count) == 2
                 
                 subject.remove(withTag: "weekdays")
                 
-                expect(subject.apply(region: Region.UTC).count) == 4
+                expect(subject.render(region: Region.UTC).count) == 4
                 
                 subject.remove(withTag: "hours")
                 
-                expect(subject.apply(region: Region.UTC).count) == 1
+                expect(subject.render(region: Region.UTC).count) == 1
             }
         }
         

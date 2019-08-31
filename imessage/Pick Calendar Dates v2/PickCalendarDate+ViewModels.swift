@@ -57,7 +57,7 @@ class PickCalendarDatesViewModel: JTAppleCalendarViewDataSource {
         let availability = schedule.min(only: selectedPeriods, tag: tag)
                                    .subtract(fromSource: calendar, tag: tag)
                                    .quantize(unit: selectedService.duration, tag: tag)
-                                   .apply(region: Region.local)  // not idempotent
+                                   .render(region: Region.local)  // not idempotent
 
         var components = URLComponents()
         components.queryItems = [

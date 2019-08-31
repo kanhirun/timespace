@@ -27,7 +27,7 @@ class AvailabilityViewController: UICollectionViewController {
         model.subtract(fromSource: appleCalendar, tag: title!)
              .quantize(unit: self.selectedService!.duration, tag: self.title!)
 
-        self.results = self.model.apply(region: Region.local)
+        self.results = self.model.render(region: Region.local)
         self.availabilityView.reloadData()
     }
     
