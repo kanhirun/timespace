@@ -6,16 +6,17 @@ import SwiftDate
 import Engine
 
 
-protocol PresentationViewDelegate {
+protocol MessageDelegate: class {
     
     func willTransition(to presentationStyle: MSMessagesAppPresentationStyle)
     func didTransition(to presentationStyle: MSMessagesAppPresentationStyle)
+    func didStartSending(_ message: MSMessage, conversation: MSConversation)
 
 }
 
 class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
     
-    var presentationDelegate : PresentationViewDelegate?
+    weak var messageDelegate : MessageDelegate?
 
     func didAction(action: ViewAction) {
         switch action {
@@ -34,7 +35,7 @@ class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
         // Use this method to configure the extension and restore previously stored state.
 
         let vc = UIStoryboard(name: "Calendar", bundle: Bundle.main).instantiateInitialViewController()!
-        presentationDelegate = vc as? PresentationViewDelegate
+        messageDelegate = vc as? MessageDelegate
         present(vc, animated: true, completion: nil)
 //        if let message = conversation.selectedMessage  {
 //            guard let periods = [TimePeriod].fromMessage(message) else {
@@ -90,7 +91,7 @@ class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
     }
     
     override func didStartSending(_ message: MSMessage, conversation: MSConversation) {
-        // Called when the user taps the send button.
+        messageDelegate?.didStartSending(message, conversation: conversation)
         dismiss()
     }
     
@@ -101,11 +102,11 @@ class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
     }
     
     override func willTransition(to presentationStyle: MSMessagesAppPresentationStyle) {
-        presentationDelegate?.willTransition(to: presentationStyle)
+        messageDelegate?.willTransition(to: presentationStyle)
     }
     
     override func didTransition(to presentationStyle: MSMessagesAppPresentationStyle) {
-        presentationDelegate?.didTransition(to: presentationStyle)
+        messageDelegate?.didTransition(to: presentationStyle)
     }
 
 }

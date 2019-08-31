@@ -158,6 +158,7 @@
                     <connections>
                         <outlet property="calendarView" destination="Lmv-I2-jkz" id="Pgt-zs-BhH"/>
                         <outlet property="headerLabel" destination="Qmc-ua-ymH" id="1vu-D9-kk0"/>
+                        <outlet property="sendButton" destination="egz-Ad-dCX" id="P8h-m6-YZB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="snb-vH-RFT" userLabel="First Responder" sceneMemberID="firstResponder"/>

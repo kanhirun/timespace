@@ -1,7 +1,7 @@
 import SwiftDate
 import JTAppleCalendar
 import Engine
-import enum Messages.MSMessagesAppPresentationStyle
+import Messages
 
 
 private let defaultService = ScheduleService(start: Date(), end: 2.months.fromNow)
@@ -10,15 +10,13 @@ class PickCalendarDatesViewModel: JTAppleCalendarViewDataSource {
     
     var presentationStyle: MSMessagesAppPresentationStyle = .compact
     
-    var headerText: String
-    
-    private let scheduleService: ScheduleService
-    private var count = 0
+    private var selected = [TimePeriod]()
     private let maxCount = 3
+
+    private let scheduleService: ScheduleService
 
     init(scheduleService: ScheduleService = defaultService) {
         self.scheduleService = scheduleService
-        self.headerText = scheduleService.start.monthName(.default)
     }
     
     func dateViewModel(for date: Date) -> CalendarDateViewModel? {
@@ -27,20 +25,41 @@ class PickCalendarDatesViewModel: JTAppleCalendarViewDataSource {
     }
     
     func isSelectable(viewModel: CalendarDateViewModel) -> Bool {
-        return viewModel.viewState == .available && count < maxCount
+        return viewModel.viewState == .available && selected.count < maxCount
     }
     
-    func select(viewModel: CalendarDateViewModel) {
-        if count <= maxCount && viewModel.viewState == .available {
+    func getHeaderText(from date: Date) -> String {
+        return "\(date.monthName(.default)) \(date.year)"
+    }
+    
+    // todo: remove duplicate
+    func getInitialHeaderText() -> String {
+        let date = scheduleService.start
+        return "\(date.monthName(.default)) \(date.year)"
+    }
+    
+    func composeMessage() -> MSMessage {
+        let message = MSMessage(session: MSSession())
+        return message
+    }
+    
+    // MARK: - Actions
+    
+    func select(date: Date, viewModel: CalendarDateViewModel) {
+        if selected.count <= maxCount && viewModel.viewState == .available {
             viewModel.select()
-            count += 1
+
+            let wholeDayPeriod = TimePeriod(startDate: date.dateAtStartOf(.day),
+                                            endDate: date.dateAtEndOf(.day))
+            selected.append(wholeDayPeriod)
         }
     }
     
-    func deselect(viewModel: CalendarDateViewModel) {
+    func deselect(date: Date, viewModel: CalendarDateViewModel) {
         if viewModel.viewState == .selected {
             viewModel.deselect()
-            count -= 1
+
+            selected.removeAll { $0.contains(date: DateInRegion(date, region: date.region)) }
         }
     }
     

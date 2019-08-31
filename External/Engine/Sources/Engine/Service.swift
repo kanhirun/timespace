@@ -6,7 +6,7 @@ public class Service {
     public let name: String
     public let duration: TimeInterval
     
-    convenience init(name: String, duration: DateComponents) {
+    public convenience init(name: String, duration: DateComponents) {
         self.init(name: name, duration: duration.timeInterval)
     }
     

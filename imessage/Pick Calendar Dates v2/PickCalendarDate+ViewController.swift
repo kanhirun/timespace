@@ -1,30 +1,45 @@
 import UIKit
 import JTAppleCalendar
-import enum SwiftDate.Month
-import enum Messages.MSMessagesAppPresentationStyle
+import SwiftDate
+import Messages
+
+import Engine
 
 class PickCalendarDatesViewController: UIViewController {
     
     @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     
     var viewModel = PickCalendarDatesViewModel()
+    var conversation: MSConversation!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        headerLabel.text = viewModel.headerText
+        headerLabel.text = viewModel.getInitialHeaderText()
 
         calendarView.calendarDataSource = viewModel
         calendarView.calendarDelegate = self as JTAppleCalendarViewDelegate
         calendarView.allowsMultipleSelection = true
 
         calendarView.scrollToDate(Date(), animateScroll: false)
+        
+        sendButton.addTarget(self, action: #selector(didAction), for: .primaryActionTriggered)
+    }
+
+    @objc func didAction() {
+        let message = viewModel.composeMessage()
+        conversation.insert(message, completionHandler: nil)
     }
 
 }
 
-extension PickCalendarDatesViewController: PresentationViewDelegate {
+extension PickCalendarDatesViewController: MessageDelegate {
+    func didStartSending(_ message: MSMessage, conversation: MSConversation) {
+        // save event
+    }
+
     func didTransition(to presentationStyle: MSMessagesAppPresentationStyle) {}
     func willTransition(to presentationStyle: MSMessagesAppPresentationStyle) {}
 }
@@ -33,13 +48,13 @@ extension PickCalendarDatesViewController: JTAppleCalendarViewDelegate {
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         let cell = cell as! CalendarDateCellV2
-        viewModel.select(viewModel: cell.viewModel!)
+        viewModel.select(date: date, viewModel: cell.viewModel!)
         cell.updateUI()  // todo: need KVO
     }
 
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         let cell = cell as! CalendarDateCellV2
-        viewModel.deselect(viewModel: cell.viewModel!)
+        viewModel.deselect(date: date, viewModel: cell.viewModel!)
         cell.updateUI()
     }
     
@@ -78,6 +93,6 @@ extension PickCalendarDatesViewController: JTAppleCalendarViewDelegate {
             return
         }
 
-        headerLabel.text = "\(aDate.monthName(.default)) \(aDate.year)"
+        headerLabel.text = viewModel.getHeaderText(from: aDate)
     }
 }
