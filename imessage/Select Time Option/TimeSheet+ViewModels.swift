@@ -28,7 +28,7 @@ struct ViewModel {
 
         periods.forEach { period in
             if (curr == nil || period.start! > curr! ) {
-                let newHeader = HeaderViewModel(period.start!.dateComponents)
+                let newHeader = HeaderViewModel(period.start!)
                 
                 headers.append(newHeader)
                 cells.append([])
@@ -61,9 +61,9 @@ struct HeaderViewModel {
     let headingText: String
     let subHeadingText: String
     
-    init(_ component: DateComponents) {
-        self.headingText    = WeekDay(rawValue: component.weekday!)!.name(style: .standaloneShort).uppercased()
-        self.subHeadingText = "\(Month(rawValue: component.month!)!.name(style: .short)) \(component.day!)"
+    init(_ date: DateInRegion) {
+        self.headingText = date.weekdayName(.standaloneShort).uppercased()
+        self.subHeadingText = "\(date.monthName(.short)) \(date.day)"
     }
 }
 
