@@ -13,6 +13,7 @@ class CalendarDateCellV2: JTAppleCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+
         circleView.layer.cornerRadius = circleView.bounds.width / 2.0
     }
     
@@ -23,16 +24,17 @@ class CalendarDateCellV2: JTAppleCell {
             dateLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             circleView.backgroundColor = #colorLiteral(red: 0, green: 0.6352941176, blue: 1, alpha: 1)
             circleView.isHidden = false
+            circleView.alpha = 1.0
         case .available:
             dateLabel.textColor = #colorLiteral(red: 0, green: 0.6352941176, blue: 1, alpha: 1)
-            circleView.backgroundColor = #colorLiteral(red: 0.9513656497, green: 0.9814328551, blue: 1, alpha: 1)
+            circleView.backgroundColor = #colorLiteral(red: 0.8828615546, green: 0.9683210254, blue: 1, alpha: 1)
             circleView.isHidden = false
+            circleView.alpha = viewModel!.alphaBusyOrNotBusy
         case .unavailable:
             dateLabel.textColor = #colorLiteral(red: 0.5803921569, green: 0.5882352941, blue: 0.6, alpha: 1)
             circleView.isHidden = true
         }
         
         dateLabel.text = viewModel!.dateText
-        circleView.alpha = viewModel!.alphaBusyOrNotBusy
     }
 }

@@ -74,7 +74,9 @@ class CalendarDateViewModel {
     
     /// The alpha quickly informing users how busy that day is
     /// e.g., 1.0 = busy, 0.0 = free
-    let alphaBusyOrNotBusy: CGFloat = 1.0
+    var alphaBusyOrNotBusy: CGFloat {
+        return CGFloat.random(in: 0.0...1.0 )
+    }
     
     private(set) var viewState: ViewState = .unavailable
     private let date: Date
@@ -83,6 +85,10 @@ class CalendarDateViewModel {
         self.date = date
         
         viewState = date.isInPast ? .unavailable : .available
+    }
+    
+    func isToday() -> Bool {
+        return date.isToday
     }
     
     func select() {
