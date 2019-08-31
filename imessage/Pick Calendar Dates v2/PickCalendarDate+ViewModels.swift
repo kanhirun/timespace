@@ -10,16 +10,19 @@ class PickCalendarDatesViewModel: JTAppleCalendarViewDataSource {
     
     var presentationStyle: MSMessagesAppPresentationStyle = .compact
     
+    var headerText: String
+    
     private let scheduleService: ScheduleService
-
     private var count = 0
     private let maxCount = 3
 
     init(scheduleService: ScheduleService = defaultService) {
         self.scheduleService = scheduleService
+        self.headerText = scheduleService.start.monthName(.default)
     }
     
     func dateViewModel(for date: Date) -> CalendarDateViewModel? {
+        // todo: Figure out how to retain selections
         return CalendarDateViewModel(date: date)
     }
     

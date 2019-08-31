@@ -33,6 +33,8 @@ class CalendarDateCellV2: JTAppleCell {
         case .unavailable:
             dateLabel.textColor = #colorLiteral(red: 0.5803921569, green: 0.5882352941, blue: 0.6, alpha: 1)
             circleView.isHidden = true
+            circleView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            circleView.alpha = viewModel!.alphaBusyOrNotBusy
         }
         
         dateLabel.text = viewModel!.dateText

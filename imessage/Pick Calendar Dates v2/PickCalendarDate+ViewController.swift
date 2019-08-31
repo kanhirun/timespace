@@ -1,15 +1,19 @@
 import UIKit
 import JTAppleCalendar
+import enum SwiftDate.Month
 import enum Messages.MSMessagesAppPresentationStyle
 
 class PickCalendarDatesViewController: UIViewController {
     
+    @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     
     var viewModel = PickCalendarDatesViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        headerLabel.text = viewModel.headerText
 
         calendarView.calendarDataSource = viewModel
         calendarView.calendarDelegate = self as JTAppleCalendarViewDelegate
@@ -67,5 +71,13 @@ extension PickCalendarDatesViewController: JTAppleCalendarViewDelegate {
             for: indexPath) as! CalendarDateCellV2
         
         cell.viewModel = viewModel.dateViewModel(for: date)
+    }
+    
+    func calendarDidScroll(_ calendar: JTAppleCalendarView) {
+        guard let aDate = calendar.visibleDates().monthDates.first?.date else {
+            return
+        }
+
+        headerLabel.text = "\(aDate.monthName(.default)) \(aDate.year)"
     }
 }

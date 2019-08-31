@@ -21,7 +21,7 @@
                             <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="e70-bf-e1t" userLabel="Content View">
                                 <rect key="frame" x="0.0" y="44" width="414" height="437.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text="August 2019" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Qmc-ua-ymH" userLabel="When Label">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text="August 2019" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Qmc-ua-ymH" userLabel="Header Label">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -144,6 +144,7 @@
                     </view>
                     <connections>
                         <outlet property="calendarView" destination="Lmv-I2-jkz" id="Pgt-zs-BhH"/>
+                        <outlet property="headerLabel" destination="Qmc-ua-ymH" id="1vu-D9-kk0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="snb-vH-RFT" userLabel="First Responder" sceneMemberID="firstResponder"/>
