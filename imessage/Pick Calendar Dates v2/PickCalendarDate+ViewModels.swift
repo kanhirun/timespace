@@ -74,7 +74,7 @@ class PickCalendarDatesViewModel: JTAppleCalendarViewDataSource {
             conversation: conversation!
         )
         layout.image = TimeSheetCollectionViewV2.toImage(viewModel: args)
-        layout.caption = "What times work for you?"
+        layout.caption = "Do these times work for you?"
         layout.subcaption = "Tap for options"
         message.layout = layout
         message.url = components.url!
