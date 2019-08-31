@@ -33,13 +33,17 @@ final class ServicesViewController: UITableViewController {
     // MARK: - Actions
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let dest = storyboard!.instantiateViewController(withIdentifier: "CalendarViewController")
-            as! CalendarViewController
+        let dest = UIStoryboard(name: "Calendar", bundle: Bundle.main).instantiateInitialViewController()!
+            as! PickCalendarDatesViewController
 
         model.select(indexPath.row)
 
-        dest.activeConversation = activeConversation
-        dest.model = CalendarViewModel(from: model)
+        dest.conversation = activeConversation
+        dest.viewModel = PickCalendarDatesViewModel(
+            serviceRepository: ServiceRepository.shared,
+            scheduleService: model.scheduleService,
+            conversation: activeConversation!
+        )
 
         navigationController?.pushViewController(dest, animated: true)
     }

@@ -4,6 +4,8 @@ import EventKit
 
 public class AppleCalendar: CalendarDataSource {
     
+    public static let shared = AppleCalendar()
+    
     private let store = EKEventStore()
     
     /// Indicates whether the user has authorized the app to use their calendar

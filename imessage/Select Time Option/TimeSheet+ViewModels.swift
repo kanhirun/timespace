@@ -23,17 +23,17 @@ struct ViewModel {
         var headers = [HeaderViewModel]()
         var cells = [ [CellViewModel] ]()
 
-        var curr: Int? = nil
+        var curr: DateInRegion? = nil
         var headerIndex = -1
 
         periods.forEach { period in
-            if (curr == nil || period.start!.day > curr! ) {
+            if (curr == nil || period.start! > curr! ) {
                 let newHeader = HeaderViewModel(period.start!.dateComponents)
                 
                 headers.append(newHeader)
                 cells.append([])
                 
-                curr = period.start?.day
+                curr = period.start?.dateAtEndOf(.day)
                 headerIndex += 1
             }
             

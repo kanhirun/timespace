@@ -34,19 +34,16 @@ class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
         // This will happen when the extension is about to present UI.
         // Use this method to configure the extension and restore previously stored state.
 
-        let vc = UIStoryboard(name: "Calendar", bundle: Bundle.main).instantiateInitialViewController()!
-        messageDelegate = vc as? MessageDelegate
-        present(vc, animated: true, completion: nil)
-//        if let message = conversation.selectedMessage  {
-//            guard let periods = [TimePeriod].fromMessage(message) else {
-//                return
-//            }
-//            let service = Service(message: message)
-//
-//            present(instantiateTimeSheetViewController(periods, conversation, service), animated: false, completion: nil)
-//        } else {
-//            present(instantiateServiceViewController(conversation), animated: false, completion: nil)
-//        }
+        if let message = conversation.selectedMessage  {
+            guard let periods = [TimePeriod].fromMessage(message) else {
+                return
+            }
+            let service = Service(message: message)
+
+            present(instantiateTimeSheetViewController(periods, conversation, service), animated: false, completion: nil)
+        } else {
+            present(instantiateServiceViewController(conversation), animated: false, completion: nil)
+        }
     }
     
     func instantiateTimeSheetViewController(_ data: [TimePeriod], _ conversation: MSConversation, _ service: Service) -> UIViewController {

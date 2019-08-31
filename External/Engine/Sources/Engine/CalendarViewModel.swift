@@ -14,10 +14,10 @@ public class CalendarViewModel {
     private let calendar = AppleCalendar()
 
     public init(from model: ServiceViewModel) {
-        filters = model.filters
-        service = model.selectedService!
-        start = model.filters.start
-        end = model.filters.end
+        filters = model.scheduleService
+        service = ServiceRepository.shared.value!
+        start = model.scheduleService.start
+        end = model.scheduleService.end
     }
     
     // MARK: - Actions

@@ -3,7 +3,7 @@ import Foundation
 import SwiftyJSON
 
 extension Array: QueryItemRepresentable where Element : TimePeriod {
-    var queryItem: URLQueryItem {
+    public var queryItem: URLQueryItem {
         return URLQueryItem(name: [TimePeriod].queryItemKey,
                             value: try! String(data: self.toJSON().rawData(), encoding: .ascii))
     }

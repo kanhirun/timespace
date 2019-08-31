@@ -3,7 +3,7 @@ import SwiftyJSON
 
 extension Service: QueryItemRepresentable {
 
-    var queryItem: URLQueryItem {
+    public var queryItem: URLQueryItem {
         return URLQueryItem(name: Service.queryItemKey,
                             value: try! String(data: self.toJSON().rawData(), encoding: .ascii))
     }

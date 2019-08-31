@@ -11,9 +11,9 @@ class PickCalendarDatesViewController: UIViewController {
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     
-    var viewModel = PickCalendarDatesViewModel()
+    var viewModel: PickCalendarDatesViewModel!
     var conversation: MSConversation!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,6 +27,16 @@ class PickCalendarDatesViewController: UIViewController {
         
         sendButton.addTarget(self, action: #selector(didAction), for: .primaryActionTriggered)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
 
     @objc func didAction() {
         let message = viewModel.composeMessage()
@@ -36,10 +46,7 @@ class PickCalendarDatesViewController: UIViewController {
 }
 
 extension PickCalendarDatesViewController: MessageDelegate {
-    func didStartSending(_ message: MSMessage, conversation: MSConversation) {
-        // save event
-    }
-
+    func didStartSending(_ message: MSMessage, conversation: MSConversation) {}
     func didTransition(to presentationStyle: MSMessagesAppPresentationStyle) {}
     func willTransition(to presentationStyle: MSMessagesAppPresentationStyle) {}
 }
@@ -49,7 +56,7 @@ extension PickCalendarDatesViewController: JTAppleCalendarViewDelegate {
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         let cell = cell as! CalendarDateCellV2
         viewModel.select(date: date, viewModel: cell.viewModel!)
-        cell.updateUI()  // todo: need KVO
+        cell.updateUI()  // todo: need KVO to remove dup
     }
 
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {

@@ -31,7 +31,7 @@ class CalendarDateCellV2: JTAppleCell {
             circleView.isHidden = false
             circleView.alpha = viewModel!.alphaBusyOrNotBusy
         case .unavailable:
-            dateLabel.textColor = #colorLiteral(red: 0.5803921569, green: 0.5882352941, blue: 0.6, alpha: 1)
+            dateLabel.textColor = #colorLiteral(red: 0.796245873, green: 0.8126872182, blue: 0.8302764297, alpha: 1)
             circleView.isHidden = true
             circleView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             circleView.alpha = viewModel!.alphaBusyOrNotBusy

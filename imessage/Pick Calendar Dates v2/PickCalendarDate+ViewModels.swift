@@ -4,19 +4,31 @@ import Engine
 import Messages
 
 
-private let defaultService = ScheduleService(start: Date(), end: 2.months.fromNow)
+private let defaultSchedule = ScheduleService(start: Date(), end: 2.months.fromNow)
 
 class PickCalendarDatesViewModel: JTAppleCalendarViewDataSource {
     
     var presentationStyle: MSMessagesAppPresentationStyle = .compact
-    
-    private var selected = [TimePeriod]()
+
+    private var selectedPeriods = [TimePeriod]()
     private let maxCount = 3
+    private let tag = "\(PickCalendarDatesViewModel.self)"
 
-    private let scheduleService: ScheduleService
+    private let calendar: AppleCalendar
+    private let service: ServiceRepository
+    private let schedule: ScheduleService
+    private let conversation: MSConversation?
 
-    init(scheduleService: ScheduleService = defaultService) {
-        self.scheduleService = scheduleService
+    init(
+        calendarService: AppleCalendar = AppleCalendar.shared,
+        serviceRepository: ServiceRepository = ServiceRepository.shared,
+        scheduleService: ScheduleService = defaultSchedule,
+        conversation: MSConversation? = nil
+    ) {
+        self.calendar = calendarService
+        self.schedule = scheduleService
+        self.service = serviceRepository
+        self.conversation = conversation
     }
     
     func dateViewModel(for date: Date) -> CalendarDateViewModel? {
@@ -25,7 +37,7 @@ class PickCalendarDatesViewModel: JTAppleCalendarViewDataSource {
     }
     
     func isSelectable(viewModel: CalendarDateViewModel) -> Bool {
-        return viewModel.viewState == .available && selected.count < maxCount
+        return viewModel.viewState == .available && selectedPeriods.count < maxCount
     }
     
     func getHeaderText(from date: Date) -> String {
@@ -34,24 +46,53 @@ class PickCalendarDatesViewModel: JTAppleCalendarViewDataSource {
     
     // todo: remove duplicate
     func getInitialHeaderText() -> String {
-        let date = scheduleService.start
-        return "\(date.monthName(.default)) \(date.year)"
-    }
-    
-    func composeMessage() -> MSMessage {
-        let message = MSMessage(session: MSSession())
-        return message
+        return getHeaderText(from: schedule.start.date)
     }
     
     // MARK: - Actions
     
+    func composeMessage() -> MSMessage {
+        let selectedService = service.value!
+
+        let availability = schedule.min(only: selectedPeriods, tag: tag)
+                                   .subtract(fromSource: calendar, tag: tag)
+                                   .quantize(unit: selectedService.duration, tag: tag)
+                                   .apply(region: Region.local)  // not idempotent
+
+        var components = URLComponents()
+        components.queryItems = [
+            availability.queryItem,
+            selectedService.queryItem,
+        ]
+        let message = MSMessage(
+            session: conversation?.selectedMessage?.session ?? MSSession()
+        )
+        let layout = MSMessageTemplateLayout()
+        let args = ViewModel(
+            periods: availability,
+            service: selectedService,
+            conversation: conversation!
+        )
+        layout.image = TimeSheetCollectionViewV2.toImage(viewModel: args)
+        layout.caption = "What times work for you?"
+        layout.subcaption = "Tap for options"
+        message.layout = layout
+        message.url = components.url!
+        
+        schedule.remove(withTag: tag)
+
+        return message
+    }
+    
     func select(date: Date, viewModel: CalendarDateViewModel) {
-        if selected.count <= maxCount && viewModel.viewState == .available {
+        if selectedPeriods.count <= maxCount && viewModel.viewState == .available {
             viewModel.select()
 
-            let wholeDayPeriod = TimePeriod(startDate: date.dateAtStartOf(.day),
-                                            endDate: date.dateAtEndOf(.day))
-            selected.append(wholeDayPeriod)
+            let startDate = date.convertTo(region: Region.local)
+                                .dateAtStartOf(.day).date
+            let endDate = startDate.dateByAdding(1, .day).date
+            let wholeDayPeriod = TimePeriod(startDate: startDate, endDate: endDate)
+            selectedPeriods.append(wholeDayPeriod)
         }
     }
     
@@ -59,15 +100,15 @@ class PickCalendarDatesViewModel: JTAppleCalendarViewDataSource {
         if viewModel.viewState == .selected {
             viewModel.deselect()
 
-            selected.removeAll { $0.contains(date: DateInRegion(date, region: date.region)) }
+            selectedPeriods.removeAll { $0.contains(date: DateInRegion(date, region: date.region)) }
         }
     }
     
     // MARK: - Data Source
     
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
-        return ConfigurationParameters(startDate: scheduleService.start.date,
-                                       endDate: scheduleService.end.date,
+        return ConfigurationParameters(startDate: schedule.start.date,
+                                       endDate: schedule.end.date,
                                        numberOfRows: 6,
                                        generateInDates: .forFirstMonthOnly,
                                        generateOutDates: .off,
@@ -75,6 +116,7 @@ class PickCalendarDatesViewModel: JTAppleCalendarViewDataSource {
                                        hasStrictBoundaries: false)
     }
 }
+
 
 class CalendarDateViewModel {
     
