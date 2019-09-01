@@ -126,6 +126,13 @@ class CalendarDateViewModel {
         case available
         case unavailable
     }
+    
+    enum BusyLevel {
+        case high
+        case medium
+        case low
+        case free
+    }
 
     /// The text shown on the view
     /// e.g., `Aug 1` or `1`.
@@ -137,10 +144,23 @@ class CalendarDateViewModel {
         }
     }
     
-    /// The alpha quickly informing users how busy that day is
-    /// e.g., 1.0 = busy, 0.0 = free
-    var alphaBusyOrNotBusy: CGFloat {
-        return CGFloat.random(in: 0.0...1.0 )
+    /// Indicates to users how busy that day is
+    ///
+    /// - Note: Values are bucketed into 4 distinct levels
+    var busyLevel: BusyLevel {
+        let rand = CGFloat.random(in: 0.0...1.0 )
+
+        switch rand {
+        case _ where rand >= 0.75:
+            return .high
+        case _ where rand >= 0.50:
+            return .medium
+        case _ where rand >= 0.25:
+            return .low
+        default:
+            return .free
+
+        }
     }
     
     private(set) var viewState: ViewState = .unavailable

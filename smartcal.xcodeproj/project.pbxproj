@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E010C1AC232451B70019B5E3 /* PickCalendarDate+ViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E065EE77231997740051C306 /* PickCalendarDate+ViewModels.swift */; };
 		E0408F4F230E0BD700FE40B1 /* ServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F4E230E0BD700FE40B1 /* ServiceCell.swift */; };
 		E05CA7CC231975D600F5200D /* ViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E05CA7CB231975D600F5200D /* ViewAction.swift */; };
 		E05CA7E223197EB700F5200D /* PickCalendarDate+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E05CA7E123197EB700F5200D /* PickCalendarDate+ViewController.swift */; };
@@ -15,7 +16,6 @@
 		E06117DF2311D770001DEE6B /* ConfirmationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E06117DE2311D770001DEE6B /* ConfirmationView.xib */; };
 		E06117E12311D9CA001DEE6B /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06117E02311D9CA001DEE6B /* ConfirmationView.swift */; };
 		E065EE67231997490051C306 /* PickCalendarDate+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = E065EE66231997490051C306 /* PickCalendarDate+Views.swift */; };
-		E065EE78231997740051C306 /* PickCalendarDate+ViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E065EE77231997740051C306 /* PickCalendarDate+ViewModels.swift */; };
 		E06A5EA4230642BD0059524E /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06A5EA3230642BD0059524E /* ServicesViewController.swift */; };
 		E06A5EA8230647960059524E /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06A5EA7230647960059524E /* ScheduleViewController.swift */; };
 		E06A5EAA2306481E0059524E /* AvailabilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06A5EA92306481E0059524E /* AvailabilityViewController.swift */; };
@@ -567,7 +567,7 @@
 				E05CA7CC231975D600F5200D /* ViewAction.swift in Sources */,
 				E06A5EBA2306F0C30059524E /* AvailabilityCell.swift in Sources */,
 				E0A424212315B88500084386 /* TimeSheet+UIImage.swift in Sources */,
-				E065EE78231997740051C306 /* PickCalendarDate+ViewModels.swift in Sources */,
+				E010C1AC232451B70019B5E3 /* PickCalendarDate+ViewModels.swift in Sources */,
 				E06A5EA4230642BD0059524E /* ServicesViewController.swift in Sources */,
 				E0408F4F230E0BD700FE40B1 /* ServiceCell.swift in Sources */,
 				E06117E12311D9CA001DEE6B /* ConfirmationView.swift in Sources */,
