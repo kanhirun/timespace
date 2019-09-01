@@ -104,7 +104,7 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="CalendarDateCellV2" id="SHL-DA-k3S" customClass="CalendarDateCellV2" customModule="imessage" customModuleProvider="target">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="CalendarDateCell" id="SHL-DA-k3S" customClass="CalendarDateCell" customModule="imessage" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -112,14 +112,14 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3DB-eK-bs1" userLabel="Circle View">
-                                                            <rect key="frame" x="7.5" y="30.5" width="45" height="45"/>
+                                                            <rect key="frame" x="7.5" y="26.5" width="45" height="45"/>
                                                             <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="3DB-eK-bs1" secondAttribute="height" multiplier="1:1" id="uk9-1F-5o5"/>
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DD" textAlignment="center" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wIK-tP-rNm" userLabel="Date Label">
-                                                            <rect key="frame" x="7.5" y="30.5" width="45" height="45"/>
+                                                            <rect key="frame" x="7.5" y="26.5" width="45" height="45"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="45" id="I7n-0x-hA5"/>
                                                                 <constraint firstAttribute="width" secondItem="wIK-tP-rNm" secondAttribute="height" multiplier="1:1" id="qY0-E6-J2B"/>

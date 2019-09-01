@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		E0408F4F230E0BD700FE40B1 /* ServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F4E230E0BD700FE40B1 /* ServiceCell.swift */; };
-		E0408F68230E2E6300FE40B1 /* Calendar+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0408F67230E2E6300FE40B1 /* Calendar+Views.swift */; };
 		E05CA7CC231975D600F5200D /* ViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E05CA7CB231975D600F5200D /* ViewAction.swift */; };
 		E05CA7E223197EB700F5200D /* PickCalendarDate+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E05CA7E123197EB700F5200D /* PickCalendarDate+ViewController.swift */; };
 		E05CA7E423197EE900F5200D /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E05CA7E323197EE900F5200D /* Calendar.storyboard */; };
@@ -28,7 +27,6 @@
 		E06B5A4A230B43BE00DF0CA5 /* SwiftDate.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0F5B949230639E70043605C /* SwiftDate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E06B5A4B230B43C000DF0CA5 /* Engine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0F5B941230639E70043605C /* Engine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E06B5A4C230B43C300DF0CA5 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0F5B945230639E70043605C /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E06B5A8C230D8D7A00DF0CA5 /* Calendar+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B5A8B230D8D7A00DF0CA5 /* Calendar+ViewController.swift */; };
 		E06CA3FD231562C800546547 /* TimeSheet+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06CA3FC231562C800546547 /* TimeSheet+ViewController.swift */; };
 		E09FFB73230EDD8A001EF1A5 /* DateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09FFB72230EDD8A001EF1A5 /* DateCell.xib */; };
 		E09FFB7B230EE715001EF1A5 /* XibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09FFB7A230EE715001EF1A5 /* XibView.swift */; };
@@ -147,7 +145,6 @@
 
 /* Begin PBXFileReference section */
 		E0408F4E230E0BD700FE40B1 /* ServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCell.swift; sourceTree = "<group>"; };
-		E0408F67230E2E6300FE40B1 /* Calendar+Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+Views.swift"; sourceTree = "<group>"; };
 		E05CA7CB231975D600F5200D /* ViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAction.swift; sourceTree = "<group>"; };
 		E05CA7E123197EB700F5200D /* PickCalendarDate+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PickCalendarDate+ViewController.swift"; sourceTree = "<group>"; };
 		E05CA7E323197EE900F5200D /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
@@ -160,7 +157,6 @@
 		E06A5EA92306481E0059524E /* AvailabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityViewController.swift; sourceTree = "<group>"; };
 		E06A5EB92306F0C30059524E /* AvailabilityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityCell.swift; sourceTree = "<group>"; };
 		E06B5A89230D8BEA00DF0CA5 /* JTAppleCalendar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JTAppleCalendar.framework; path = Carthage/Build/iOS/JTAppleCalendar.framework; sourceTree = "<group>"; };
-		E06B5A8B230D8D7A00DF0CA5 /* Calendar+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+ViewController.swift"; sourceTree = "<group>"; };
 		E06CA3FC231562C800546547 /* TimeSheet+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeSheet+ViewController.swift"; sourceTree = "<group>"; };
 		E09FFB72230EDD8A001EF1A5 /* DateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateCell.xib; sourceTree = "<group>"; };
 		E09FFB7A230EE715001EF1A5 /* XibView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibView.swift; sourceTree = "<group>"; };
@@ -204,15 +200,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E05CA7DC23197BAD00F5200D /* Pick Calendar Dates */ = {
-			isa = PBXGroup;
-			children = (
-				E06B5A8B230D8D7A00DF0CA5 /* Calendar+ViewController.swift */,
-				E0408F67230E2E6300FE40B1 /* Calendar+Views.swift */,
-			);
-			path = "Pick Calendar Dates";
-			sourceTree = "<group>";
-		};
 		E05CA7DD23197BC800F5200D /* Select Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -234,7 +221,6 @@
 		E05CA7DF23197CA200F5200D /* __Old */ = {
 			isa = PBXGroup;
 			children = (
-				E05CA7DC23197BAD00F5200D /* Pick Calendar Dates */,
 				E06A5EA7230647960059524E /* ScheduleViewController.swift */,
 				E06A5EA92306481E0059524E /* AvailabilityViewController.swift */,
 				E06A5EB92306F0C30059524E /* AvailabilityCell.swift */,
@@ -242,7 +228,7 @@
 			path = __Old;
 			sourceTree = "<group>";
 		};
-		E05CA7E023197EA300F5200D /* Pick Calendar Dates v2 */ = {
+		E05CA7E023197EA300F5200D /* Pick Calendar Dates */ = {
 			isa = PBXGroup;
 			children = (
 				E05CA7E323197EE900F5200D /* Calendar.storyboard */,
@@ -250,7 +236,7 @@
 				E065EE66231997490051C306 /* PickCalendarDate+Views.swift */,
 				E065EE77231997740051C306 /* PickCalendarDate+ViewModels.swift */,
 			);
-			path = "Pick Calendar Dates v2";
+			path = "Pick Calendar Dates";
 			sourceTree = "<group>";
 		};
 		E06CA40F2315633200546547 /* Select Time Option */ = {
@@ -326,7 +312,7 @@
 				E05CA7CB231975D600F5200D /* ViewAction.swift */,
 				E0F5B91E2306399C0043605C /* MessagesViewController.swift */,
 				E05CA7DD23197BC800F5200D /* Select Service */,
-				E05CA7E023197EA300F5200D /* Pick Calendar Dates v2 */,
+				E05CA7E023197EA300F5200D /* Pick Calendar Dates */,
 				E06CA40F2315633200546547 /* Select Time Option */,
 				E05CA7DE23197C4500F5200D /* Confirm Service */,
 				E05CA7DF23197CA200F5200D /* __Old */,
@@ -577,8 +563,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E09FFB7B230EE715001EF1A5 /* XibView.swift in Sources */,
-				E06B5A8C230D8D7A00DF0CA5 /* Calendar+ViewController.swift in Sources */,
-				E0408F68230E2E6300FE40B1 /* Calendar+Views.swift in Sources */,
 				E065EE67231997490051C306 /* PickCalendarDate+Views.swift in Sources */,
 				E05CA7CC231975D600F5200D /* ViewAction.swift in Sources */,
 				E06A5EBA2306F0C30059524E /* AvailabilityCell.swift in Sources */,

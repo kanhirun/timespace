@@ -1,6 +1,6 @@
 import JTAppleCalendar
 
-class CalendarDateCellV2: JTAppleCell {
+class CalendarDateCell: JTAppleCell {
     
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var circleView: UIView!
