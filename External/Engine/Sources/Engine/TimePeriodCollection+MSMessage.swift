@@ -1,8 +1,8 @@
 import SwiftDate
 import Messages
 
-extension Array where Element : TimePeriod {
-    public static func fromMessage(_ message: MSMessage) -> [TimePeriod]? {
+extension TimePeriodCollection {
+    public convenience init?(fromMessage message: MSMessage) {
         guard let url = message.url
         else {
             debugPrint("Expected message to have url, but found none.")
@@ -16,6 +16,6 @@ extension Array where Element : TimePeriod {
             return nil
         }
         
-        return TimePeriodCollection.fromQueryItems(queryItems)
+        self.init(fromQueryItems: queryItems)
     }
 }

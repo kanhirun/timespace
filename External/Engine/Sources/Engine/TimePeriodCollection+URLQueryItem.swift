@@ -12,11 +12,12 @@ extension TimePeriodCollection: QueryItemRepresentable  {
         return "TimePeriods"
     }
     
-    public static func fromQueryItems(_ queryItems: [URLQueryItem]) -> [TimePeriod]? {
+    public convenience init?(fromQueryItems queryItems: [URLQueryItem]) {
         for queryItem in queryItems {
             if let jsonString = queryItem.value, queryItem.name == TimePeriodCollection.queryItemKey {
                 let json = JSON(parseJSON: jsonString)
-                return TimePeriodCollection.fromJSON(json)
+                self.init(fromJSON: json)
+                return
             }
         }
         

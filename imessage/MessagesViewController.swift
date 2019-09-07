@@ -35,7 +35,7 @@ class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
         // Use this method to configure the extension and restore previously stored state.
 
         if let message = conversation.selectedMessage  {
-            guard let periods = [TimePeriod].fromMessage(message) else {
+            guard let periods = TimePeriodCollection(fromMessage: message) else {
                 return
             }
             let service = Service(message: message)
@@ -46,11 +46,11 @@ class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
         }
     }
     
-    func instantiateTimeSheetViewController(_ data: [TimePeriod], _ conversation: MSConversation, _ service: Service) -> UIViewController {
+    func instantiateTimeSheetViewController(_ periods: TimePeriodCollection, _ conversation: MSConversation, _ service: Service) -> UIViewController {
         let destination = UIStoryboard(name: "TimeSheet", bundle: Bundle.main).instantiateInitialViewController() as! TimeSheetCollectionViewControllerV2
         
         destination.viewModel = ViewModel(
-            periods: TimePeriodCollection(data),
+            periods: periods,
             service: service,
             conversation: conversation
         )
