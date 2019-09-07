@@ -9,17 +9,17 @@ class TimePeriodArrayJSONExtensionTests: QuickSpec {
     override func spec() {
         describe(".toJSON()") {
             it("converts empty array to empty JSON array") {
-                let empty = [TimePeriod]()
+                let empty = TimePeriodCollection()
                 let results = empty.toJSON()
                 
                 expect(results.arrayValue).to(beEmpty())
             }
             
             it("converts periods to JSON and back") {
-                let periods = [
+                let periods = TimePeriodCollection([
                     TimePeriod(start: DateInRegion("2019-11-11T11:11:11Z")!,
                                end: DateInRegion("2019-08-01T10:00:00Z")!),
-                ]
+                ])
                 
                 let results = periods.toJSON()
                 

@@ -50,7 +50,7 @@ class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
         let destination = UIStoryboard(name: "TimeSheet", bundle: Bundle.main).instantiateInitialViewController() as! TimeSheetCollectionViewControllerV2
         
         destination.viewModel = ViewModel(
-            periods: data,
+            periods: TimePeriodCollection(data),
             service: service,
             conversation: conversation
         )

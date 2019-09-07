@@ -16,6 +16,6 @@ extension Array where Element : TimePeriod {
             return nil
         }
         
-        return [TimePeriod].fromQueryItems(queryItems)
+        return TimePeriodCollection.fromQueryItems(queryItems)
     }
 }

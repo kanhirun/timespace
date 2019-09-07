@@ -2,9 +2,9 @@ import SwiftDate
 import Foundation
 import SwiftyJSON
 
-extension Array: QueryItemRepresentable where Element : TimePeriod {
+extension TimePeriodCollection: QueryItemRepresentable  {
     public var queryItem: URLQueryItem {
-        return URLQueryItem(name: [TimePeriod].queryItemKey,
+        return URLQueryItem(name: TimePeriodCollection.queryItemKey,
                             value: try! String(data: self.toJSON().rawData(), encoding: .ascii))
     }
 
@@ -14,9 +14,9 @@ extension Array: QueryItemRepresentable where Element : TimePeriod {
     
     public static func fromQueryItems(_ queryItems: [URLQueryItem]) -> [TimePeriod]? {
         for queryItem in queryItems {
-            if let jsonString = queryItem.value, queryItem.name == [TimePeriod].queryItemKey {
+            if let jsonString = queryItem.value, queryItem.name == TimePeriodCollection.queryItemKey {
                 let json = JSON(parseJSON: jsonString)
-                return [TimePeriod].fromJSON(json)
+                return TimePeriodCollection.fromJSON(json)
             }
         }
         

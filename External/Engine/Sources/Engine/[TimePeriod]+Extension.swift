@@ -1,41 +1,44 @@
-import SwiftDate
+@testable import SwiftDate
 import SwiftyJSON
 import Foundation
 
-func quantized(_ periods: [TimePeriod], unit: DateComponents) -> [TimePeriod] {
-    return quantized(periods, unit: unit.timeInterval)
-}
-
-func quantized(_ periods: [TimePeriod], unit: TimeInterval) -> [TimePeriod] {
-    let res = periods
-        // Maps the time periods into smaller, unit-sized chunks, if possible
-        .compactMap { period -> [TimePeriod] in
-            var res = [TimePeriod]()
-            
-            // if the unit is larger than the period, then drop.
-            guard period.duration >= unit else {
+extension TimePeriodCollection {
+    func quantized(unit: DateComponents) -> [TimePeriod] {
+        return quantized(unit: unit.timeInterval)
+    }
+    
+    func quantized(unit: TimeInterval) -> [TimePeriod] {
+        let res = self.periods
+            // Maps the time periods into smaller, unit-sized chunks, if possible
+            .compactMap { period -> [TimePeriod] in
+                var res = [TimePeriod]()
+                
+                // if the unit is larger than the period, then drop.
+                guard period.duration >= unit else {
+                    return res
+                }
+                
+                var i: TimeInterval = 0
+                let n: TimeInterval = floor(period.duration / unit)
+                var increment = period.start!
+                
+                while i < n {
+                    let chunk = TimePeriod(start: increment, duration: unit)
+                    
+                    res.append(chunk)
+                    
+                    increment = increment.addingTimeInterval(unit)
+                    i += 1
+                }
+                
                 return res
             }
-            
-            var i: TimeInterval = 0
-            let n: TimeInterval = floor(period.duration / unit)
-            var increment = period.start!
-            
-            while i < n {
-                let chunk = TimePeriod(start: increment, duration: unit)
-                
-                res.append(chunk)
-                
-                increment = increment.addingTimeInterval(unit)
-                i += 1
-            }
-            
-            return res
-        }
-        // Flattens the results
-        .reduce([], +)
-    
-    return res
+            // Flattens the results
+            .reduce([], +)
+        
+        return res
+    }
+
 }
 
 public extension Array where Element : TimePeriod {

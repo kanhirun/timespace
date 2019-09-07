@@ -1,9 +1,9 @@
 import SwiftDate
 import SwiftyJSON
 
-public extension Array where Element : TimePeriod {
+public extension TimePeriodCollection {
     func toJSON() -> JSON {
-        let arr = map { $0.toJSON() }
+        let arr = map { ($0 as! TimePeriod).toJSON() }
 
         return JSON(arr)
     }

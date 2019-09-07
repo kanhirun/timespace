@@ -11,7 +11,7 @@ struct ViewModel {
     private let service: Service
     private let conversation: MSConversation
     
-    init(periods: [TimePeriod], service: Service, conversation: MSConversation) {
+    init(periods: TimePeriodCollection, service: Service, conversation: MSConversation) {
         let localizedRegionPeriods = periods.map { TimePeriod(start: $0.start?.convertTo(region: Region.local), end: $0.end?.convertTo(region: Region.local)) }
         
         (self.subHeaderViewModels, self.cellViewModels) = ViewModel.generateModels(periods: localizedRegionPeriods, service: service)
@@ -19,7 +19,7 @@ struct ViewModel {
         self.conversation = conversation
     }
     
-    private static func generateModels(periods: [TimePeriod], service: Service) -> ( [HeaderViewModel], [[CellViewModel]] ) {
+    private static func generateModels(periods: TimePeriodCollection, service: Service) -> ( [HeaderViewModel], [[CellViewModel]] ) {
         var headers = [HeaderViewModel]()
         var cells = [ [CellViewModel] ]()
 
@@ -37,7 +37,7 @@ struct ViewModel {
                 headerIndex += 1
             }
             
-            let cell = CellViewModel(timePeriod: period, service: service)
+            let cell = CellViewModel(timePeriod: period as! TimePeriod, service: service)
             cells[headerIndex].append(cell)
         }
         

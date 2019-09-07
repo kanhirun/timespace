@@ -21,10 +21,10 @@ final class ScheduleServiceTests: QuickSpec {
                        .min(only: .monday, .wednesday, tag: "business-hours")
                        .subtract(with: lunchPeriod, yogaClass, tag: "google-calendar")
                 
-                let res = subject.render(region: Region.UTC)
+                let res = subject.render(region: Region.UTC).compactMap { $0 }
                 
                 expect(res.count) == 3
-
+                
                 expect(res[0].start?.hour) == 9
                 expect(res[0].end?.hour) == 12
                 
@@ -120,11 +120,11 @@ final class ScheduleServiceTests: QuickSpec {
         describe(".quantize(_:unit:)") {
             it("decomposes the time period") {
                 let unit = 1.hours
-                let periods = [
+                let periods = TimePeriodCollection([
                     TimePeriod(end: DateInRegion(), duration: 5.hours)
-                ]
+                ])
                 
-                let res = quantized(periods, unit: unit)
+                let res = periods.quantized(unit: unit)
                 
                 expect(res.count) == 5
                 expect(res.allSatisfy { period in
@@ -134,22 +134,22 @@ final class ScheduleServiceTests: QuickSpec {
 
             it("zeros out the time period if unit is larger") {
                 let larger = 1.hours
-                let smaller = [
+                let smaller = TimePeriodCollection([
                     TimePeriod(end: DateInRegion(), duration: 10.minutes)
-                ]
+                ])
                 
-                let res = quantized(smaller, unit: larger)
+                let res = smaller.quantized(unit: larger)
                 
                 expect(res).to(beEmpty())
             }
 
             it("decomposes the time period, and disposes the rest") {
                 let unit = 1.hours
-                let extra = [
+                let extra = TimePeriodCollection([
                     TimePeriod(end: DateInRegion(), duration: 3.hours + 45.minutes)
-                ]
+                ])
                 
-                let res = quantized(extra, unit: unit)
+                let res = extra.quantized(unit: unit)
                 
                 expect(res.count) == 3
             }
