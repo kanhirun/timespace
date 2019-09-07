@@ -20,7 +20,7 @@ public class ServiceViewModel {
                 calendarService: AppleCalendar = AppleCalendar.shared) {
         self.calendarService = calendarService
         self.serviceRepository = serviceRepository
-        self.scheduleService = ScheduleService(start: DateInRegion(Date(), region: Region.local), duration: 3.months)
+        self.scheduleService = ScheduleService(start: DateInRegion(Date(), region: Region.local), duration: 2.months)
     }
     
     // MARK: - Actions

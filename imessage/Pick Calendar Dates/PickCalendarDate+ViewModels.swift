@@ -32,9 +32,9 @@ class PickCalendarDatesViewModel {
         self.endDate = scheduleService.end.date
     }
     
-    func dateViewModel(for date: Date) -> CalendarDateViewModel? {
+    func dateViewModel(localDate: Date) -> CalendarDateViewModel? {
         // todo: Figure out how to retain selections
-        return CalendarDateViewModel(date: date)
+        return CalendarDateViewModel(localDate: localDate, availability: schedule.render(region: Region.local))
     }
     
     func isSelectable(viewModel: CalendarDateViewModel) -> Bool {
@@ -85,12 +85,11 @@ class PickCalendarDatesViewModel {
         return message
     }
     
-    func select(date: Date, viewModel: CalendarDateViewModel) {
+    func select(localDate: Date, viewModel: CalendarDateViewModel) {
         if selectedPeriods.count <= maxCount && viewModel.viewState == .available {
             viewModel.select()
 
-            let startDate = date.convertTo(region: Region.local)
-                                .dateAtStartOf(.day).date
+            let startDate = localDate.dateAtStartOf(.day).date
             let endDate = startDate.dateByAdding(1, .day).date
             let wholeDayPeriod = TimePeriod(startDate: startDate, endDate: endDate)
 
@@ -98,11 +97,11 @@ class PickCalendarDatesViewModel {
         }
     }
     
-    func deselect(date: Date, viewModel: CalendarDateViewModel) {
+    func deselect(localDate: Date, viewModel: CalendarDateViewModel) {
         if viewModel.viewState == .selected {
             viewModel.deselect()
 
-            selectedPeriods.removeAll { $0.startDate == date }
+            selectedPeriods.removeAll { $0.startDate == localDate }
         }
     }
 }
@@ -153,12 +152,16 @@ class CalendarDateViewModel {
     }
     
     private(set) var viewState: ViewState = .unavailable
-    private let date: Date
+    private let period: TimePeriod
+    private let date: DateInRegion
+    private let availability: TimePeriodCollection
 
-    init(date: Date) {
-        self.date = date
-        
-        viewState = date.isInPast ? .unavailable : .available
+    init(localDate: Date, availability: TimePeriodCollection) {
+        let start = localDate
+        self.period = TimePeriod(startDate: start, endDate: start.dateByAdding(1, .day).date)
+        self.date = DateInRegion(start)
+        self.availability = availability
+        deselect()
     }
     
     func isToday() -> Bool {
@@ -170,6 +173,12 @@ class CalendarDateViewModel {
     }
     
     func deselect() {
-        viewState = date.isInPast ? .unavailable : .available
+        let availableTimes = availability.periodsInside(period: period) // wtf
+
+        if availableTimes.count > 0 && !date.isInPast {
+            viewState = .available
+        } else {
+            viewState = .unavailable
+        }
     }
 }

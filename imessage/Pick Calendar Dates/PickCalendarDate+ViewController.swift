@@ -67,13 +67,13 @@ extension PickCalendarDatesViewController: JTAppleCalendarViewDelegate {
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         let cell = cell as! CalendarDateCell
-        viewModel.select(date: date, viewModel: cell.viewModel!)
+        viewModel.select(localDate: date, viewModel: cell.viewModel!)
         cell.updateUI()  // todo: need KVO to remove dup
     }
 
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         let cell = cell as! CalendarDateCell
-        viewModel.deselect(date: date, viewModel: cell.viewModel!)
+        viewModel.deselect(localDate: date, viewModel: cell.viewModel!)
         cell.updateUI()
     }
     
@@ -93,7 +93,7 @@ extension PickCalendarDatesViewController: JTAppleCalendarViewDelegate {
             cell.isHidden = false
         }
 
-        cell.viewModel = viewModel.dateViewModel(for: date)
+        cell.viewModel = viewModel.dateViewModel(localDate: date)
         
 
         return cell
@@ -104,7 +104,7 @@ extension PickCalendarDatesViewController: JTAppleCalendarViewDelegate {
             withReuseIdentifier: "CalendarDateCell",
             for: indexPath) as! CalendarDateCell
         
-        cell.viewModel = viewModel.dateViewModel(for: date)
+        cell.viewModel = viewModel.dateViewModel(localDate: date)
     }
     
     func calendarDidScroll(_ calendar: JTAppleCalendarView) {

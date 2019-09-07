@@ -39,7 +39,7 @@ class CalendarDateCell: JTAppleCell {
                 dateLabel.textColor = #colorLiteral(red: 0.8705882353, green: 0.4196078431, blue: 0, alpha: 1)
                 circleView.backgroundColor = #colorLiteral(red: 0.9921568627, green: 0.9529411765, blue: 0.662745098, alpha: 1)
             case .free:
-                dateLabel.textColor = #colorLiteral(red: 0.5725490196, green: 0.5725490196, blue: 0.568627451, alpha: 1)
+                dateLabel.textColor = #colorLiteral(red: 0.3029262424, green: 0.3029828668, blue: 0.3029187918, alpha: 1)
                 circleView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             }
         case .unavailable:
