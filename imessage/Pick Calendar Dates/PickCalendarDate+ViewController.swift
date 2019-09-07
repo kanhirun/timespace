@@ -19,7 +19,7 @@ class PickCalendarDatesViewController: UIViewController {
         
         headerLabel.text = viewModel.getInitialHeaderText()
 
-        calendarView.calendarDataSource = viewModel
+        calendarView.calendarDataSource = self
         calendarView.calendarDelegate = self as JTAppleCalendarViewDelegate
         calendarView.allowsMultipleSelection = true
 
@@ -49,6 +49,18 @@ extension PickCalendarDatesViewController: MessageDelegate {
     func didStartSending(_ message: MSMessage, conversation: MSConversation) {}
     func didTransition(to presentationStyle: MSMessagesAppPresentationStyle) {}
     func willTransition(to presentationStyle: MSMessagesAppPresentationStyle) {}
+}
+
+extension PickCalendarDatesViewController: JTAppleCalendarViewDataSource {
+    func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
+        return ConfigurationParameters(startDate: viewModel.startDate,
+                                       endDate: viewModel.endDate,
+                                       numberOfRows: 6,
+                                       generateInDates: .forFirstMonthOnly,
+                                       generateOutDates: .off,
+                                       firstDayOfWeek: .monday,
+                                       hasStrictBoundaries: false)
+    }
 }
 
 extension PickCalendarDatesViewController: JTAppleCalendarViewDelegate {

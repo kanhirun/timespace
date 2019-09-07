@@ -1,14 +1,13 @@
 import SwiftDate
-import JTAppleCalendar
 import Engine
 import Messages
 
-
-private let defaultSchedule = ScheduleService(start: Date(), end: 2.months.fromNow)
-
-class PickCalendarDatesViewModel: JTAppleCalendarViewDataSource {
+class PickCalendarDatesViewModel {
     
     var presentationStyle: MSMessagesAppPresentationStyle = .compact
+    
+    let startDate: Date
+    let endDate: Date
 
     private var selectedPeriods = [TimePeriod]()
     private let maxCount = 3
@@ -22,13 +21,15 @@ class PickCalendarDatesViewModel: JTAppleCalendarViewDataSource {
     init(
         calendarService: AppleCalendar = AppleCalendar.shared,
         serviceRepository: ServiceRepository = ServiceRepository.shared,
-        scheduleService: ScheduleService = defaultSchedule,
+        scheduleService: ScheduleService,
         conversation: MSConversation? = nil
     ) {
         self.calendar = calendarService
         self.schedule = scheduleService
         self.service = serviceRepository
         self.conversation = conversation
+        self.startDate = scheduleService.start.date
+        self.endDate = scheduleService.end.date
     }
     
     func dateViewModel(for date: Date) -> CalendarDateViewModel? {
@@ -103,18 +104,6 @@ class PickCalendarDatesViewModel: JTAppleCalendarViewDataSource {
 
             selectedPeriods.removeAll { $0.startDate == date }
         }
-    }
-    
-    // MARK: - Data Source
-    
-    func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
-        return ConfigurationParameters(startDate: schedule.start.date,
-                                       endDate: schedule.end.date,
-                                       numberOfRows: 6,
-                                       generateInDates: .forFirstMonthOnly,
-                                       generateOutDates: .off,
-                                       firstDayOfWeek: .monday,
-                                       hasStrictBoundaries: false)
     }
 }
 
