@@ -28,16 +28,6 @@ class PickCalendarDatesViewController: UIViewController {
         
         sendButton.addTarget(self, action: #selector(didAction), for: .primaryActionTriggered)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: false)
-    }
 
     @objc func didAction() {
         let message = viewModel.composeMessage()
