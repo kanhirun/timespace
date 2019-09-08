@@ -8,6 +8,7 @@ final class ServicesViewController: UITableViewController {
 
     let model = ServiceViewModel()
     var activeConversation: MSConversation? = nil
+    weak var actionDelegate: ActionDelegate?
     
     // MARK: - Controller
     
@@ -44,6 +45,7 @@ final class ServicesViewController: UITableViewController {
             scheduleService: model.scheduleService,
             conversation: activeConversation!
         )
+        dest.actionDelegate = actionDelegate
 
         navigationController?.pushViewController(dest, animated: true)
     }

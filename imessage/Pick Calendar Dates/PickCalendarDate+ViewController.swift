@@ -13,6 +13,7 @@ class PickCalendarDatesViewController: UIViewController {
     
     var viewModel: PickCalendarDatesViewModel!
     var conversation: MSConversation!
+    weak var actionDelegate: ActionDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,15 +41,16 @@ class PickCalendarDatesViewController: UIViewController {
 
     @objc func didAction() {
         let message = viewModel.composeMessage()
-        conversation.insert(message, completionHandler: nil)
+        conversation.insert(message) { err in
+            if let err = err {
+                debugPrint(err)
+                return
+            }
+            
+            self.actionDelegate?.didAction(action: .didSend)
+        }
     }
 
-}
-
-extension PickCalendarDatesViewController: MessageDelegate {
-    func didStartSending(_ message: MSMessage, conversation: MSConversation) {}
-    func didTransition(to presentationStyle: MSMessagesAppPresentationStyle) {}
-    func willTransition(to presentationStyle: MSMessagesAppPresentationStyle) {}
 }
 
 extension PickCalendarDatesViewController: JTAppleCalendarViewDataSource {

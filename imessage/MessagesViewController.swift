@@ -22,8 +22,10 @@ class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
         switch action {
         case .didBook(_):
             dismiss()
-        default:
+        case .willBook(_):
             return
+        case .didSend:
+            requestPresentationStyle(.compact)
         }
     }
 
@@ -64,6 +66,7 @@ class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
         let nav: UINavigationController = {
             let rootVC = self.storyboard!.instantiateViewController(withIdentifier: "ServicesViewController") as! ServicesViewController
             rootVC.activeConversation = conversation
+            rootVC.actionDelegate = self
             return UINavigationController(rootViewController: rootVC)
         }()
         
