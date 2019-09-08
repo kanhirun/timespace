@@ -136,8 +136,6 @@ class CalendarDateViewModel {
     ///
     /// - Note: Values are bucketed into 4 distinct levels
     var busyLevel: BusyLevel {
-        let rand = CGFloat.random(in: 0.0...1.0 )
-
         switch rand {
         case _ where rand >= 0.75:
             return .high
@@ -152,12 +150,14 @@ class CalendarDateViewModel {
     }
     
     private(set) var viewState: ViewState = .unavailable
+    private let rand: CGFloat
     private let period: TimePeriod
     private let date: DateInRegion
     private let availability: TimePeriodCollection
 
     init(localDate: Date, availability: TimePeriodCollection) {
         let start = localDate
+        self.rand = CGFloat.random(in: 0.0...1.0)
         self.period = TimePeriod(startDate: start, endDate: start.dateByAdding(1, .day).date)
         self.date = DateInRegion(start)
         self.availability = availability
