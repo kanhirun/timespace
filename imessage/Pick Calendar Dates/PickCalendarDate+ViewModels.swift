@@ -89,7 +89,7 @@ class PickCalendarDatesViewModel {
         if selectedPeriods.count <= maxCount && viewModel.viewState == .available {
             viewModel.select()
 
-            let startDate = localDate.dateAtStartOf(.day).date
+            let startDate = localDate.date
             let endDate = startDate.dateByAdding(1, .day).date
             let wholeDayPeriod = TimePeriod(startDate: startDate, endDate: endDate)
 
