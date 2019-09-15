@@ -43,8 +43,27 @@ public final class ScheduleService {
         return TimePeriodCollection(arr)
     }
     
+    
+    /// Renders the stack partially or completely based on tag
     public func render(region: Region, at tag: String) -> TimePeriodCollection {
-        return TimePeriodCollection([])
+        var res = window
+
+        for layer in layers {
+            res = res.only(periods: layer.contents)
+
+            if tag == layer.tag {
+                break
+            }
+        }
+        
+        let arr = res.map { period in
+                return TimePeriod(
+                    start: period.start?.convertTo(region: region),
+                    end: period.end?.convertTo(region: region)
+                )
+            }
+
+        return TimePeriodCollection(arr)
     }
     
     // MARK: - Filter

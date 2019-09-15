@@ -36,6 +36,25 @@ final class ScheduleServiceTests: QuickSpec {
             }
         }
         
+        describe("render(region:at:)") {
+            it("returns nil if tag doesn't exist") {}
+            it("can return the top layer") {}
+            it("can return the bottom layer") {}
+            it("can return the middle layers") {
+                let subject = ScheduleService(start: Date(timeIntervalSince1970: 0),
+                                              end: Date(timeIntervalSince1970: 10))
+                
+                subject.min(only: aPeriod(2, 6), tag: "1")
+                subject.min(only: aPeriod(4, 8), tag: "2")
+                subject.min(only: aPeriod(6, 6), tag: "3")
+                
+                let res = subject.render(region: Region.UTC, at: "2")
+                                 .compactMap { $0 } as! [TimePeriod]
+
+                expect(res) == [aPeriod(4, 6)]
+            }
+        }
+        
         describe("inversed(_:)") {
             it("returns empty when input has no gaps") {
                 /// ```
@@ -45,10 +64,8 @@ final class ScheduleServiceTests: QuickSpec {
                 ///
                 ///        []       -> returns empty
                 /// ```
-                let subject = ScheduleService(
-                    start: Date(timeIntervalSince1970: 0),
-                    end: Date(timeIntervalSince1970: 10)
-                )
+                let subject = ScheduleService(start: Date(timeIntervalSince1970: 0),
+                                              end: Date(timeIntervalSince1970: 10))
                 
                 let inverted = subject.inversed([aPeriod(0, 10)])
                 
@@ -62,10 +79,8 @@ final class ScheduleServiceTests: QuickSpec {
                 ///
                 ///        *----*    -> returns the gap with edge
                 /// ```
-                let subject = ScheduleService(
-                    start: Date(timeIntervalSince1970: 0),
-                    end: Date(timeIntervalSince1970: 10)
-                )
+                let subject = ScheduleService(start: Date(timeIntervalSince1970: 0),
+                                              end: Date(timeIntervalSince1970: 10))
                 
                 let inverted = subject.inversed([aPeriod(0, 5)])
                 
@@ -80,10 +95,8 @@ final class ScheduleServiceTests: QuickSpec {
                 ///
                 ///    *---*         -> returns the gap with edge
                 /// ```
-                let subject = ScheduleService(
-                    start: Date(timeIntervalSince1970: 0),
-                    end: Date(timeIntervalSince1970: 10)
-                )
+                let subject = ScheduleService(start: Date(timeIntervalSince1970: 0),
+                                              end: Date(timeIntervalSince1970: 10))
                 
                 let inverted = subject.inversed([aPeriod(5, 10)])
                 
@@ -91,10 +104,8 @@ final class ScheduleServiceTests: QuickSpec {
             }
             
             it("does the invert for enclosing") {
-                let subject = ScheduleService(
-                    start: Date(timeIntervalSince1970: 0),
-                    end: Date(timeIntervalSince1970: 10)
-                )
+                let subject = ScheduleService(start: Date(timeIntervalSince1970: 0),
+                                              end: Date(timeIntervalSince1970: 10))
                 
                 let inverted = subject.inversed([aPeriod(2, 4)])
                 
