@@ -7,8 +7,8 @@ import SwiftDate
 
 final class ScheduleServiceTests: QuickSpec {
     override func spec() {
-        describe(".add()") {
-            it("pushes new filters in") {
+         context("methods") {
+            it("appends to a stack") {
                 let subject = ScheduleService(
                     start: DateInRegion("2019-08-12T00:00:00Z")!,
                     end: DateInRegion("2019-08-16T00:00:00Z")!
@@ -36,8 +36,15 @@ final class ScheduleServiceTests: QuickSpec {
             }
         }
         
-        describe("inverse(_:)") {
-            it("does the invert for empty") {
+        describe("inversed(_:)") {
+            it("returns empty when input has no gaps") {
+                /// ```
+                ///    *        *   1. the edges, with
+                ///    o----o       2. periods w/ no gaps
+                ///         o---o
+                ///
+                ///        []       -> returns empty
+                /// ```
                 let subject = ScheduleService(
                     start: Date(timeIntervalSince1970: 0),
                     end: Date(timeIntervalSince1970: 10)
@@ -48,7 +55,13 @@ final class ScheduleServiceTests: QuickSpec {
                 expect(inverted).to(beEmpty())
             }
             
-            it("does the invert for start touching") {
+            it("can return gaps along with the right edge") {
+                /// ```
+                ///    *        *    1. the edges, with
+                ///    o---o         2. a period
+                ///
+                ///        *----*    -> returns the gap with edge
+                /// ```
                 let subject = ScheduleService(
                     start: Date(timeIntervalSince1970: 0),
                     end: Date(timeIntervalSince1970: 10)
@@ -60,7 +73,13 @@ final class ScheduleServiceTests: QuickSpec {
                 expect(inverted.first?.equals(aPeriod(5, 10))).to(beTrue())
             }
             
-            it("does the invert for end touching") {
+            it("can return gaps with the left edge") {
+                /// ```
+                ///    *        *    1. the edges, with
+                ///        o----o    2. a period
+                ///
+                ///    *---*         -> returns the gap with edge
+                /// ```
                 let subject = ScheduleService(
                     start: Date(timeIntervalSince1970: 0),
                     end: Date(timeIntervalSince1970: 10)

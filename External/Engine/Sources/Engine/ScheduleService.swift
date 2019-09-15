@@ -43,6 +43,10 @@ public final class ScheduleService {
         return TimePeriodCollection(arr)
     }
     
+    public func render(region: Region, at tag: String) -> TimePeriodCollection {
+        return TimePeriodCollection([])
+    }
+    
     // MARK: - Filter
     
     @discardableResult
@@ -115,6 +119,15 @@ public final class ScheduleService {
     }
     
     /// MARK: - Helpers
+    
+    /// Returns the inverse (i.e. gaps) between the given time periods
+    /// ```
+    ///   o--o   o-----o  o-o   time periods
+    ///
+    ///      *---*     *--*      -> returns the gap(s)
+    /// ```
+    /// - Parameter periods: A list of periods to be inversed
+    /// - Returns: A new list of periods
     func inversed(_ periods: [TimePeriod]) -> [TimePeriod] {
         var curr = window.first!.start!
         let end = window.first!.end!

@@ -10,7 +10,7 @@ class TimeSheetCollectionViewControllerV2: UIViewController,
     var conversation: MSConversation!
     var viewModel: ViewModel!
     
-    var actionDelegate: ActionDelegate?
+    weak var actionDelegate: ActionDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
