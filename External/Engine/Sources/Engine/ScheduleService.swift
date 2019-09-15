@@ -36,13 +36,9 @@ public final class ScheduleService {
     // MARK: - Reduce
     
     public func render(region: Region) -> TimePeriodCollection {
-        let arr = layers.map { $0.contents }
-                        .reduce(window) { res, next  in res.only(periods: next) }
-                        .map { TimePeriod(start: $0.start?.convertTo(region: region), end: $0.end?.convertTo(region: region)) }
-        
-        return TimePeriodCollection(arr)
+        let lastTag = layers.last!.tag
+        return render(region: region, at: lastTag)
     }
-    
     
     /// Renders the stack partially or completely based on tag
     public func render(region: Region, at tag: String) -> TimePeriodCollection {
