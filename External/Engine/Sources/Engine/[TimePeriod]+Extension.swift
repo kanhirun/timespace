@@ -3,6 +3,33 @@ import SwiftyJSON
 import Foundation
 
 extension TimePeriodCollection {
+    
+    /// Returns the inverse (i.e. gaps) between the given time periods
+    /// ```
+    ///   o--o   o-----o  o-o   time periods
+    ///
+    ///      *---*     *--*      -> returns the gap(s)
+    /// ```
+    /// - Parameter periods: A list of periods to be inversed
+    /// - Returns: A new list of periods
+    func inversed(start: DateInRegion, end: DateInRegion) -> [TimePeriod] {
+        var curr = start
+        var iter = periods.makeIterator()
+        var res = [TimePeriod]()
+        
+        while curr < end {
+            let period = iter.next() ?? TimePeriod(start: end, end: end)
+            
+            if curr < period.start! {
+                res.append(TimePeriod(start: curr, end: period.start!))
+            }
+            
+            curr = period.end!
+        }
+        
+        return res
+    }
+    
     func quantized(unit: DateComponents) -> [TimePeriod] {
         return quantized(unit: unit.timeInterval)
     }

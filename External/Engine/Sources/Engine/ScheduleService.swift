@@ -96,7 +96,7 @@ public final class ScheduleService {
     
     @discardableResult
     public func subtract(with periods: [TimePeriod], tag: String) -> Self {
-        let input = inversed(periods)
+        let input = TimePeriodCollection(periods).inversed(start: start, end: end)
         let filtered = window.only(periods: input)
 
         layers.append( (tag: tag, contents: filtered) )
@@ -135,34 +135,5 @@ public final class ScheduleService {
     
     public func remove(withTag target: String) {
         layers.removeAll { filter -> Bool in filter.tag == target }
-    }
-    
-    /// MARK: - Helpers
-    
-    /// Returns the inverse (i.e. gaps) between the given time periods
-    /// ```
-    ///   o--o   o-----o  o-o   time periods
-    ///
-    ///      *---*     *--*      -> returns the gap(s)
-    /// ```
-    /// - Parameter periods: A list of periods to be inversed
-    /// - Returns: A new list of periods
-    func inversed(_ periods: [TimePeriod]) -> [TimePeriod] {
-        var curr = window.first!.start!
-        let end = window.first!.end!
-        var iter = periods.makeIterator()
-        var res = [TimePeriod]()
-
-        while curr < end {
-            let period = iter.next() ?? TimePeriod(start: end, end: end)
-            
-            if curr < period.start! {
-                res.append(TimePeriod(start: curr, end: period.start!))
-            }
-
-            curr = period.end!
-        }
-        
-        return res
     }
 }
