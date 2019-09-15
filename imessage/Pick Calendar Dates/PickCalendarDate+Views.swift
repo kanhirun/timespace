@@ -1,4 +1,5 @@
 import JTAppleCalendar
+import class Engine.CalendarDateViewModel
 
 class CalendarDateCell: JTAppleCell {
     
