@@ -34,7 +34,10 @@ class PickCalendarDatesViewModel {
     
     func dateViewModel(localDate: Date) -> CalendarDateViewModel? {
         // todo: Figure out how to retain selections
-        return CalendarDateViewModel(localDate: localDate, availability: schedule.render(region: Region.local))
+        return CalendarDateViewModel(localDate: localDate,
+                                     occupiedTimes: schedule.render(region: Region.local),
+                                     availableTimes: schedule.render(region: Region.local)
+        )
     }
     
     func isSelectable(viewModel: CalendarDateViewModel) -> Bool {

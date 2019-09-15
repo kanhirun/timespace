@@ -31,12 +31,12 @@ public class CalendarDateViewModel {
     ///
     /// - Note: Values are bucketed into 4 distinct levels
     public var busyLevel: BusyLevel {
-        switch rand {
-        case _ where rand >= 0.75:
+        switch _busyLevel {
+        case _ where _busyLevel >= 0.75:
             return .high
-        case _ where rand >= 0.50:
+        case _ where _busyLevel >= 0.50:
             return .medium
-        case _ where rand >= 0.25:
+        case _ where _busyLevel > 0.0:
             return .low
         default:
             return .free
@@ -45,17 +45,30 @@ public class CalendarDateViewModel {
     }
     
     public private(set) var viewState: ViewState = .unavailable
-    private let rand: CGFloat
+    private let _busyLevel: CGFloat
     private let period: TimePeriod
     private let date: DateInRegion
     private let availability: TimePeriodCollection
     
-    public init(localDate: Date, availability: TimePeriodCollection) {
+    public init(localDate: Date, occupiedTimes: TimePeriodCollection, availableTimes: TimePeriodCollection) {
+
+        // move me
+        func compute(t1: TimePeriodCollection, t2: TimePeriodCollection) -> CGFloat {
+            let lhs = t1.reduce(0.0) { res, curr -> TimeInterval in
+                res + curr.duration
+            }
+            let rhs = t2.reduce(0.0) { res, curr -> TimeInterval in
+                res + curr.duration
+            }
+            
+            return CGFloat(lhs / rhs)
+        }
+
         let start = localDate
-        self.rand = CGFloat.random(in: 0.0...1.0)
+        self._busyLevel = compute(t1: occupiedTimes, t2: availableTimes)
         self.period = TimePeriod(startDate: start, endDate: start.dateByAdding(1, .day).date)
         self.date = DateInRegion(start)
-        self.availability = availability
+        self.availability = availableTimes
         deselect()
     }
     
