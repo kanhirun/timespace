@@ -5,99 +5,125 @@ import Foundation
 import SwiftDate
 @testable import Engine
 
-func compute(_ date: Date, _ components: DateComponents) -> TimeInterval {
-    var projectedDate = date.dateBySet([
-        .month : components.month ?? date.month,
-        .day : components.day ?? date.day,
-        .hour : components.hour ?? date.hour,
-        .minute: components.minute ?? date.minute,
-        .second: components.second ?? date.second,
-    ])
-    
-    if let weekday = components.weekday, let nextWeekday = WeekDay(rawValue: weekday) {
-        projectedDate = projectedDate?.nextWeekday(nextWeekday)
-    }
-    
-    var offset: TimeInterval = 0
-    if let timeZone = components.timeZone {
-        offset = -TimeInterval(timeZone.secondsFromGMT(for: date))
-    }
 
-    if let res = projectedDate?.timeIntervalSince(date), res + offset > 0 {
-        return res + offset
-    } else {
-        return 0.0
+// Returns the time interval for a date that is advanced by component
+func timeInterval(for date: Date, advancedBy components: DateComponents) -> TimeInterval {
+    if let futureDate = projectedDate(from: date, advancedBy: components), futureDate > date {
+        return futureDate.timeIntervalSince(date)
     }
+    
+    return 0
 }
 
-final class PredicateTests: QuickSpec {
+// Returns a new date when advanced by component
+func projectedDate(from other: Date, advancedBy components: DateComponents) -> Date? {
+    var result = other.calendar.nextDate(after: other,
+                                         matching: components,
+                                         matchingPolicy: .nextTime,
+                                         repeatedTimePolicy: .first)
+    // Advance by timezone
+    let timeZoneOffset = components.timeZone?.secondsFromGMT(for: other) ?? 0
+    result?.addTimeInterval(-TimeInterval(timeZoneOffset))
+
+    return result
+}
+
+final class PredicateV2Tests: QuickSpec {
     override func spec() {
-        describe("compute()") {
-            context("when fast-forwarding") {
-                it("calculates when components is months") {
+
+        describe("timeInterval(for:advancedBy:)") {
+            describe("complex cases") {
+                it("calculates when combining components") {
                     let aDate = Date("2019-09-16T00:00:00Z")!
-                    let aComponent = DateComponents(month: 10)
-                    let res = compute(aDate, aComponent)
                     
-                    expect(res) == 30.days.timeInterval
+                    let wednesdayAt9 = DateComponents(timeZone: Zones.americaNewYork.toTimezone(),
+                                                      hour: 9,
+                                                      weekday: WeekDay.wednesday.rawValue)
+                    
+                    let res = projectedDate(from: aDate, advancedBy: wednesdayAt9)
+                    
+                    expect(res) == Date("2019-09-18T09:00:00-04:00")!
                 }
 
-                it("calculates when components is hour") {
+                it("returns 0 when the year component is behind") {
                     let aDate = Date("2019-09-16T02:00:00Z")!
-                    let aComponent = DateComponents(hour: 9)
-                    let res = compute(aDate, aComponent)
+                    
+                    // year component is behind
+                    let backIn1990 = DateComponents(year: 1990, day: 13, hour: 10)
+                    
+                    let res = timeInterval(for: aDate, advancedBy: backIn1990)
+                    
+                    expect(res) == 0
+                }
+                
+                it("calculates next month when day component is behind") {
+                    let aDate = Date("2019-09-16T02:00:00Z")!
+                    
+                    // the day component is behind the current day
+                    let aComponent = DateComponents(day: 13, hour: 10)
+                    
+                    let res = timeInterval(for: aDate, advancedBy: aComponent)
+                    
+                    expect(res) == Date("2019-10-13T10:00:00Z")!.timeIntervalSince(aDate)
+                }
+            }
+
+            describe("simple cases") {
+                xit("can calculate for month") {
+                    let aDate = Date("2019-09-16T00:00:00Z")!
+
+                    let res = projectedDate(from: aDate, advancedBy: DateComponents(month: 10))
+                    
+                    expect(res) == Date("2019-10-10T00:00:00Z")!
+                }
+
+                it("can calculate for hour") {
+                    let aDate = Date("2019-09-16T02:00:00Z")!
+
+                    let res = timeInterval(for: aDate, advancedBy: DateComponents(hour: 9))
                     
                     expect(res) == 7.hours.timeInterval
                 }
                 
-                it("calculates when day and hour") {
+                it("can calculate for day and hour") {
                     let aDate = Date("2019-09-16T02:00:00Z")!
-                    let aComponent = DateComponents(day: 17, hour: 4)
-                    let res = compute(aDate, aComponent)
+
+                    let res = timeInterval(for: aDate, advancedBy: DateComponents(day: 17, hour: 4))
                     
                     expect(res) == 1.days.timeInterval + 2.hours.timeInterval
                 }
                 
-                it("calculates when minutes") {
+                it("can calculate for minute") {
                     let aDate = Date("2019-09-16T02:00:00Z")!
-                    let aComponent = DateComponents(minute: 30)
-                    let res = compute(aDate, aComponent)
+
+                    let res = timeInterval(for: aDate, advancedBy: DateComponents(minute: 30))
                     
                     expect(res) == 30.minutes.timeInterval
                 }
                 
-                it("calculates when weekdays") {
-                    let aDate = Date("2019-09-16T00:00:00Z")!
-                    let aComponent = DateComponents(weekday: WeekDay.wednesday.rawValue)
-                    let res = compute(aDate, aComponent)
+                it("can calculate for weekday component") {
+                    let aDate = Date("2019-09-16T00:00:00Z")!  // a monday
+
+                    let res = timeInterval(for: aDate, advancedBy: DateComponents(weekday: WeekDay.wednesday.rawValue))
                     
                     expect(res) == 2.days.timeInterval
                 }
                 
-                it("calculates when seconds") {
+                it("can calculate for seconds") {
                     let aDate = Date("2019-09-16T00:00:10Z")!
-                    let aComponent = DateComponents(second: 33)
-                    let res = compute(aDate, aComponent)
+
+                    let res = timeInterval(for: aDate, advancedBy: DateComponents(second: 33))
                     
                     expect(res) == 23.seconds.timeInterval
                 }
                 
-                it("calculates timezone differences") {
+                it("can calculate for timezone") {
                     let aDate = Date("2019-09-16T5:00:10Z")!
-                    let aComponent = DateComponents(timeZone: TimeZone(identifier: "EST")!, hour: 10)
                     
-                    let res = compute(aDate, aComponent)
+                    let res = timeInterval(for: aDate, advancedBy: DateComponents(timeZone: TimeZone(identifier: "EST")!, hour: 10))
                     
                     expect(res) == 10.hours.timeInterval
                 }
-            }
-            
-            it("returns 0 when in the past") {
-                let aDate = Date("2019-09-16T02:00:00Z")!
-                let aComponent = DateComponents(day: 13, hour: 23)
-                let res = compute(aDate, aComponent)
-
-                expect(res) == 0
             }
         }
     }

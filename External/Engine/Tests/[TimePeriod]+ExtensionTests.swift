@@ -227,7 +227,7 @@ final class TimePeriodTests: QuickSpec {
             }
             
             it("does not cause a double round error") {
-                let subject = [
+                let _ = [
                     TimePeriod(start: DateInRegion("2019-08-01T04:32:00Z")!, duration: 1.hours),
                     TimePeriod(start: DateInRegion("2019-08-01T04:32:00Z")!, duration: 1.hours),
                 ]
