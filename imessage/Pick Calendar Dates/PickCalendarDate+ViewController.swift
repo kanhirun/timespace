@@ -9,7 +9,7 @@ class PickCalendarDatesViewController: UIViewController {
     
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var sendButton: UIButton!
-    @IBOutlet weak var calendarView: JTAppleCalendarView!
+    @IBOutlet weak var calendarView: JTACMonthView!
     
     var viewModel: PickCalendarDatesViewModel!
     var conversation: MSConversation!
@@ -21,7 +21,7 @@ class PickCalendarDatesViewController: UIViewController {
         headerLabel.text = viewModel.getInitialHeaderText()
 
         calendarView.calendarDataSource = self
-        calendarView.calendarDelegate = self as JTAppleCalendarViewDelegate
+        calendarView.calendarDelegate = self as JTACMonthViewDelegate
         calendarView.allowsMultipleSelection = true
 
         calendarView.scrollToDate(Date(), animateScroll: false)
@@ -43,8 +43,8 @@ class PickCalendarDatesViewController: UIViewController {
 
 }
 
-extension PickCalendarDatesViewController: JTAppleCalendarViewDataSource {
-    func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
+extension PickCalendarDatesViewController: JTACMonthViewDataSource {
+    func configureCalendar(_ calendar: JTACMonthView) -> ConfigurationParameters {
         return ConfigurationParameters(startDate: viewModel.startDate,
                                        endDate: viewModel.endDate,
                                        numberOfRows: 6,
@@ -55,26 +55,26 @@ extension PickCalendarDatesViewController: JTAppleCalendarViewDataSource {
     }
 }
 
-extension PickCalendarDatesViewController: JTAppleCalendarViewDelegate {
+extension PickCalendarDatesViewController: JTACMonthViewDelegate {
     
-    func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+    func calendar(_ calendar: JTACMonthView, didSelectDate date: Date, cell: JTACDayCell?, cellState: CellState) {
         let cell = cell as! CalendarDateCell
         viewModel.select(localDate: date, viewModel: cell.viewModel!)
         cell.updateUI()  // todo: need KVO to remove dup
     }
 
-    func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+    func calendar(_ calendar: JTACMonthView, didDeselectDate date: Date, cell: JTACDayCell?, cellState: CellState) {
         let cell = cell as! CalendarDateCell
         viewModel.deselect(localDate: date, viewModel: cell.viewModel!)
         cell.updateUI()
     }
     
-    func calendar(_ calendar: JTAppleCalendarView, shouldSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
+    func calendar(_ calendar: JTACMonthView, shouldSelectDate date: Date, cell: JTACDayCell?, cellState: CellState) -> Bool {
         let cell = cell as! CalendarDateCell
         return viewModel.isSelectable(viewModel: cell.viewModel!)
     }
     
-    func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
+    func calendar(_ calendar: JTACMonthView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTACDayCell {
         let cell = calendar.dequeueReusableJTAppleCell(
             withReuseIdentifier: "CalendarDateCell",
             for: indexPath) as! CalendarDateCell
@@ -91,7 +91,7 @@ extension PickCalendarDatesViewController: JTAppleCalendarViewDelegate {
         return cell
     }
 
-    func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
+    func calendar(_ calendar: JTACMonthView, willDisplay cell: JTACDayCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
         let cell = calendar.dequeueReusableJTAppleCell(
             withReuseIdentifier: "CalendarDateCell",
             for: indexPath) as! CalendarDateCell
@@ -99,7 +99,7 @@ extension PickCalendarDatesViewController: JTAppleCalendarViewDelegate {
         cell.viewModel = viewModel.dateViewModel(localDate: date)
     }
     
-    func calendarDidScroll(_ calendar: JTAppleCalendarView) {
+    func calendarDidScroll(_ calendar: JTACMonthView) {
         guard let aDate = calendar.visibleDates().monthDates.first?.date else {
             return
         }

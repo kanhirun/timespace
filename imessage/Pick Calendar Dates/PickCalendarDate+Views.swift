@@ -1,7 +1,8 @@
 import JTAppleCalendar
 import class Engine.CalendarDateViewModel
+import UIKit
 
-class CalendarDateCell: JTAppleCell {
+class CalendarDateCell: JTACDayCell {
     
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var circleView: UIView!
