@@ -32,45 +32,22 @@ class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
     // MARK: - Conversation Handling
     
     override func willBecomeActive(with conversation: MSConversation) {
-        // Called when the extension is about to move from the inactive to active state.
-        // This will happen when the extension is about to present UI.
-        // Use this method to configure the extension and restore previously stored state.
-
+        var vc: UIViewController!
         if let message = conversation.selectedMessage  {
             guard let periods = TimePeriodCollection(fromMessage: message) else {
                 return
-            }
+            }1
             let service = Service(message: message)
 
-            present(instantiateTimeSheetViewController(periods, conversation, service), animated: false, completion: nil)
+            vc = instantiateTimeSheetViewController(periods, conversation, service)
         } else {
-            present(instantiateServiceViewController(conversation), animated: false, completion: nil)
+            vc = instantiateServiceViewController(conversation)
         }
-    }
-    
-    func instantiateTimeSheetViewController(_ periods: TimePeriodCollection, _ conversation: MSConversation, _ service: Service) -> UIViewController {
-        let destination = UIStoryboard(name: "TimeSheet", bundle: Bundle.main).instantiateInitialViewController() as! TimeSheetCollectionViewControllerV2
-        
-        destination.viewModel = ViewModel(
-            periods: periods,
-            service: service,
-            conversation: conversation
-        )
-        destination.conversation = conversation
-        destination.actionDelegate = self
-        
-        return destination
-    }
-    
-    func instantiateServiceViewController(_ conversation: MSConversation) -> UIViewController {
-        let nav: UINavigationController = {
-            let rootVC = self.storyboard!.instantiateViewController(withIdentifier: "ServicesViewController") as! ServicesViewController
-            rootVC.activeConversation = conversation
-            rootVC.actionDelegate = self
-            return UINavigationController(rootViewController: rootVC)
-        }()
-        
-        return nav
+
+        addChild(vc)
+        vc.view.frame = self.view.bounds
+        self.view.addSubview(vc.view)
+        vc.didMove(toParent: self)
     }
     
     override func didResignActive(with conversation: MSConversation) {
@@ -107,6 +84,33 @@ class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
     
     override func didTransition(to presentationStyle: MSMessagesAppPresentationStyle) {
         messageDelegate?.didTransition(to: presentationStyle)
+    }
+    
+    // MARK: - Helpers
+    
+    func instantiateTimeSheetViewController(_ periods: TimePeriodCollection, _ conversation: MSConversation, _ service: Service) -> UIViewController {
+        let destination = UIStoryboard(name: "TimeSheet", bundle: Bundle.main).instantiateInitialViewController() as! TimeSheetCollectionViewControllerV2
+        
+        destination.viewModel = ViewModel(
+            periods: periods,
+            service: service,
+            conversation: conversation
+        )
+        destination.conversation = conversation
+        destination.actionDelegate = self
+        
+        return destination
+    }
+    
+    func instantiateServiceViewController(_ conversation: MSConversation) -> UIViewController {
+        let nav: UINavigationController = {
+            let rootVC = self.storyboard!.instantiateViewController(withIdentifier: "ServicesViewController") as! ServicesViewController
+            rootVC.activeConversation = conversation
+            rootVC.actionDelegate = self
+            return UINavigationController(rootViewController: rootVC)
+        }()
+        
+        return nav
     }
 
 }
