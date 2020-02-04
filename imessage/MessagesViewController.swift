@@ -36,7 +36,7 @@ class MessagesViewController: MSMessagesAppViewController, ActionDelegate {
         if let message = conversation.selectedMessage  {
             guard let periods = TimePeriodCollection(fromMessage: message) else {
                 return
-            }1
+            }
             let service = Service(message: message)
 
             vc = instantiateTimeSheetViewController(periods, conversation, service)
