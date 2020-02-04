@@ -176,7 +176,6 @@
 		E0F5B9232306399D0043605C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E0F5B9252306399D0043605C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E0F5B92E230639E70043605C /* Engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Engine.xcodeproj; path = Engine/Engine.xcodeproj; sourceTree = "<group>"; };
-		E0F5B95123063DDC0043605C /* OAuthSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuthSwift.framework; path = Carthage/Build/iOS/OAuthSwift.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -293,7 +292,6 @@
 			isa = PBXGroup;
 			children = (
 				E06B5A89230D8BEA00DF0CA5 /* JTAppleCalendar.framework */,
-				E0F5B95123063DDC0043605C /* OAuthSwift.framework */,
 				E0F5B91B2306399C0043605C /* Messages.framework */,
 			);
 			name = Frameworks;
@@ -527,14 +525,12 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/OAuthSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/JTAppleCalendar.framework",
 			);
 			name = "Copy Frameworks (Carthage)";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/OAuthSwift.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/JTAppleCalendar.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
